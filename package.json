@@ -48,7 +48,7 @@
     "@angular/router": "^14.2.12",
     "@asymmetrik/ngx-leaflet": "3.0.1",
     "@fortawesome/fontawesome-pro": "^6.3.0",
-    "@koerberdigitaldevteam/koerber-design-system-web": "^1.1.0-5",
+    
     "@microsoft/signalr": "^7.0.4",
     "@nebular/auth": "10.0.0",
     "@nebular/eva-icons": "10.0.0",
