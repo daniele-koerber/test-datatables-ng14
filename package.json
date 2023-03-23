@@ -48,7 +48,6 @@
     "@angular/router": "^14.2.12",
     "@asymmetrik/ngx-leaflet": "3.0.1",
     "@fortawesome/fontawesome-pro": "^6.3.0",
-    
     "@microsoft/signalr": "^7.0.4",
     "@nebular/auth": "10.0.0",
     "@nebular/eva-icons": "10.0.0",
@@ -59,7 +58,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "@swimlane/ngx-charts": "^14.0.0",
-    "angular-datatables": "^12.0.2",
+    "angular-datatables": "^14.0.2",
     "angular2-chartjs": "0.4.1",
     "bootstrap": "4.3.1",
     "chart.js": "2.7.1",
