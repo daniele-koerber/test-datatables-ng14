@@ -31,7 +31,7 @@ export class ECommerceComponent implements OnInit, OnDestroy {
   }
 
   drawTable() {
-    if (this.datatableElement?.dtInstance) {
+    if (this.datatableElement.dtInstance) {
       this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
