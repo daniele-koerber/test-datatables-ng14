@@ -1,0 +1,10 @@
+{
+  "LAST_COMMIT": "",
+  "VERSION": "dev",
+
+  "BASE_SERVER": "http://development.kodislocal.it",
+  "KEYCLOAK_URL": "http://development.kodislocal.it",
+  "KEYCLOAK_REDIRECT_URI": "/auth/authorize",
+  "KEYCLOAK_REALM": "d.operations",
+  "KEYCLOAK_CLIENT_ID": "d.operations"  
+}
