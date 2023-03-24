@@ -1,0 +1,123 @@
+<!-- <form [formGroup]="mainForm"> -->
+  <!-- <nb-card style="height: 900px;width: 1600px;"> -->
+
+    <nb-card  style="max-width: 1700px; min-height: 200px; min-width: 200px;" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+
+    <nb-card-header>{{ 'PRODUCT_DEFINITION.Product_Details' | translate }}
+      <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+        <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+      </button>
+      <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+        <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+      </button>
+    </nb-card-header>
+    <nb-card-body>
+      <div *ngIf="processCellsArray?.length > 0" class="col-sm-12">
+        <form [formGroup]="mainForm">
+
+        <ngx-product-details-card [readonly]="readonly" [definition]="definition" [definitions]="data"></ngx-product-details-card>
+
+        <!-- <div  class="space"> </div> -->
+
+
+        <table  class="table table-bordered table-sm row-border hover" datatable="ng"  [dtOptions]="dtOptions">
+          <thead>
+            <tr>
+              <th>{{ 'CALENDAR.Parameter_Description' | translate }}</th>
+              <th>{{ 'CALENDAR.UoM' | translate }}</th>
+              <th *ngFor="let processCell of processCellsArray">{{ processCell.description}}
+                <mat-checkbox
+                class="check-box-ED"
+                (change)="toggleManualColumn(processCell, $event)"
+                [checked]=" checkProcessCell(processCell, definition.activeProcessCells).isActive "
+                [disabled]=" definition.canBeDeleted === false && checkProcessCell(processCell, definition.activeProcessCells).isActive "></mat-checkbox>
+              </th>
+              <th class="text-center">{{ 'PRODUCT_DEFINITION.Unique_Value' | translate }}</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+
+              <td [attr.colspan]="2">
+                {{ 'PRODUCT_DEFINITION.line_residence_time' | translate }}
+              </td>
+              <td style="display: none;"></td>
+              <td  *ngFor="let processCell of processCellsArray; let count = index">
+                <div *ngFor="let unit of checkProcessCell(processCell, definition?.activeProcessCells)?.unitsData; let index = index">
+                  <input [disabled] = "
+                  (definition?.firstEnabledExpectedChange?.processCellPath !== processCell?.processCellPath &&
+                  definition?.expectedChangeoverTimeUniqueValues === true)
+                  || !checkProcessCell(processCell, definition?.activeProcessCells).isActive "
+
+                  (change)=" onTrunkChange(processCell, $event, 0, count) " [name]=" 'hours[' + processCell.processCellPath + ']'" type="number" min="0" max="23" [value]=" getTrunk(checkProcessCell(processCell, definition?.activeProcessCells).isActive, unit.expectedChangeoverTime, 0) " /> :
+                  <input [disabled] = " (definition?.firstEnabledExpectedChange?.processCellPath !== processCell?.processCellPath && definition?.expectedChangeoverTimeUniqueValues === true) || !checkProcessCell(processCell, definition?.activeProcessCells).isActive " (change)=" onTrunkChange(processCell, $event, 1, index) " [name]=" 'minutes[' + processCell.processCellPath + ']'" type="number" min="0" max="59" [value]=" getTrunk(checkProcessCell(processCell, definition?.activeProcessCells).isActive, unit.expectedChangeoverTime, 1) " /> :
+                  <input [disabled] = " (definition?.firstEnabledExpectedChange?.processCellPath !== processCell?.processCellPath && definition?.expectedChangeoverTimeUniqueValues === true) || !checkProcessCell(processCell, definition?.activeProcessCells).isActive " (change)=" onTrunkChange(processCell, $event, 2, index) " [name]=" 'seconds[' + processCell.processCellPath + ']'" type="number" min="0" max="59" [value]=" getTrunk(checkProcessCell(processCell, definition?.activeProcessCells).isActive, unit.expectedChangeoverTime, 2) " />
+                </div>
+              </td>
+              <td class="text-center">
+                <mat-checkbox [checked]=" definition.expectedChangeoverTimeUniqueValues " (change)=' toggleChangeOverTimeRow($event) '></mat-checkbox>
+              </td>
+            </tr>
+            <tr *ngFor="let row of data">
+              <td>
+                <div [hidden]=" row?.defaultedValues !== true " class="dot"
+                  [attr.style]=" 'background-color:' + getValidationColor() "></div>
+
+                  {{ row?.definition?.description }}
+
+
+              </td>
+              <td>{{ row?.definition?.uoM }}</td>
+              <td *ngFor="let processCell of processCellsArray;">
+                <!-- {{ (checkEl(processCell, row)?.readOnly) }} |
+                {{ !checkProcessCell(processCell, definition.activeProcessCells).isActive }} -->
+
+
+
+
+
+                <div [ngSwitch]=" row?.definition?.parametersType ">
+
+                  <ngx-products-working-parameter        (emitChange)="emitChangeF(row)" (touched)="touched()" [changed]=" row.changed " [firstEnabledProcessCell]="row.firstEnabledProcessCell" [uniqueValues]=" row.uniqueValues " [readonly]="!checkEl(processCell, row)" [disabled] = " !checkProcessCell(processCell, definition.activeProcessCells).isActive " [row]="row" [formGroup]="mainForm" [processCell]="processCell" *ngSwitchCase=" 'WorkingParameter' "></ngx-products-working-parameter>
+                  <ngx-products-mandatory-parameter-speed (emitChange)="emitChangeF(row)" (touched)="touched()" [changed]=" row.changed " [firstEnabledProcessCell]="row.firstEnabledProcessCell" [uniqueValues]=" row.uniqueValues " [readonly]="!checkEl(processCell, row)" [disabled] = " !checkProcessCell(processCell, definition.activeProcessCells).isActive " [row]="row" [formGroup]="mainForm" [definition]="definition" [processCell]="processCell" *ngSwitchCase=" 'MandatoryParameterSpeed' "></ngx-products-mandatory-parameter-speed>
+                  <ngx-products-mandatory-parameter-speed (emitChange)="emitChangeF(row)" (touched)="touched()" [changed]=" row.changed " [firstEnabledProcessCell]="row.firstEnabledProcessCell" [uniqueValues]=" row.uniqueValues " [readonly]="!checkEl(processCell, row)" [disabled] = " !checkProcessCell(processCell, definition.activeProcessCells).isActive " [row]="row" [formGroup]="mainForm" [definition]="definition" [processCell]="processCell" *ngSwitchCase=" 'MandatoryParameterReferenceSpeed' "></ngx-products-mandatory-parameter-speed>
+
+                  <ngx-products-mandatory-parameter-unit-conversion (emitChange)="emitChangeF(row)" (touched)="touched()" [changed]=" row.changed " [firstEnabledProcessCell]="row.firstEnabledProcessCell" [uniqueValues]=" row.uniqueValues " [readonly]="!checkEl(processCell, row)" [disabled] = " !checkProcessCell(processCell, definition.activeProcessCells).isActive " [row]="row" [formGroup]="mainForm" [definition]="definition" [processCell]="processCell" *ngSwitchCase=" 'MandatoryParameterUnitConversion' "></ngx-products-mandatory-parameter-unit-conversion>
+                  <ngx-products-quality-range-parameter (emitChange)="emitChangeF(row)" (touched)="touched()" [changed]=" row.changed " [firstEnabledProcessCell]="row.firstEnabledProcessCell" [uniqueValues]=" row.uniqueValues " [disabled] = " !checkProcessCell(processCell, definition.activeProcessCells).isActive " [row]="row" [formGroup]="mainForm" [definition]="definition" [processCell]="processCell" *ngSwitchCase=" 'QualityRangeParameter' "></ngx-products-quality-range-parameter>
+                  <ngx-products-quality-type-parameter   (emitChange)="emitChangeF(row)" (touched)="touched()" [changed]=" row.changed " [firstEnabledProcessCell]="row.firstEnabledProcessCell" [uniqueValues]=" row.uniqueValues " [readonly]="!checkEl(processCell, row)" [disabled] = " !checkProcessCell(processCell, definition.activeProcessCells).isActive " [row]="row" [formGroup]="mainForm" [definition]="definition" [processCell]="processCell" *ngSwitchCase=" 'QualityTypeParameter' "></ngx-products-quality-type-parameter>
+                  <ngx-products-routing-parameter (emitChange)="emitChangeF(row)" (touched)="touched()" [changed]=" row.changed " [firstEnabledProcessCell]="row.firstEnabledProcessCell" [uniqueValues]=" row.uniqueValues " [readonly]="!checkEl(processCell, row)" [disabled] = " !checkProcessCell(processCell, definition.activeProcessCells).isActive " [row]="row" [formGroup]="mainForm" [definition]="definition" [processCell]="processCell" *ngSwitchCase=" 'MandatoryParameterRouting' "></ngx-products-routing-parameter>
+                  <div *ngSwitchDefault></div>
+                </div>
+
+              </td>
+              <td class="text-center">
+                <mat-checkbox [checked]=" row?.uniqueValues "
+                *ngIf="row?.definition?.parametersType !== 'MandatoryParameterRouting'"
+                (change)=' toggleRow(row, $event) '></mat-checkbox>
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+
+      </form>
+
+      </div>
+
+    </nb-card-body>
+
+    <nb-card-footer  *ngIf="!isLoading">
+      <div *ngIf="defaultedValues === true" class=" text-danger text-center pt-2 pb-2">
+      {{ 'PRODUCT_DEFINITION.defaultedValue' | translate }}
+      </div>
+      <div class="text-center">
+      <button nbButton (click)=" onFormSubmit() "
+      [disabled]=" !canFormBeSaved || !mainForm.touched"
+      class="appearance-filled secondary" style=" margin: 0 auto">
+            {{ 'COMMON.Save' | translate }}
+        </button>
+      </div>
+    </nb-card-footer>
+</nb-card>
+<!-- </form> -->

@@ -1,0 +1,75 @@
+<nb-card style="min-width: 400px;" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" >
+  <nb-card-header>
+    <span *ngIf="!isStopProduction">{{ 'COMMON.Adjust_Quantity' | translate }}</span>
+    <span *ngIf="isStopProduction">{{ 'SHARED.Stop_Production' | translate }}</span>
+
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+
+    <button style="float: right;padding: 4px;" (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body style="min-height: 80px;">
+
+    <div [hidden]="!isStopProduction"> {{ 'COMMON.Are_you_sure_you_want_to_stop_production' | translate }} </div>
+
+    <div [hidden]="!isStopProduction " class= "dividing-line"> </div>
+
+    <div [hidden]="!isStopProduction " style= "margin-bottom: 10px;"> {{ 'COMMON.Before_stop_production_pieces_can_be_adjusted' | translate }} </div>
+
+    <div [hidden]="!canAdjustPieces" style="display: flex;">
+      <div>
+        <div class="flex small-space-batch-details" style="margin: 0">
+          <div class="first-div-align"></div>
+          <div class="second-div-align" style="width: max-content;"><strong><span style="width: 5rem;">{{ 'SHARED.Actual' | translate }}</span></strong>
+          </div>
+        </div>
+      </div>
+      <div style="margin-right: 2.5rem;width: 100%;display: flex;justify-content: flex-end;">
+        <div class="flex small-space-batch-details" style="margin: 0">
+          <div class="first-div-align" style="width: max-content; display: flex;">
+            <div><strong><span style="width: 5rem;">{{ 'SHARED.Adjustment' | translate }}</span></strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex;">
+      <div>
+        <div class="flex small-space-batch-details">
+          <div class="first-div-align">{{ 'SHARED.Total_pieces_good' | translate }}: </div>
+          <div class="second-div-align" style="width: max-content;"><strong>{{goodCount}} {{ uom }}</strong>
+          </div>
+        </div>
+        <div class="flex small-space-batch-details">
+          <div class="first-div-align">{{ 'SHARED.Total_pieces_rejected' | translate }}: </div>
+          <div class="second-div-align" style="width: max-content;"><strong>{{rejectedCount}} {{ uom }}</strong>
+          </div>
+        </div>
+      </div>
+      <div [hidden]="!canAdjustPieces" style="margin-left: 2rem;">
+        <div class="flex small-space-batch-details">
+          <div class="first-div-align" style="width: max-content; display: flex;">
+            <div><input matInput #input [(ngModel)]="adjustedgoodCount" type="number" style="width: 5rem;"></div>
+            <div><strong>{{ uom }}</strong></div>
+          </div>
+        </div>
+        <div class="flex small-space-batch-details">
+          <div class="first-div-align" style="width: max-content; display: flex;">
+            <div><input matInput #input [(ngModel)]="adjustedrejectedCount" type="number" style="width: 5rem;"></div>
+            <div><strong>{{ uom }}</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p [hidden]="canAdjustPieces"  class="info-paragraph">{{ 'SHARED.No_permission_pieces_adjust' | translate }}</p>
+
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button [disabled]="isLoading" nbButton status="basic" (click)=" cancel() " class="appearance-filled secondary">{{ 'COMMON.Cancel' | translate }}</button>
+    <button [disabled]="isLoading" nbButton status="basic" (click)=" submit() " class="float-right appearance-filled primary">{{ saveButton }}</button>
+  </nb-card-footer>
+</nb-card>

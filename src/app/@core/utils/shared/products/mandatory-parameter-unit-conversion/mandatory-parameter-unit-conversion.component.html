@@ -1,0 +1,20 @@
+
+<div class="justify-content-between" *ngIf=" getProcessCellParameterValue(processCell.path, row?.values).Value !== null ">
+  <form [formGroup]="formGroup">
+    <mat-form-field>
+
+      <input matInput type="text"
+      ngDefaultControl (change)=" onFieldChange($event, processCell.path, row?.values) "
+      [readonly]="readonly || disabled || (uniqueValues === true && processCell.path !== firstEnabledProcessCell.processCellPath)" placeholder=""
+      [value]=" disabled ? null : (getProcessCellParameterValue(processCell.path, row?.values).Value !== undefined ? getProcessCellParameterValue(processCell.path, row?.values).Value : '') ">
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_formField'].hasError('required')">
+        {{ 'COMMON.Field_is_required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_formField'].hasError('value')">
+        {{ 'COMMON.Field_value_must_be_a_number_greater_than_zero' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+
+  </form>
+</div>

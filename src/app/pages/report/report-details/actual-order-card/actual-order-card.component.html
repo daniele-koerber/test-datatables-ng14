@@ -1,0 +1,93 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" >
+  <nb-card-header>
+    <h5 class="card-title d-flex">{{ 'REPORT.Order_Data' | translate }}</h5>
+    <h5 style="margin-left: 8px" *ngIf="!isLoading && !serverError">{{ 'REPORT.Process_Cell' | translate }}: {{processCellName}}</h5>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div *ngIf="!isLoading && !serverError" class="d-flex justify-content-center flex-wrap h-100">
+      <div class="col-xxl-12 col-xxxl-4">
+        <div class="flex-grow-1 h-100 d-flex flex-column justify-content-between">
+
+          <div class="d-flex">
+            <div class="first-div-align nb-font">{{ 'REPORT.Order' | translate }}: </div>
+            <div class="second-div-align"><strong>{{batch?.productionOrder}}</strong></div>
+          </div>
+
+          <div class="d-flex">
+            <div class="first-div-align nb-font">{{ 'REPORT.Product_Code' | translate }}: </div>
+            <div class="second-div-align"><strong>{{batch?.productCode}}</strong></div>
+          </div>
+
+          <div class="d-flex">
+            <div class="first-div-align nb-font">{{ 'REPORT.PO_Description' | translate }}: </div>
+            <div class="second-div-align"><strong>{{batch?.productDescription}}</strong></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-xxl-12 col-xxxl-4">
+        <div class="flex-grow-1 h-100 d-flex flex-column justify-content-between">
+
+          <div class="d-flex">
+            <div class="first-div-align nb-font" >{{ 'REPORT.Actual_Start_Time' | translate }}: </div>
+            <div class="second-div-align"><strong>{{batch?.batchExpectedStart | DateFormatPipe}}</strong></div>
+          </div>
+
+          <div class="d-flex">
+            <div class="first-div-align nb-font">{{ 'REPORT.Actual_End_Time' | translate }}: </div>
+            <div class="second-div-align"><strong>{{batch?.batchExpectedEnd | DateFormatPipe}}</strong></div>
+          </div>
+
+          <div class="d-flex">
+            <div class="first-div-align nb-font">{{ 'REPORT.Duration' | translate }}: </div>
+            <div class="second-div-align"><strong>{{batch?.currentDurationTicks | TicksToDurationPipe : ('COMMON.d' | translate) : ('COMMON.h' | translate) : ('COMMON.min' | translate)}}</strong></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="col-xxl-12 col-xxxl-4">
+        <div class="flex-grow-1 h-100 d-flex flex-column justify-content-between">
+
+          <div class="d-flex">
+            <div class="first-div-align nb-font">{{ 'REPORT.Target_quantity' | translate }}: </div>
+            <div class="second-div-align"><strong>{{batch?.targetQuantity}} {{UoM}}</strong></div>
+          </div>
+
+          <div class="d-flex">
+            <div class="first-div-align nb-font">{{ 'REPORT.Total_Good_Pieces' | translate }}: </div>
+            <div class="second-div-align"><strong>{{batchQuantities?.response?.goodCount}} {{UoM}}</strong></div>
+          </div>
+
+          <div class="d-flex">
+            <div class="first-div-align nb-font">{{ 'REPORT.Total_Defective_Pieces' | translate }}: </div>
+            <div class="second-div-align"><strong>{{defectiveCount}} {{UoM}}</strong></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <p *ngIf="(serverError)">
+      {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+    </p>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <div *ngIf="batch !== null" class="d-flex flex-wrap justify-content-between">
+      <div>
+        <button nbButton size="small" class="tertiary" (click)="prevOrderClickEvent()" [disabled]="!isPrevOrderEnable || isLoading || serverError">
+          <nb-icon icon="chevron-left-outline"> </nb-icon>{{ 'REPORT.Go_To_Previous_Order_on_PC' | translate }} {{processCellName}}
+        </button>
+        <button nbButton size="small" class="tertiary" (click)="nextOrderClickEvent()" [disabled]="!isNextOrderEnable  || isLoading || serverError">
+          {{ 'REPORT.Go_To_Next_Order_on_PC' | translate }} {{processCellName}} <nb-icon icon="chevron-right-outline"></nb-icon>
+        </button>
+      </div>
+
+      <button (mousedown)='goToDetails()' [disabled]="noData || isLoading || serverError" nbButton size="small" class="tertiary">
+        {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+      </button>
+    </div>
+  </nb-card-footer>
+</nb-card>

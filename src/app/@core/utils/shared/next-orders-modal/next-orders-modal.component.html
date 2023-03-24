@@ -1,0 +1,89 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'OVERVIEW.Next_Orders' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" (click)=" openHelp() " [disabled]=" (helpPageLinkDestination === '#') " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row" *ngIf="isLoading === false">
+      <div class="col-sm-12" >
+
+        <div class="order" *ngFor="let order of nextOrders">
+          <div class="order-details" *ngIf="order?.productionOrder">
+
+            <div class="flex small-space-batch-details">
+              <div class="first-div-align">{{ 'OVERVIEW.Production_Order' | translate }}: </div>
+              <div class="second-div-align"><strong >{{order?.productionOrder}} </strong>
+                <span class="dot" [style.background]="getStatusColor(order?.status)"></span>
+              </div>
+            </div>
+
+            <div class="flex small-space-batch-details">
+              <div class="first-div-align">{{ 'OVERVIEW.Product_Code' | translate }}: </div>
+              <div class="second-div-align"><strong >{{order?.productCode}} </strong>
+              </div>
+            </div>
+
+            <div class="flex small-space-batch-details">
+              <div class="first-div-align">{{ 'SHARED.Scheduled_Start_Time' | translate }}: </div>
+              <div class="second-div-align"><strong >{{order?.batchExpectedStart | DateFormatPipe}} </strong>
+              </div>
+            </div>
+
+            <!-- <div class="flex small-space-batch-details" style="margin-left: -16px;"> -->
+              <button (mousedown)='gotoDetails(order?.productionOrder)'  [disabled]="noData === true" nbButton  style="float: right; margin-top: 8px;margin-bottom: 8px" class= "appearance-filled tertiary"  size="small">
+                {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+              </button>
+            <!-- </div> -->
+
+          </div>
+        </div>
+        <div [hidden]="nextOrders.length !== 0 || isLoading">{{ 'SHARED.No_Orders_Planned' | translate }}</div>
+
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+
+
+<!-- <nb-card class="batch-list" [size]="'small'">
+  <nb-card-header>{{ 'OVERVIEW.Next_Orders' | translate }}</nb-card-header>
+  <nb-card-body>
+    <div  class="space"> </div>
+    <div [hidden]="nextOrders.length !== 0">{{ 'SHARED.No_Orders_Planned' | translate }}</div>
+    <div [hidden]="nextOrders.length == 0"class="order"  *ngFor="let order of nextOrders">
+      <div class="row" (click)="gotoDetails(order?.productionOrder)" style="padding: 0px;">
+        <div class="col-11" style="padding: 0px;">
+          <div class="order-details" >
+            <span class="semibold">{{ order?.productionOrder }}</span><br>
+            <span> {{ order?.productCode }} </span> <br>
+            <span>{{ order?.batchExpectedStart| DateFormatPipe }}</span> <br>
+          </div>
+        </div>
+        <div class="col-1" style="padding: 0px;">
+            <span  slot="end" class="details-arraow">
+              <nb-icon icon="chevron-right-outline"></nb-icon>
+            </span>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card> -->
+
+
+
+
+
+<ngx-server-notifications
+                          [from]="'next-order-modal'"
+                          *ngIf="selectedProcessCell"
+                          [processCell]="selectedProcessCell"
+                          [topic]="getSchedulingComponentTopic()"
+                          [signalRSubscriptionType] = "getComponentSignalRSubscriptionType()"
+                          [signalRListenersNames]="getComponentSignalRSchedulingListenersNames()"
+                          (message)="BatchDataChanged($event)">
+</ngx-server-notifications>

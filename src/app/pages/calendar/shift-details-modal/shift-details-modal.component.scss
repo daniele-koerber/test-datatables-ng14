@@ -1,0 +1,41 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+
+  .first-div-align{
+    min-width: 170px ;
+    float: right;
+    font-family: nb-theme(font-family-light);
+    font-size: 14px;
+  }
+
+  .second-div-align{
+    width: 150px;
+    float: right;
+    font-family: nb-theme(font-family-semibold);
+    font-size: medium;
+    }
+  .flex{
+    display: flex;
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+
+  .small-space-details{
+    font-size: medium;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+  }
+
+:focus {
+  outline:none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+}
+
+}

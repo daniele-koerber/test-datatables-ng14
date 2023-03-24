@@ -1,5 +1,6 @@
-@import 'bootstrap/scss/mixins/breakpoints';
-@import '@nebular/theme/styles/global/breakpoints';
+$custom-file-text: ();
+@import 'node_modules/bootstrap/scss/mixins/breakpoints';
+@import 'node_modules/@nebular/theme/styles/global/breakpoints';
 @import '../../styles/themes';
 
 @include nb-install-component() {
@@ -7,16 +8,34 @@
   justify-content: space-between;
   width: 100%;
 
-  .logo-container {
-    display: flex;
-    align-items: center;
-    width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
+  h1 {
+    font-size: 1.375rem;
+    font-family: nb-theme(font-family-bold);
+  }
+    
+  // ngx-progress-bar { position: absolute; z-index: 1000; }
+
+  .disabled { color: rgb(151, 151, 151)}
+
+  :host ::ng-deep {
+
+    .mat-form-field-infix {
+      border-top:0;
+      margin-top: 0;
+      background-color: #f5f3f1;
+
+    }
+    .mat-select-value {
+      padding-left: 8px
+    }
+
   }
 
   nb-action {
     height: auto;
     display: flex;
     align-content: center;
+    border-right: 1px solid #edf1f7;
   }
 
   nb-user {
@@ -27,14 +46,24 @@
     padding: 0!important;
   }
 
-  .header-container {
+  .header-container-user {
     display: flex;
     align-items: center;
+  }
+
+  .option-button{
+    display: flex;
+    align-items: center;
+  }
+
+  .header-container {
+    // display: flex;
+    // align-items: center;
     width: auto;
 
     .sidebar-toggle {
-      @include nb-ltr(padding-right, 1.25rem);
-      @include nb-rtl(padding-left, 1.25rem);
+      @include nb-ltr(margin-right, 1.25rem);
+      @include nb-rtl(margin-left, 1.25rem);
       text-decoration: none;
       color: nb-theme(text-hint-color);
       nb-icon {
@@ -45,20 +74,36 @@
     .logo {
       padding: 0 1.25rem;
       font-size: 1.75rem;
-      @include nb-ltr(border-left, 1px solid nb-theme(divider-color));
-      @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
       white-space: nowrap;
       text-decoration: none;
+    }
+
+    .round-button {
+      background: #ffff;
+      border: 2px solid #0060ff;
+      border-left: 2px solid #0060ff !important;
+      border-right: 2px solid #0060ff !important;
+      width: 40px;
+      height: 40px;
+      border-radius: 30px;
+      padding: 0.5rem 0.5rem !important;
+      margin-left: 20px;
+      margin-right: 20px;
+      a{
+        margin: auto;
+        height: 20px;
+      }
+      nb-icon{
+        width: 20px;
+        height: 20px;
+        color: #0060ff;
+      }
     }
   }
 
   @include media-breakpoint-down(sm) {
     .control-item {
       display: none;
-    }
-    .user-action {
-      border: none;
-      padding: 0;
     }
   }
 
@@ -68,3 +113,17 @@
     }
   }
 }
+
+  ::ng-deep{
+    .mat-menu-content{
+    padding-bottom: 0 !important;
+  }
+    .log-out-container{
+        width: 100%;
+        .logout-button{
+          width: 100%;
+          height: 40px;
+          border-radius: 0 !important;
+        }
+      }
+  }

@@ -1,0 +1,80 @@
+<nb-card style="width: 90vw; height: 870px;" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'SHARED.Status_Details' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" (click)=" openHelp() " [disabled]=" (helpPageLinkDestination === '#') " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12" *ngIf= "isReport == true">
+
+        <nb-tabset (changeTab)="onChangeTab($event)" fullWidth>
+
+          <nb-tab active="true" [tabId]=" tabs[3].id "  [tabTitle]=" tabs[3].title " style="padding-bottom: 0">
+             <ngx-machine-status-report-chart
+            [chartId]= "'report-machine-details-status-chart-Id'"
+            [isDetails] = "isDetails"
+            [serverError]="serverError"
+            [machineStatus]="machinesStatus"
+            [showMachineInUse]="showMachineInUse"
+            (loadingFinished)="isLoading = !($event)"
+            ></ngx-machine-status-report-chart>
+          </nb-tab>
+
+          <nb-tab  [tabId]=" tabs[1].id "  [tabTitle]=" tabs[1].title " style="padding-bottom: 0">
+           <ngx-machines-status-history-chart
+            [selectedTabTitle]=" selectedTabTitle"
+            [tabTitle]=" tabs[1].title "
+            (tabDisabled)=" setTabDisabled($event) "
+            [tabIndex]=" 1 "
+            [dateStart] = "dateStart"
+            [dateEnd] = "dateEnd"
+            [id] = "id"
+            [processCell] = "processCellPath"
+            [isReport] = "true"
+            (loadingFinished)="isLoading = !($event)"
+            ></ngx-machines-status-history-chart>
+          </nb-tab>
+
+        </nb-tabset>
+      </div>
+      <div class="col-sm-12" *ngIf= "isReport == false">
+
+        <nb-tabset (changeTab)="onChangeTab($event)" fullWidth>
+
+          <nb-tab [tabId]=" tabs[0].id " active="isReport == true" [tabTitle]=" tabs[0].title "  style="padding-bottom: 0">
+            <ngx-machines-status-chart
+            (tabDisabled)=" setTabDisabled($event) "
+            [tabIndex]=" 0 "
+            [dateStart] = "dateStart"
+            [dateEnd] = "dateEnd"
+            [processCellPath] = "processCellPath"
+            (loadingFinished)="isLoading = !($event)"
+            ></ngx-machines-status-chart>
+          </nb-tab>
+
+          <nb-tab [tabId]=" tabs[1].id " active="isReport == true" [tabTitle]=" tabs[1].title "  style="padding-bottom: 0">
+            <ngx-machines-status-history-chart
+            [selectedTabTitle]=" selectedTabTitle"
+            [tabTitle]=" tabs[1].title "
+            (tabDisabled)=" setTabDisabled($event) "
+            [tabIndex]=" 1 "
+            [dateStart] = "dateStart"
+            [dateEnd] = "dateEnd"
+            [processCell] = "processCellPath"
+            [isReport] =  "true"
+            (loadingFinished)="isLoading = !($event)"
+            ></ngx-machines-status-history-chart>
+          </nb-tab>
+
+        </nb-tabset>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+
+

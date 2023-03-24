@@ -1,0 +1,4 @@
+
+  <ngx-date-picker [hidden]="!isReport || !this.domain" [date]="this.rawDate" [min]="minDate" [max]="maxDate" (dateChange)="dateChanged($event)"></ngx-date-picker>
+
+  <div [id]="chartId" [ngStyle]="{'height': isReport && this.domain ? '675px' : '725px'}" style=" width: 100%;margin: 0 auto;"> </div>

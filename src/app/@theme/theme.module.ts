@@ -1,5 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../@core/shared.module';
 import {
   NbActionsModule,
   NbLayoutModule,
@@ -16,6 +17,12 @@ import {
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
 
+import { MatRippleModule } from '@angular/material/core';
+import {MatMenuModule} from '@angular/material/menu';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NbPopoverModule } from '@nebular/theme'
+import {MatSelectModule} from '@angular/material/select';
+
 import {
   FooterComponent,
   HeaderComponent,
@@ -23,21 +30,13 @@ import {
   TinyMCEComponent,
 } from './components';
 import {
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
-} from './pipes';
-import {
   OneColumnLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
 } from './layouts';
 import { DEFAULT_THEME } from './styles/theme.default';
-import { COSMIC_THEME } from './styles/theme.cosmic';
-import { CORPORATE_THEME } from './styles/theme.corporate';
-import { DARK_THEME } from './styles/theme.dark';
+import { DPRODUCTION_THEME } from './styles/theme.dproduction';
+
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -52,6 +51,10 @@ const NB_MODULES = [
   NbSelectModule,
   NbIconModule,
   NbEvaIconsModule,
+  NgbModule,
+  NbPopoverModule,
+  SharedModule,
+  MatSelectModule
 ];
 const COMPONENTS = [
   HeaderComponent,
@@ -62,18 +65,11 @@ const COMPONENTS = [
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
 ];
-const PIPES = [
-  CapitalizePipe,
-  PluralPipe,
-  RoundPipe,
-  TimingPipe,
-  NumberWithCommasPipe,
-];
 
 @NgModule({
-  imports: [CommonModule, ...NB_MODULES],
-  exports: [CommonModule, ...PIPES, ...COMPONENTS],
-  declarations: [...COMPONENTS, ...PIPES],
+  imports: [CommonModule, MatRippleModule, MatMenuModule, SharedModule, ...NB_MODULES],
+  exports: [CommonModule, MatRippleModule, MatMenuModule, SharedModule, NbPopoverModule, ...COMPONENTS],
+  declarations: [...COMPONENTS],
 })
 export class ThemeModule {
   static forRoot(): ModuleWithProviders<ThemeModule> {
@@ -81,10 +77,11 @@ export class ThemeModule {
       ngModule: ThemeModule,
       providers: [
         ...NbThemeModule.forRoot(
-          {
-            name: 'default',
-          },
-          [ DEFAULT_THEME, COSMIC_THEME, CORPORATE_THEME, DARK_THEME ],
+          // {
+          //   name: 'dproduction',
+          // },
+          // [ DPRODUCTION_THEME, DEFAULT_THEME],
+          { name: 'dproduction' }
         ).providers,
       ],
     };

@@ -1,0 +1,30 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+ :focus {
+      outline:none !important;
+      box-shadow: none !important;
+      background-color: transparent !important;
+      border-width: 0px !important;
+    }
+
+    .space{
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border-top: 1px solid;
+      border-color: grey;
+    }
+    
+    .first-div-align{
+      width: 100px;
+      float: left;
+    }
+  
+    .second-div-align{
+      width: 250px;
+      float: left;
+    }
+
+
+  }

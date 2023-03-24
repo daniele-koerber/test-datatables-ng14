@@ -1,0 +1,72 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card-header>
+        <h5 class="card-title d-flex">{{ 'REPORT.Shift_Data' | translate }}</h5>
+        <div class="d-flex flex-wrap align-items-center" style="margin-left: 8px" *ngIf="!isLoading && !serverError">
+            {{ 'REPORT.Process_Cell' | translate }}: {{processCellName}}
+            <hr class="vertical-line-separator"/>
+            {{ 'REPORT.Team' | translate }}: {{shift?.isTeamOverriden ? shift?.overrideTeamName : shift?.teamName}}
+            <div class="color-picker-read"
+                [style.background-color]="shift?.isTeamOverriden ? shift?.overrideTeamColor : shift?.teamColor"></div>
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <div *ngIf="!isLoading && !serverError" class="d-flex justify-content-center flex-wrap h-100">
+            <div class="col-xxl-12 col-xxxl-6">
+              <div class="flex-grow-1 h-100 d-flex flex-column justify-content-between">
+
+                <div class="d-flex">
+                  <div class="first-div-align nb-font">{{ 'REPORT.Actual_Start_Time' | translate }}: </div>
+                  <div class="second-div-align"><strong>{{shift?.shiftStartDatetime | DateFormatPipe}}</strong></div>
+                </div>
+
+                <div class="d-flex">
+                  <div class="first-div-align nb-font">{{ 'REPORT.Actual_End_Time' | translate }}: </div>
+                  <div class="second-div-align"><strong>{{shift?.shiftEndDatetime | DateFormatPipe}}</strong></div>
+                </div>
+
+                <div class="d-flex">
+                  <div class="first-div-align nb-font">{{ 'REPORT.Duration' | translate }}: </div>
+                  <div class="second-div-align"><strong>{{shift?.shiftProgressTimeTicks | TicksToDurationPipe : ('COMMON.d' | translate) : ('COMMON.h' | translate) : ('COMMON.min' | translate)}}</strong></div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-xxl-12 col-xxxl-6">
+              <div class="flex-grow-1 h-100 d-flex flex-column justify-content-between">
+
+                <div class="d-flex">
+                  <div class="first-div-align nb-font">{{ 'REPORT.Total_Good_Pieces' | translate }}: </div>
+                  <div class="second-div-align"><strong>{{shiftQuantities?.response?.goodCount}} {{UoM}}</strong></div>
+                </div>
+
+                <div class="d-flex">
+                  <div class="first-div-align nb-font">{{ 'REPORT.Total_Defective_Pieces' | translate }}: </div>
+                  <div class="second-div-align"><strong>{{defectiveCount}} {{UoM}}</strong></div>
+                </div>
+
+                <div class="d-flex">
+                  <div style="opacity: 0;">.</div>
+                </div>
+
+              </div>
+            </div>
+        </div>
+
+        <p *ngIf="(serverError)">
+          {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+        </p>
+    </nb-card-body>
+
+    <nb-card-footer>
+        <div class="d-flex flex-wrap justify-content-start">
+            <button nbButton size="small" class="tertiary" (click)="prevShiftClickEvent()" [disabled]="!isPrevShiftEnable || isLoading || serverError">
+                <nb-icon icon="chevron-left-outline"> </nb-icon>{{ 'REPORT.Go_To_Previous_Shift_on_PC' | translate }} {{processCellName}}
+            </button>
+            <button nbButton size="small" class="tertiary" (click)="nextShiftClickEvent()" [disabled]="!isNextShiftEnable || isLoading || serverError ">
+                {{ 'REPORT.Go_To_Next_Shift_on_PC' | translate }} {{processCellName}} <nb-icon icon="chevron-right-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-footer>
+</nb-card>

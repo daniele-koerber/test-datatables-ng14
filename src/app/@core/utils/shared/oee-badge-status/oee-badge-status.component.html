@@ -1,0 +1,12 @@
+<span class="warning-dot dot d-flex" *ngIf="badgeStatus === 'warning'">
+    <nb-icon icon="minus-outline"></nb-icon>
+</span>
+<span class="error-dot dot d-flex" *ngIf="badgeStatus === 'error'">
+    <nb-icon icon="minus-outline"></nb-icon>
+</span>
+<span class="success-dot dot d-flex" *ngIf="badgeStatus === 'success'">
+    <nb-icon icon="checkmark-outline"></nb-icon>
+</span>
+<span class="undefined-dot dot d-flex" *ngIf="badgeStatus === 'undefined'">
+    <nb-icon icon="question-mark-outline"></nb-icon>
+</span>

@@ -1,0 +1,94 @@
+.card-title{
+    margin: 5px;
+    font-family: nb-theme(font-family-semibold);
+    font-size: 18px;
+}
+
+.nb-font{
+  font-family: nb-theme(font-family-light);
+}
+
+.nb-font-semibold{
+  font-family: nb-theme(font-family-semibold);
+}
+
+ngx-oee-badge-status {
+  display: inline-block!important
+}
+
+.padding-top-20 {
+  padding-top:20px;
+}
+
+.right-button-container,
+.left-button-container { height:40px }
+
+.overflow { width:100%; overflow-y:scroll; padding-bottom:10px }
+
+
+
+.right-button-container{
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  background: #f5f3f1;
+
+  button{
+    padding: 0 0.4625rem !important;
+    border-radius: 0;
+    height: -webkit-fill-available;
+  }
+  button:focus{
+    outline:0;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+.left-button-container{
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #f5f3f1;
+
+  button{
+    padding: 0 0.4625rem !important;
+    border-radius: 0;
+    height: -webkit-fill-available;
+  }
+  button:focus{
+    outline:0;
+    box-shadow: none;
+    border: none;
+  }
+}
+
+
+  .overflow::-webkit-scrollbar {
+    width: 0rem!important;
+    height: 0rem!important;
+  }
+  .overflow::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: rgba(91, 85, 78, 0.2);
+  }
+  .overflow::-webkit-scrollbar-thumb:hover {
+  background: rgba(91, 85, 78, 0.4);
+  }
+  .overflow::-webkit-scrollbar-thumb:active {
+  background: rgba(91, 85, 78, 0.7);
+  }
+
+
+  .hide-element{
+    visibility: collapse;
+    width: 0;
+  }
+
+  ::ng-deep{
+    kds-tab{
+      display: block;
+      width: max-content;
+    }
+  }
+

@@ -1,0 +1,161 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>
+    <h5 class="card-title d-flex">
+      <div *ngIf="batch && isBatchActive(batch?.status)" class="d-flex align-items-center">
+        {{ 'SHARED.Current_order' | translate }}
+        <ngx-oee-badge-status [status]="status"  *ngIf="isLoading === false"></ngx-oee-badge-status>
+      </div>
+      <div *ngIf="!batch || !isBatchActive(batch?.status)">
+        {{ 'COMMON.Next_order' | translate }}
+      </div>
+    </h5>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div *ngIf="isLoading === false">
+      <div *ngIf="(batch !== null && batch !== undefined && !serverError)" class="d-flex justify-content-center flex-wrap">
+        <div class="col-xxl-12 col-xxxl-4">
+          <div class="flex-grow-1 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex">
+              <div class="first-div-align nb-font">{{ 'OVERVIEW.Production_Order' | translate }}: </div>
+              <div class="second-div-align"><strong>{{batch?.productionOrder}}</strong></div>
+            </div>
+
+            <div class="d-flex">
+              <div class="first-div-align nb-font">{{ 'OVERVIEW.Product_Code' | translate }}: </div>
+              <div class="second-div-align"><strong>{{batch?.productCode}}</strong></div>
+            </div>
+
+            <div class="d-flex">
+              <div class="first-div-align nb-font">{{ 'PRODUCT_DEFINITION.Product_Description' | translate }}:  </div>
+              <div class="second-div-align"><strong>{{batch?.productDescription}}</strong></div>
+            </div>
+
+            <div class="d-flex">
+              <div class="first-div-align nb-font" >{{ 'PRODUCT_DEFINITION.Version' | translate }}: </div>
+              <div class="second-div-align"><strong >{{batch?.version}} </strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-12 col-xxxl-4">
+          <div class="flex-grow-1 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex">
+              <div class="first-div-align nb-font" *ngIf="(!isBatchActive(batch?.status))">{{ 'SHARED.Expected_Start_Time' | translate }}: </div>
+              <div class="first-div-align nb-font" *ngIf="!(!isBatchActive(batch?.status))">{{ 'SHARED.Actual_Start_Time' | translate }}: </div>
+              <div class="second-div-align"><strong >{{batch?.batchExpectedStart | DateFormatPipe}} </strong></div>
+            </div>
+
+            <div class="d-flex">
+              <div class="first-div-align nb-font">{{ 'SHARED.Estimated_End_Time' | translate }}: </div>
+              <div class="second-div-align"><strong >{{batch?.batchExpectedEnd | DateFormatPipe}} </strong></div>
+            </div>
+
+            <div class="d-flex">
+              <div class="first-div-align nb-font"  *ngIf="!isBatchActive(batch?.status)">{{ 'CALENDAR.Estimated_Duration' | translate }}: </div>
+              <div class="first-div-align nb-font"  *ngIf="isBatchActive(batch?.status)">{{ 'SHARED.Duration' | translate }}: </div>
+              <div class="second-div-align" *ngIf="!isBatchActive(batch?.status)"><strong >{{batch?.estimatedDurationTicks | TicksToDurationPipe : ('COMMON.d' | translate) : ('COMMON.h' | translate) : ('COMMON.min' | translate) }} </strong></div>
+              <div class="second-div-align" *ngIf="isBatchActive(batch?.status)"><strong >{{batch?.currentDurationTicks | TicksToDurationPipe : ('COMMON.d' | translate) : ('COMMON.h' | translate) : ('COMMON.min' | translate) }} </strong></div>
+            </div>
+
+            <div class="d-flex">
+              <div class="first-div-align nb-font">{{ 'SHARED.Status' | translate }}: </div>
+              <div class="second-div-align"><strong >{{ getBatchStatus(batch?.status) }} </strong>
+                <span class="dot" [style.background]="getBatchStatusColor(getNotTranslatedBatchStatus(batch?.status))"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-12 col-xxxl-4">
+          <div class="flex-grow-1 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex">
+              <div class="first-div-align nb-font">{{ 'CALENDAR.Target_Quantity' | translate }}: </div>
+              <div class="second-div-align"><strong>{{ batch?.targetQuantity }} {{ batch?.uom }}</strong></div>
+            </div>
+
+            <div class="d-flex justify-content-between" style="width: 268px; margin-top: 20px">
+              <div class="d-flex justify-content-between">
+                <div class="nb-font">{{ 'SHARED.Good' | translate }}:&nbsp; </div>
+                <div class="nb-font-semibold"><strong> {{ totalGoodPieces }}</strong> </div>
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <div class="nb-font">{{ 'REPORT.Defective' | translate }}:&nbsp; </div>
+                <div class="nb-font-semibold" style="font-size: medium;"><strong>{{ totalDefectivePieces}}</strong></div>
+              </div>
+            </div>
+
+            <div >
+              <ngx-pieces-progress-chart [targetPieces]="batch?.targetQuantity" [goodPieces]="totalGoodPieces" [performancePercentage]="performancePercentage"> </ngx-pieces-progress-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p *ngIf="((batch == null || batch == undefined) && !serverError)">
+        {{ 'SHARED.No_Orders_Planned' | translate }}
+      </p>
+      <p *ngIf="(serverError)">
+        {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+      </p>
+    </div>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <div *ngIf="batch !== null" class="d-flex justify-content-between">
+      <div class="grid-order-buttons-container" >
+
+        <!-- Start Button -->
+        <button
+        [disabled]="!isStartEnable || isLoading === true || batch == null || batch == undefined || serverError"
+        (mousedown)="startProduction()"
+        nbButton outline
+        class="appearance-filled secondary order-button" size="small">
+        {{ 'SHARED.Start_Production' | translate }}</button>
+
+        <!-- Stop Button -->
+        <button
+        [disabled]="!isStopEnable || isLoading === true  || batch == null || batch == undefined || serverError"
+        (mousedown)="stopProduction()"
+        nbButton outline
+        class= "appearance-filled secondary order-button" size="small">
+        {{ 'SHARED.Stop_Production' | translate }}</button>
+
+
+        <button
+        *ngIf="isPauseEnable && (isBatchActive(batch?.status) && batch?.status !== batchStatus?.Paused)"
+        (mousedown)="pauseProduction()"
+        nbButton outline
+        class= "appearance-filled secondary order-button" size="small">
+        {{ 'SHARED.Pause_Production' | translate }}</button>
+
+
+        <button
+        *ngIf="isPauseEnable && (!(!isBatchActive(batch?.status) || (
+          isBatchActive(batch?.status) &&
+          (batch?.status !== batchStatus?.Paused && batch?.status !== batchStatus?.Delayed)
+        )))"
+        (mousedown)="resumeProduction()"
+        nbButton outline
+        class= "appearance-filled secondary order-button" size="small">
+        {{ 'SHARED.Resume_Production' | translate }}</button>
+
+      </div>
+
+      <div>
+        <button (mousedown)=' gotoReport() ' nbButton [disabled]="!isBatchActive(batch?.status) || noData === true || isLoading === true || serverError === true  || batch == null || batch == undefined" class= "tertiary" size="small">
+          {{ 'REPORT.Report' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+        </button>
+
+        <button (mousedown)='goToNextOrders()' [disabled]="isLoading === true || serverError === true || batch == null || batch == undefined " nbButton size="small" class="tertiary">
+          {{ 'OVERVIEW.Next_Orders' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+        </button>
+
+        <button (mousedown)='goToDetails(null)' [disabled]="noData === true || isLoading === true || serverError === true  || batch == null || batch == undefined " nbButton size="small" class="tertiary">
+          {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+        </button>
+      </div>
+
+    </div>
+  </nb-card-footer>
+</nb-card>

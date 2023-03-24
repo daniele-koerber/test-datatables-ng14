@@ -1,0 +1,16 @@
+
+<!-- <div [hidden]="isLoading === false"style="height: 600px; width: 100%;margin: 0 auto;"><ngx-spinner  [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading]="isLoading" ></ngx-spinner></div> -->
+<div *ngIf="noDataAvailable == true" style="height: 500px; width: 1500; display: flex; justify-content: center;align-items: center;">
+  <h6 >{{ 'SHARED.No_Data_Available' | translate }}</h6>
+</div>
+<div *ngIf="serverError == true" style="height: 500px; width: 1500; display: flex; justify-content: center;align-items: center;">
+  <h6 >{{ 'SHARED.Server_Error_While_Data_Loading' | translate }}</h6>
+</div>
+<ngx-date-picker *ngIf="serverError == false && noDataAvailable == false" [date]="this.rawDate" [min]="min" [max]="max" (dateChange)="dateChanged($event)"></ngx-date-picker>
+
+
+<div [hidden]="isLoading === true" *ngFor="let chart of chartData">
+  <h6 style= " font-size: medium; ">{{ chart?.machineName}}</h6>
+  <ngx-multi-line-speed-chart [chartData]="chart?.machineSpeeds" [speedUoM]="chart?.speedUoM" [minBetweenTwoPoint]="chart.minBetweenTwoPointSpeed" [noDataAvailable]="noDataAvailable" [canExportData]="canExportData" [showActualValue]="showActualValue"></ngx-multi-line-speed-chart>
+  <div class= "dividing-line"> </div>
+</div>

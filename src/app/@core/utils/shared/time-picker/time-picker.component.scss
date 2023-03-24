@@ -1,0 +1,17 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  .timepicker{
+    border: none;
+      border-radius: 0px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+      background: none;
+      padding: 0.4375em;
+      height: 32px;
+      width: 90px;
+      margin-left: 5px;
+  }
+  .timepicker:focus{
+    border-bottom: 2px solid #3f51b5;
+  }
+}

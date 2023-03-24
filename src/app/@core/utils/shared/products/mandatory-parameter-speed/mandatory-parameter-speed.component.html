@@ -1,0 +1,21 @@
+<div class="justify-content-between" *ngIf=" getProcessCellParameterValue(processCell.path, row?.values).Speed !== null ">
+  <form [formGroup]="formGroup">
+    <mat-form-field>
+      <input matInput
+      [formControlName]="(parameterDefinitionName + '_' + path +'_formField') "
+      type="text" ngDefaultControl placeholder=""
+      (change)=" onFieldChange($event, processCell.path, row?.values , parameterDefinitionName + '_' + path +'_formField') "
+      [readonly]="readonly || disabled || (uniqueValues === true && processCell.path !== firstEnabledProcessCell.processCellPath)"
+      [value]=" readonly || disabled ? null : (getProcessCellParameterValue(processCell.path, row?.values).Speed !== undefined ? getProcessCellParameterValue(processCell.path, row?.values).Speed : '')">
+      <mat-error *ngIf="(getProcessCellParameterValue(this.processCell.path, this.row.values).Speed ?
+      formGroup?.controls[parameterDefinitionName + '_' + path +'_formField']?.hasError('required') : false)">
+        {{ 'COMMON.Field_is_required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="(getProcessCellParameterValue(this.processCell.path, this.row.values).Speed ?
+      formGroup?.controls[parameterDefinitionName + '_' + path +'_formField']?.hasError('value') : false)">
+        {{ 'COMMON.Speed_must_be_greater_than_zero' | translate }}
+      </mat-error>
+
+    </mat-form-field>
+  </form>
+</div>

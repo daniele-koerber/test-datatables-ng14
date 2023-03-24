@@ -1,0 +1,19 @@
+<div class="justify-content-between"
+*ngIf=" getProcessCellParameterValue(processCell.path, row?.values) !== '' ">
+  <form [formGroup]="formGroup">
+
+    <mat-form-field [class]="readonly || disabled ? 'readonly' : ''">
+      <input (change)="emitChangeEvent($event)"
+      ngDefaultControl [value]= " (disabled ? '' :
+      (getProcessCellParameterValue(processCell?.path, row?.values).Value !== undefined ? getProcessCellParameterValue(processCell?.path, row?.values).Value : '')
+      ) "
+      [formControlName]="parameterDefinitionName + '_' + path +'_formField'"
+      [readonly]="readonly || disabled || (uniqueValues === true && processCell.path !== firstEnabledProcessCell.processCellPath)"
+      type="text" matInput placeholder=""
+      >
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path +'_formField'].hasError('value')">
+        {{ 'COMMON.Field_value_is_not_correct' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>

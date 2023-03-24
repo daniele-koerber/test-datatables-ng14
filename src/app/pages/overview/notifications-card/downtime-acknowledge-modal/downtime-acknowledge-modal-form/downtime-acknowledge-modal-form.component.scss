@@ -1,0 +1,32 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+
+  :focus {
+    outline:none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-width: 0px !important;
+  }
+  [nbButton] {
+    background-color: nb-theme(button-background-color);
+    text-transform: capitalize;
+  }
+
+  ::ng-deep {
+    .step-container { max-width: 800px; }
+    .mat-step-header .mat-step-icon-selected {
+      background-color: nb-theme(color-primary-default);
+    }
+
+    nb-radio.status-basic .native-input:enabled:checked {
+      + .outer-circle {
+        border-color: nb-theme(black-color);
+      }
+      ~ .inner-circle{
+        background-color: nb-theme(black-color);
+      }
+    }
+  }
+}

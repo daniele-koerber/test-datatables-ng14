@@ -1,0 +1,129 @@
+@import '../../@theme/styles/themes';
+
+@include nb-install-component() {
+  h5 {
+    font-size: 1.375rem;
+    font-family: nb-theme(font-family-semibold);
+  }
+
+  .bg-spinner{
+    position: absolute;
+    z-index: 2;
+    background: nb-theme(color-basic-control-transparent-600);
+    height: 100%;
+    width: 100%;
+    margin-top: -40px;
+    margin-left: -24px;
+  }
+  ::ng-deep{
+    .chips-filter-container{
+      position: relative;
+    }
+  }
+
+  .full-height{
+    height: 100%;
+  }
+
+  .box {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+  }
+
+  .card-title{
+    margin: 5px;
+    font-family: nb-theme(font-family-semibold);
+    font-size: 18px;
+  }
+  
+  .mt-20 { margin-top: 20px }
+
+
+  .box .header {
+    flex: 0 1 auto;
+  }
+  .box .content {
+    flex: 1 1 auto;
+  }
+
+  .dx-autocomplete{
+    background: none;
+  }
+  ::ng-deep{
+    .dx-editor-outlined.dx-texteditor-with-floating-label.dx-texteditor-empty .dx-texteditor-label .dx-label {
+      color: rgba(0,0,0,.54);
+      border-top: 0px;
+      border-bottom: 1px solid rgba(0,0,0,.42);
+    }
+    .dx-editor-outlined.dx-texteditor-with-floating-label .dx-texteditor-label .dx-label {
+      color: rgba(0,0,0,.54);
+      border-top: 0px;
+      border-bottom: 1px solid rgba(0,0,0,.42);
+    }
+    .dx-editor-outlined.dx-texteditor-with-floating-label.dx-state-focused .dx-texteditor-label .dx-label {
+      border-bottom: 1px solid #3f51b5;
+      color:#3f51b5;
+    }
+
+
+    .dx-editor-outlined.dx-texteditor-with-floating-label.dx-texteditor-empty .dx-texteditor-label .dx-label-after {
+      border-radius: 0;
+      border-top: 0px !important;
+      border-right: 0px !important;
+      border-bottom: 1px solid rgba(0,0,0,.42);
+    }
+    .dx-editor-outlined.dx-texteditor-with-floating-label .dx-texteditor-label .dx-label-after {
+      border-radius: 0;
+      border-top: 0px !important;
+      border-right: 0px !important;
+      border-bottom: 1px solid rgba(0,0,0,.42);
+    }
+
+    .dx-editor-outlined.dx-texteditor-with-floating-label.dx-state-focused .dx-texteditor-label .dx-label-after {
+      border-radius: 0;
+      border-top: 0px !important;
+      border-right: 0px !important;
+      border-bottom: 1px solid #3f51b5;
+    }
+
+    .dx-editor-outlined.dx-texteditor-with-floating-label .dx-texteditor-label .dx-label-before{
+      border: 0px !important;
+    }
+    .dx-editor-outlined.dx-texteditor-with-floating-label.dx-texteditor-empty .dx-texteditor-label .dx-label-before{
+      border: 0px !important;
+    }
+
+    .dx-label{
+      span{
+        padding-left: 2px;
+      }
+    }
+    .dx-texteditor-input {
+      padding-left: 14px;
+    }
+
+  }
+
+  .dx-list-item.dx-state-hover{
+    background-color: nb-theme(color-basic-hover) !important;
+  }
+
+  .header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .go-button{
+    height: 34px;
+    outline: none;
+    box-shadow: none;
+  }
+
+  [nbButton].appearance-ghost.status-primary.btn-disabled{
+      background-color: transparent !important;
+  }
+//#3f51b5;
+}

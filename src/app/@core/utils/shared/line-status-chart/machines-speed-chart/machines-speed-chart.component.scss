@@ -1,0 +1,48 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  ul { list-style-type: none; margin: 0; padding: 0; display: flex; justify-content: space-between;
+    li { display: inline-block; margin-right: 10px; line-height:0;
+      p { display: inline-block; vertical-align: top; font-size: .7em; margin: 0; line-height: 1.4em }
+    }
+  }
+  .dot {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius:25%;
+    margin-left: 0;
+    margin-right: 4px;
+    margin-top: 0;
+  }
+
+  .dividing-line{
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-top: 1px solid;
+    border-color: grey;
+  }
+
+
+  .legend-description {
+    font-size: 14px !important;
+  }
+
+  .title-chart {
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  .team-div-container{
+    display: flex;
+    margin: 0px 0px 15px 0px;
+    align-items:center;
+  }
+
+  .team-div{
+    margin: 20px;
+  }
+
+
+
+}

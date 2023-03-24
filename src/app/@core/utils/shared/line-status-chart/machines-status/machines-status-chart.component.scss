@@ -1,0 +1,38 @@
+ul { list-style-type: none; margin: 0 auto; padding: 0; display: table; 
+    li { display: inline-block; margin-right: 10px; line-height:0;
+      p { display: inline-block; vertical-align: top; font-size: .7em; margin: 0; line-height: 1.4em ; margin-top: 3px; margin-right: 16px;}
+    }
+  }
+  .dot {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius:25%;
+    margin-left: 0;
+    margin-right: 4px;
+    margin-top: 0;
+  }
+
+  .legend-description {
+    font-size: 14px !important;
+      .info-paragraph{
+    font-size: 12px;
+    opacity: .5;
+    margin-top: 8px;
+  }
+
+}
+
+.info-paragraph{
+  font-size: 12px;
+  opacity: .5;
+  margin-top: 8px;
+  margin-bottom: 0px;
+}
+
+
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+

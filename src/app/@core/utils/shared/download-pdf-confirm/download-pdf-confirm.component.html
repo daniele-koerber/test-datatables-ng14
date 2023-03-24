@@ -1,0 +1,13 @@
+<nb-card>
+  <nb-card-header>
+    {{ 'REPORT.Download_PDF' | translate }}
+  </nb-card-header>
+  <nb-card-body>
+    {{ 'REPORT.Go_Fullscreen_text' | translate }}
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button nbButton  (click)=" cancel() " class="appearance-filled secondary">{{ 'COMMON.Cancel' | translate }}</button>
+    <button nbButton (click)=" submit() "class="appearance-filled status-primary" style="float: right;">{{ 'REPORT.Go_Fullscreen' | translate }}</button>
+  </nb-card-footer>
+</nb-card>

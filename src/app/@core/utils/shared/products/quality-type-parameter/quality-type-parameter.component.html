@@ -1,0 +1,18 @@
+<div class="justify-content-between" *ngIf=" optionsArray.length ">
+  <form [formGroup]="formGroup">
+    <ngx-material-select-parameters  [disabled]=" disabled "
+    ngDefaultControl
+    [formControlName]="parameterDefinitionName + '_' + path + '_SelectedChoice'"
+    [readonly]="(readonly && !disabled) || ((uniqueValues === true && processCell.path !== firstEnabledProcessCell.processCellPath) && !disabled)"
+    (selectionChanged)="selectChanged($event)"
+    [selectedChoice]=" disabled ? null : selectedChoice "
+    [defaultVoidMenuVoice]="defaultVoidMenuVoice"
+    [hideChoiceZero]="true"
+    [optionsArray]=" optionsArray "
+                        >
+    </ngx-material-select-parameters>
+    <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_SelectedChoice'].hasError('required')">
+      {{ 'COMMON.Field_is_required' | translate }}
+    </mat-error>
+  </form>
+</div>

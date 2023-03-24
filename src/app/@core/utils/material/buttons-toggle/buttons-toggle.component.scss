@@ -1,0 +1,35 @@
+@import '../../../../../app/@theme/styles/themes';
+
+@include nb-install-component() {
+  div.center {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  ::ng-deep {
+    .mat-button-toggle-label-content {
+    //  padding: 8px 12px;
+      min-width: 10em !important;
+      height: 2em !important;
+      line-height: 2em !important;
+    
+      align-items: center !important;
+      vertical-align: middle !important;
+      padding: 0!important;
+    }
+
+    .mat-button-toggle-checked {
+      background-color: nb-theme(color-primary-default);
+      color: nb-theme(button-background-color);
+
+      &:hover, &:active, &:focus {
+        background-color: nb-theme(color-primary-300);
+
+      }
+    }
+
+    .mat-button-toggle-focus-overlay {
+      border-bottom: 0;
+    }
+  }
+}

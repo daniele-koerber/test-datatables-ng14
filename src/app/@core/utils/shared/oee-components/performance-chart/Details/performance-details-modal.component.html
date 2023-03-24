@@ -1,0 +1,33 @@
+
+<nb-card style="width: 90vw; height: 90vh;" [nbSpinner]="chart1Loading || chart2Loading" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'OVERVIEW.Performance_Details' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" (click)=" openHelp() " [disabled]=" (helpPageLinkDestination === '#') " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+
+    <div *ngIf="!(chart1Loading)" class="title-chart"> <strong>{{'OVERVIEW.Machines_Performance' | translate }}</strong></div>
+    <ngx-machine-performance-chart 
+    [dateStart]="dateStart" 
+    [dateEnd]="dateEnd" 
+    [id]= "id" 
+    [processCellPath]= "processCellPath"
+    (loadingFinished)="chart1Loading = false"></ngx-machine-performance-chart>
+
+    <div *ngIf="!(chart1Loading || chart2Loading)" class= "dividing-line"> </div>
+
+    <div *ngIf="!(chart2Loading)" class="title-chart"> <strong>{{'OVERVIEW.Line_Performance_By_Hour' | translate }}</strong></div>
+    <ngx-line-performance-by-hours-chart 
+    [dateStart]="dateStart" 
+    [dateEnd]="dateEnd" 
+    [id]= "id" 
+    [processCellPath]= "processCellPath"
+    (loadingFinished)="chart2Loading = false"></ngx-line-performance-by-hours-chart>
+
+  </nb-card-body>
+</nb-card>
+

@@ -2,24 +2,35 @@ import { NgModule } from '@angular/core';
 import { NbMenuModule } from '@nebular/theme';
 
 import { ThemeModule } from '../@theme/theme.module';
+import { ConfigurationService } from '../@core/mock/configuration.service';
 import { PagesComponent } from './pages.component';
-import { DashboardModule } from './dashboard/dashboard.module';
-import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
+import { SettingsModule } from './settings/settings.module';
+import { CalendarModule } from './calendar/calendar.module';
+import { ReportModule } from './report/report.module';
+
+import { ProductDefinitionModule } from './product-definition/product-definition.module';
+
+
 
 @NgModule({
   imports: [
     PagesRoutingModule,
     ThemeModule,
     NbMenuModule,
-    DashboardModule,
-    ECommerceModule,
     MiscellaneousModule,
+    SettingsModule,
+    CalendarModule,
+    ProductDefinitionModule,
+    ReportModule
   ],
   declarations: [
-    PagesComponent,
+    PagesComponent
   ],
+  providers: [
+    ConfigurationService
+  ]
 })
 export class PagesModule {
 }

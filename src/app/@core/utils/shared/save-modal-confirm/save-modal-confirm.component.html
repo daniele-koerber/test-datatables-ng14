@@ -1,0 +1,18 @@
+<nb-card>
+  <nb-card-header>
+    <div [hidden]="isPlanConfirmation === true"> {{ 'COMMON.Save_Item' | translate }}</div> 
+    <div [hidden]="isPlanConfirmation !== true"> {{ 'CALENDAR.Plan_Order' | translate }}</div> 
+  </nb-card-header>
+  <nb-card-body>
+    
+    <div [hidden]="isPlanConfirmation === true"> {{ 'COMMON.Are_you_sure_you_want_to_save_this_item' | translate }} </div> 
+    <div [hidden]="isPlanConfirmation !== true"> {{ 'COMMON.Are_you_sure_you_want_to_plan_this_order' | translate }}</div> 
+
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button nbButton  (click)=" cancel() " class="appearance-filled secondary">{{ 'COMMON.Cancel' | translate }}</button>
+    <button nbButton  [hidden]="isPlanConfirmation === true" (click)=" submit() "class="appearance-filled status-primary" style="float: right;">{{ 'COMMON.Save' | translate }}</button>
+    <button nbButton  [hidden]="isPlanConfirmation !== true" (click)=" submit() "class="appearance-filled status-primary" style="float: right;">{{ 'COMMON.Plan' | translate }}</button>
+  </nb-card-footer>
+</nb-card>

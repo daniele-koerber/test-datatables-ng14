@@ -1,0 +1,56 @@
+<div class="justify-content-between"
+*ngIf="(checkProcessCell(processCell, row?.values)?.value?.ValueMIN !== null && checkProcessCell(processCell, row?.values)?.value?.ValueMAX !== null && checkProcessCell(processCell, row?.values)?.value?.ValueSP !== null)"
+>
+
+  <form [formGroup]="formGroup">
+    <mat-form-field>
+      <mat-label>{{ 'COMMON.MIN' | translate }}</mat-label>
+
+        <input name="ValueMIN" (change)=" onFieldChange(processCell?.path, row?.values, $event) " type="text"
+        ngDefaultControl [value]="(disabled ? '' :
+        (getProcessCellParameterValue(processCell?.path, row?.values).ValueMIN !== undefined ? getProcessCellParameterValue(processCell?.path, row?.values).ValueMIN : '')
+        )"
+        [formControlName]="parameterDefinitionName + '_' + path + '_ValueMIN'"
+        [readonly]="disabled || readonly || (uniqueValues === true && processCell?.path !== firstEnabledProcessCell?.processCellPath)" matInput
+        placeholder=""
+        >
+        <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMIN'].hasError('required')">
+          {{ 'COMMON.Field_is_required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMIN'].hasError('value') && formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMIN'].touched">
+          {{ 'COMMON.MIN_value_cannot_be_greater_than_SP_and_MAX_value' | translate }}
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'COMMON.Setpoint' | translate }}</mat-label>
+      <input name="ValueSP"
+      (change)=" onFieldChange(processCell?.path, row?.values, $event) " type="text"
+      ngDefaultControl [value]="(disabled ? '' :
+      (getProcessCellParameterValue(processCell?.path, row?.values).ValueSP !== undefined ? getProcessCellParameterValue(processCell?.path, row?.values).ValueSP : '')
+      )"
+      [formControlName]="parameterDefinitionName + '_' + path + '_ValueSP'"
+      [readonly]="disabled || readonly || (uniqueValues === true && processCell?.path !== firstEnabledProcessCell?.processCellPath)" matInput placeholder="">
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueSP'].hasError('required') && formGroup.controls[parameterDefinitionName + '_' + path + '_ValueSP'].touched">
+        {{ 'COMMON.Field_is_required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueSP'].hasError('value')">
+        {{ 'COMMON.SP_value_must_be_between_MIN_and_MAX_values' | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'COMMON.MAX' | translate }}</mat-label>
+      <input name="ValueMAX" (change)=" onFieldChange(processCell?.path, row?.values, $event) " type="text"
+      ngDefaultControl [value]="(disabled ? '' :
+      (getProcessCellParameterValue(processCell?.path, row?.values).ValueMAX !== undefined ? getProcessCellParameterValue(processCell?.path, row?.values).ValueMAX : '')
+      )"
+      [formControlName]="parameterDefinitionName + '_' + path + '_ValueMAX'"
+      [readonly]="disabled || readonly || (uniqueValues === true && processCell?.path !== firstEnabledProcessCell?.processCellPath)" matInput placeholder="">
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMAX'].hasError('required')">
+        {{ 'COMMON.Field_is_required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMAX'].hasError('value') && formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMAX'].touched">
+        {{ 'COMMON.MAX_value_cannot_be_smaller_than_MIN_and_SP_value' | translate }}
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>

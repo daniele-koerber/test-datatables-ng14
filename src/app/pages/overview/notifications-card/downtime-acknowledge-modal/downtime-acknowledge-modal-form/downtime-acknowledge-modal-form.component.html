@@ -1,0 +1,100 @@
+<nb-card [nbSpinner]="formSaving === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'OVERVIEW.Downtime_Acknowledge_Form' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+
+    <div class="row">
+      <div class="col-sm-6">
+        {{ 'OVERVIEW.Production_Order' | translate }}: <strong>{{ row.productionOrder }}</strong><br />
+        {{ 'OVERVIEW.Product_Code' | translate }}: {{ row.productCode }}<br />
+      </div>
+      <div class="col-sm-6">
+        {{ 'OVERVIEW.Start_at' | translate }}: {{ row.startDate | date:'dd/MM/yyyy HH:mm:ss' }}<br />
+        {{ 'OVERVIEW.Ends_at' | translate }}: {{ row.endDate | date:'dd/MM/yyyy HH:mm:ss' }}<br />
+      </div>
+
+    </div>
+    <div [hidden]="row.alarmMessage === null || row.alarmMessage === undefined" >
+       {{ 'OVERVIEW.Alarm' | translate }}: {{ alarmMachine?.name }} - {{ row.alarmMessage }}
+    </div>
+    <!-- <div [hidden] ="!formSaving" style="min-height: 400px; min-width: 700px; display: flex;align-items: center; justify-content: center">
+      <ngx-spinner  [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading] = "formSaving" >  </ngx-spinner>
+    </div> -->
+
+    <mat-horizontal-stepper  [(selectedIndex)] = "selectedIndex" disableStepNavigation=" true " #stepper>
+      <mat-step [completed]="false" [stepControl]="firstForm" label="{{ 'OVERVIEW.Machine' | translate }}">
+        <form [formGroup]="firstForm" class="step-container">
+          <div class="row">
+            <div class="col-sm-4" *ngFor="let machine of machinesArray" >
+              <label for="{{ machine.id }}">
+                <nb-radio [disabled]=" isJustified === true " [checked]=" compare(firstForm.controls.confirmedMachinePath.value, machine.path) " id="{{ machine.path }}" (click)="firstFormRadioClick(machine.path)" name="confirmedMachinePath" value="{{ machine.path }}">
+                  {{ machine.name }}
+                </nb-radio>
+              </label>
+            </div>
+          </div>
+          <button [disabled]=" !firstForm.controls.confirmedMachinePath.valid " nbButton style= "float: right" outline class="appearance-filled primary" matStepperNext>{{ 'COMMON.Next' | translate }} &gt;</button>
+        </form>
+
+      </mat-step>
+      <mat-step [completed]="false" *ngIf="!hideComponentSteps" [stepControl]="secondForm" label="{{ 'REPORT.Component' | translate }}">
+
+        <form [formGroup]="secondForm" class="step-container">
+          <div class="row">
+            <div class="col-sm-4" *ngFor="let component of componentsArray" >
+              <label for="'component' + {{ component.id }}">
+                <nb-radio id="'component' + {{ component.id }}"
+                [disabled]=" isJustified === true "
+                [checked]=" (secondForm.controls.confirmedMachineComponentPath.value === 0
+                && component.id === 0)
+                || secondForm.controls.confirmedMachineComponentPath.value == component.fullPath "
+                (click)="secondFormRadioClick(component.fullPath)" name="confirmedMachineComponentPath" value="{{ component.fullPath }}">
+                {{ component.description }}
+                </nb-radio>
+              </label>
+            </div>
+          </div>
+          <button nbButton outline class="appearance-filled secondary" matStepperPrevious>&lt; {{ 'COMMON.Back' | translate }}</button>
+          <button [disabled]=" !secondForm.controls.confirmedMachineComponentPath.valid " nbButton style= "float: right" outline class="appearance-filled primary" matStepperNext>{{ 'COMMON.Next' | translate }} &gt;</button>
+
+        </form>
+
+      </mat-step>
+
+      <mat-step [completed]="false" [stepControl]="thirdForm" label="{{ 'REPORT.Reason' | translate }}">
+
+        <form [formGroup]="thirdForm" class="step-container">
+          <div class="row">
+            <div class="col-sm-4" *ngFor="let reason of reasonsArray" >
+              <label for="'reason' + {{ reason.id }}">
+                <nb-radio
+                [disabled]=" isJustified === true "
+                [checked]=" thirdForm.controls.confirmedReasonId.value  && +thirdForm.controls.confirmedReasonId.value === +reason.id " id="'reason' + {{ reason.id }}" (click)="thirdFormRadioClick(reason.id)" name="confirmedReasonId" value="{{ reason.id }}">
+                {{ reason.text }}
+                </nb-radio>
+              </label>
+            </div>
+          </div>
+
+          <div class="col-sm-12 mb-2 p-0">
+            <label for="notes">{{ 'REPORT.Notes' | translate }}:</label>
+            <textarea [readonly]=" isJustified === true " id="notes" class="form-control" (change)="setNotes($event)" placeholder="{{ 'REPORT.Notes' | translate }}">{{ thirdForm.controls.notes.value }}</textarea>
+          </div>
+          <button nbButton [disabled]="formSaving"  outline class="appearance-filled secondary" matStepperPrevious>&lt; {{ 'COMMON.Back' | translate }}</button>
+
+          <button [hidden]=" isJustified !== true " nbButton style= "float: right" outline class="appearance-filled primary" (click)="closeModal()">{{ 'SHARED.Close' | translate }}</button>
+          <button [hidden]=" isJustified === true " [disabled]="!firstForm.controls.confirmedMachinePath.valid || !thirdForm.controls.confirmedReasonId.valid ||  formSaving" nbButton style= "float: right" outline class="appearance-filled primary" (click)="submitForm()">{{ 'COMMON.Confirm' | translate }}</button>
+        </form>
+
+      </mat-step>
+    </mat-horizontal-stepper>
+
+  </nb-card-body>
+
+</nb-card>

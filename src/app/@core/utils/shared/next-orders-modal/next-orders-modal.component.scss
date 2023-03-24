@@ -1,0 +1,67 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  div.order { 
+    border-left: 3px solid nb-theme(color-success-default); 
+    border-radius: 5px;
+    padding: 16px; 
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top:12px;
+    background-color: #f5f3f1;
+    overflow: auto;
+    width: 100%;
+    .order-details {
+      margin-left: 10px;
+      margin-top: 10px; 
+      padding-top: 10px;
+      padding-bottom: 3px;
+    }
+  }
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius:100%;
+    margin-left: 10px;
+    margin-right: 4px;
+    margin-top: 0;
+  }
+
+  h5 { 
+    font-family: nb-theme(font-family-semibold); 
+  }
+  .semibold { font-family: nb-theme(font-family-semibold); }
+
+  .first-div-align{
+    min-width: 170px ;
+    float: right;
+    font-family: nb-theme(font-family-light);
+    font-size: 14px;
+  }
+
+  .second-div-align{
+    min-width: 100px;
+    float: right;
+    font-family: nb-theme(font-family-semibold);
+    font-size: medium;
+  }
+  .flex{
+    display: flex;
+  }
+
+
+  .space {
+    margin-bottom: 16px;
+  }
+
+  .details { 
+    font-size:12px; 
+    color:nb-theme(blue-color); 
+    display: flex;
+    float:right;
+  }
+
+
+}

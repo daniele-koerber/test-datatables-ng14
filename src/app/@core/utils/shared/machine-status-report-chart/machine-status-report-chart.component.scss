@@ -1,0 +1,18 @@
+ul { list-style-type: none; margin: 0; padding: 0; display: flex; justify-content: space-between;
+    li { display: inline-block; margin-right: 10px; line-height:0;
+      p { display: inline-block; vertical-align: top; font-size: .7em; margin: 0; line-height: 1.4em }
+    }
+  }
+  .dot {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius:25%;
+    margin-left: 0;
+    margin-right: 4px;
+    margin-top: 0;
+  }
+
+  .legend-description {
+    font-size: 14px !important;
+}

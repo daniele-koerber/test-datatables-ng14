@@ -1,9 +1,108 @@
+$custom-file-text: ();
 @import '../../styles/themes';
-@import 'bootstrap/scss/mixins/breakpoints';
-@import '@nebular/theme/styles/global/breakpoints';
+@import 'node_modules/bootstrap/scss/mixins/breakpoints';
+@import 'node_modules/@nebular/theme/styles/global/breakpoints';
 
 @include nb-install-component() {
   .menu-sidebar ::ng-deep .scrollable {
-    padding-top: nb-theme(layout-padding-top);
+    // padding-top: nb-theme(layout-padding-top);
+    background-color: #262523;
+    z-index: 1050 !important;
+
+
+    li:hover{
+      background-color: #ffffff;
+    }
+
+    .eva-lock-outline{
+      width: 24px!important;
+    }
+
+    a.active::before{
+      background: #ffffff;
+    }
+
+    a[href="/auth/logout"] {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding-top: 20px;
+      padding-bottom: 20px;
+
+    }
+
   }
+  .logo-container {
+    display: flex;
+    align-items: center;
+    width: unset;
+    margin-top: -1.25rem;
+    margin-left: -1.25rem;
+    margin-right: -1.25rem;
+
+    .sidebar-toggle{
+      text-decoration: none;
+      color: #fff;
+      margin-top: -80px;
+      margin-left: -29px;
+      nb-icon{
+        width: 88px;
+        height: 30px;
+      }
+
+    }
+
+    .logo{
+      margin-top: 30px;
+      margin-bottom: 50px;
+      margin-left: 25px;
+    }
+    .TMOM-text{
+      margin-top: 70px;
+      margin-bottom: 0px;
+      margin-left: -66px;
+      align-items: center;
+      text-decoration-color: #ffffff;
+      font-weight: bold;
+    }
+  }
+
+::ng-deep{
+
+  .main-container-fixed{
+    top:0px !important;
+  }
+  nb-layout-header nav{
+    padding-bottom: 0px;
+    padding-top: 0px;
+    height: 4.75rem;
+  }
+
+  nb-layout-footer nav{
+    padding-bottom: 8px !important;
+    padding-top: 8px !important;
+    color: gray !important;
+    border-top: 0px !important;
+    background-color: #f5f3f1 !important;
+  }
+
+
+}
+nb-layout-column{
+  background-color: #f5f3f1;
+}
+
+}
+
+#version{
+  font-size: 15px;
+  color: #90887d;
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  outline: 0 !important;
+}
+
+#version:hover{
+  color: white !important;
 }

@@ -1,0 +1,10 @@
+<form [formGroup]="formGroup">
+  <ngx-material-select  (selectionChanged)="selectionChange($event.value)"
+    [readonly]="readonly" ngDefaultControl
+    [formControlName]="parameterDefinitionName + '_' + path +'_SelectedChoice'"
+    [hideChoiceZero]="true"
+    [selectedChoice]=" selectedChoice "
+    [optionsArray]="optionsArray"
+  >
+  </ngx-material-select>
+</form>

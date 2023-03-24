@@ -1,0 +1,27 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary"  style="width: 90vw; height: 350px;">
+    <nb-card-header>
+        <div class="d-flex justify-content-between">
+            <h5>{{'SHARED.Status_History' | translate}}</h5>
+            <button style="float: right;padding: 4px;" (click)="closeModal()" nbButton ghost >
+                <nb-icon icon="close-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div style="margin-top: 16px;">
+        </div>
+        <ngx-machine-status-history-chart
+        [chartId]="'macStatusHistoryDetailschartId'"
+        [dateStart]="dateStart"
+        [dateEnd]="dateEnd"
+        [height]="'150px'"
+        [processCellPath]="processCellPath"
+        [isLoading]="isLoading"
+        [noData]="noData"
+        [serverError]="serverError"
+        [machinePath]="machinePath"
+        (dataLoading)="dataIsLoading($event)"
+        ></ngx-machine-status-history-chart>
+    </nb-card-body>
+</nb-card>
+

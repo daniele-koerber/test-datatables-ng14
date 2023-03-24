@@ -1,0 +1,52 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" style="height: 250px;">
+    <nb-card-header>
+        <h5 class="card-title d-flex">{{ 'SHARED.Order_List' | translate }}</h5>
+    </nb-card-header>
+    
+    <nb-card-body style="margin-bottom: 10px;">
+        <div class="d-flex flex-column h-100" style="justify-content: space-between;" *ngIf="isLoading === false">
+            <div class="d-flex flew-wrap order-wrap" style="margin-bottom: 5px;" *ngFor="let order of ordersList" (click)="goToDetail(order.productionOrder)">
+                <div class="col-11 border-success order-descriptor">
+                    <h5 class="m-0">{{order.productionOrder}}</h5>
+                    <div class="d-flex" style="line-height: 2rem;">
+                        <div style="margin-right: 40px">{{ 'SHARED.Produced_pieces' | translate }}: <strong>{{order.goodCount}} {{order.uom}}</strong></div>
+    
+                        <div>{{ 'SHARED.Defective_pieces' | translate }}: <strong>{{order.defectiveCount}} {{order.uom}}</strong></div>
+                    </div>
+                </div>
+                <div class="col-1 order-button">
+                    <nb-icon icon="chevron-right-outline" class="text-primary" style="font-size: 30px;"></nb-icon>
+                </div>
+            </div> 
+        </div>
+    </nb-card-body>
+</nb-card>
+
+<!-- 
+<nb-card class="batch-list">
+    <nb-card-header>{{ 'SHARED.Order_List' | translate }}</nb-card-header>
+    <nb-card-body >
+      <div class="order"  *ngFor="let row of data">
+        <div class="row" (click)="goToDetails(row.productionOrder)" style="padding: 0px;">
+          <div class="col-11" style="padding: 0px;">
+            <div class="order-details" >
+              <span class="semibold">{{ row.productionOrder }}</span>
+              <span [hidden] = "!row.batchNotFullyDoneInThisShift" style= "padding-left: 8px;" class="lightText">*{{ 'SHARED.Batch_Done_Next_Shift' | translate }}</span>
+              <br>
+              <span> {{ 'SHARED.Good' | translate }}: <b>{{ row.goodCount }} {{ row.uom }}</b> </span>
+              <span style="padding-left: 20px;">           </span>
+              <span> {{ 'REPORT.Defective' | translate }}: <b>{{ row.defectiveCount }} {{ row.uom }}</b> </span> <br>
+              <div  class="smallSpace"> </div>
+
+
+            </div>
+          </div>
+          <div class="col-1" style="padding: 0px;">
+              <span  slot="end" class="details-arraow">
+                <nb-icon icon="chevron-right-outline"></nb-icon>
+              </span>
+          </div>
+        </div>
+      </div>
+    </nb-card-body>
+</nb-card> -->

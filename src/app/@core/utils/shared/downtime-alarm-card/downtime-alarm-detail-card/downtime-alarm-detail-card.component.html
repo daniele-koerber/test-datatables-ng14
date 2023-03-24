@@ -1,0 +1,30 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" [size]="'small'" style="width: 95vw; height: 95vh;">
+  <nb-card-header>
+      {{ 'SHARED.Downtime_alarm' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- <ngx-oee-chart [componentData]="componentData" [chartId] = "chartId"></ngx-oee-chart> -->
+
+        <ngx-alarm-chart  style= "margin: 0 auto;"
+                                    [chartId]= "chartId"
+                                    [dateStart]="dateStart" [dateEnd]="dateEnd"
+                                    [chartData]="chartData"
+                                    [rowNumberToShow]="rowNumberToShow"
+                                    [serverError]= "serverError"
+                                    [status]=status
+                                    [machinePath]="machinePath"
+      ></ngx-alarm-chart>
+
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+

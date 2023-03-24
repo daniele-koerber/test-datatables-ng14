@@ -1,0 +1,8 @@
+
+
+ <div style="display: flex; margin: 0 auto; justify-content: center;">
+  <button style="float: left; padding: 4px; width: 30px;" [disabled]="disableLeftButton" (click)=" dateIncremets(-1) " nbButton ghost ><nb-icon class="date-icon" icon="chevron-left-outline" ></nb-icon></button>
+  <input style="cursor: pointer;" class="date-mat" nbInput placeholder="Pick Date" [nbDatepicker]="formcontrol" [formControl]="formControl" [value] = "dateString" >
+  <button style="float: right; padding: 4px; width: 30px;" [disabled]="disableRightButton" (click)=" dateIncremets(1) " nbButton ghost ><nb-icon class="date-icon" icon="chevron-right-outline" ></nb-icon></button>
+  <nb-datepicker [min]="momentMinDate" [max]="momentMaxDate" (dateChange)="dateChanged($event)" #formcontrol></nb-datepicker>
+</div>

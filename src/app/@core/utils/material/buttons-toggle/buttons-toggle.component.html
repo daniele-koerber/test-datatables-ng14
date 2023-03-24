@@ -1,0 +1,7 @@
+<div class="center">
+  <mat-button-toggle-group [value]=" '' + defaultValue " (change)="emitChange(''+$event.value)">
+    <mat-button-toggle [disabled]="disableButtons" *ngFor="let option of optionsArray" [value]=" '' + option.key ">
+      {{ option.value }}
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

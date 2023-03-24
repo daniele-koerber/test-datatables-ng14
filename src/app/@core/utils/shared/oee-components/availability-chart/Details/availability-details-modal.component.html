@@ -1,0 +1,37 @@
+<nb-card style="width: 90vw; height: 90vh;" [nbSpinner]="(chart1Loading || chart2Loading)" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'SHARED.Availability_details' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+      <h6 *ngIf="!chart1Loading" style= "padding-left: 16px; font-size: medium;">{{ 'REPORT.Machine_Downtime' | translate }}</h6>
+      <ngx-machine-downtime-chart
+      style= "margin: 0 auto;"
+      [processCellPath]="processCellPath"
+      [dateStart]="dateStart"
+      [dateEnd]="dateEnd"
+      [id]="id"
+      [chartId]= "machineDowntimechartId"
+      (loadingFinished)="chart1Loading = false"></ngx-machine-downtime-chart>
+
+      <div *ngIf="!chart1Loading && !chart2Loading" class= "dividing-line"> </div>
+
+      <h6 *ngIf="!chart2Loading" style= "padding-left: 16px; font-size: medium; ">{{ 'REPORT.Justified_Reasons' | translate }}</h6>
+      <ngx-downtime-reasons-chart
+      style= "margin: 0 auto;"
+      [processCellPath]="processCellPath"
+      [dateStart]="dateStart"
+      [dateEnd]="dateEnd"
+      [id]="id"
+      [chartId]= "downtimeReasonchartId"
+      (loadingFinished)="chart2Loading = false"></ngx-downtime-reasons-chart>
+
+  </nb-card-body>
+</nb-card>
+
+
+

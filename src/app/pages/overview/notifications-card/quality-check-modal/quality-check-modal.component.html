@@ -1,0 +1,57 @@
+<nb-card class="modal-full" style="width: 65vw; height: 90vh;min-width: 800px;"  [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'COMMON.Quality_Checks' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+
+        <ngx-buttons-toggle [optionsArray]="toggleArray" [defaultValue]=" defaultValue " (change)="showFiltered($event)"></ngx-buttons-toggle>
+        <div class="flex small-space">
+          <button [disabled]=" disableAddNew " (click)=' addNew() ' nbButton class="appearance-filled secondary">
+            {{ 'COMMON.Add_New' | translate }}
+          </button>
+        </div>
+        <table id="datatableElement" class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+          <thead>
+            <tr>
+              <th [ngStyle]="{'width': defaultValue === true ? '20%' : '25%' }">{{ 'OVERVIEW.Production_Order' | translate }}</th>
+              <th [ngStyle]="{'width': defaultValue === true ? '20%' : '25%' }">{{ 'PRODUCT_DEFINITION.Product_Code' | translate }}</th>
+              <th [ngStyle]="{'width': defaultValue === true ? '15%' : '20%' }">{{ columnTitle }}</th>
+              <th style="width:20%">{{ 'OVERVIEW.Form' | translate }}</th>
+              <th [ngStyle]="{'width': defaultValue === true ? '15%' : '0%' }" class="text-center"><span *ngIf=" defaultValue === true ">{{ 'REPORT.Compliant' | translate }}</span></th>
+              <th style="width:10%"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of filteredData">
+              <td  [ngStyle]="{'width': defaultValue === true ? '20%' : '25%' }">{{ row.productionOrderId }}</td>
+              <td  [ngStyle]="{'width': defaultValue === true ? '20%' : '25%' }">{{ row.productCode }}</td>
+              <td  [ngStyle]="{'width': defaultValue === true ? '15%' : '20%' }">{{ (defaultValue !== true ? row.scheduledDateUtc : row.acknowledgeDateTimeUtc) | DateFormatPipe }}</td>
+              <td style="width:20%" >{{ row.formTitle }}</td>
+              <td [ngStyle]="{'width': defaultValue === true ? '15%' : '0%' }" class="text-center" >
+                <span *ngIf=" defaultValue === true " class="dot" [style.background]="getValue(row?.compliance)"></span>
+              </td>
+              <td style="width:10%" class="text-right">
+                <button [hidden]=" defaultValue === true " nbButton [disabled]=" allowedToOpen === false" class= "appearance-filled tertiary" ghost  (click)="openDialog(row, row.id)">
+                  <nb-icon icon="edit-outline"></nb-icon>
+                </button>
+
+                <button [hidden]=" defaultValue !== true " nbButton class= "appearance-filled tertiary"  ghost  (click)="openDialog(row, row.id)">
+                  <nb-icon class="icon-open" icon="book-open-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <!-- <ngx-server-notifications [processCell]="selectedProcessCell" [topic]="getComponentTopic()" [signalRSubscriptionType] = "getComponentSignalRSubscriptionType()" [signalRListenersNames]="getComponentSignalRListenersNames()" (message)="DowntimesCountChanged($event)"></ngx-server-notifications> -->
+  </nb-card-body>
+</nb-card>

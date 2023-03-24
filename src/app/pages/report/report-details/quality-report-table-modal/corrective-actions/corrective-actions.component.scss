@@ -1,0 +1,84 @@
+@import '../../../../../@theme/styles/themes';
+@include nb-install-component() {
+  // ::ng-deep {
+  //   .mat-checkbox {
+
+  //     .mat-checkbox-inner-container {width: 24px; height: 24px;}
+
+  //     .mat-checkbox-ripple .mat-ripple-element {
+  //         background-color: nb-theme(black-color);
+  //     }
+  //     .mat-checkbox-frame {
+  //         border-color: nb-theme(black-color);
+  //     }
+  //   }
+
+  //   .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  //     background-color: nb-theme(black-color);
+  //   }
+
+  //   .mat-checkbox-checked.mat-accent.mat-checkbox-disabled .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  //     background-color: nb-theme(color-basic-100);
+
+  //   }
+
+  //   .mat-checkbox-checked.mat-accent.mat-checkbox-disabled .mat-checkbox-frame{
+  //     border-color: nb-theme(color-basic-300);
+  //     z-index: 2;
+  //   }.mat-checkbox.mat-accent.mat-checkbox-disabled .mat-checkbox-frame{
+  //     border-color: nb-theme(color-basic-300);
+  //     z-index: 2;
+  //   }
+
+  // .mat-checkbox-checked.mat-accent.mat-checkbox-disabled .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  //   background-color: nb-theme(color-basic-100);
+  // }
+  // }
+
+  ::ng-deep {
+    .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background{
+    background-color: nb-theme(color-basic-100)!important;
+    border: 1px solid nb-theme(color-basic-400) !important;
+
+    }
+    .mat-checkbox-disabled.mat-checkbox .mat-checkbox-background, .mat-checkbox-disabled.mat-checkbox-indeterminate .mat-checkbox-background{
+      background-color: nb-theme(color-basic-100)!important;
+      border: 1px solid nb-theme(color-basic-400) !important;
+
+    }
+    .mat-checkbox-inner-container{width: 24px; height: 24px;}
+
+    .mat-checkbox-disabled.mat-checkbox-checked .mat-checkbox-checkmark-path{
+        stroke: nb-theme(color-basic-400) !important;
+    }
+  }
+
+  .flex{
+    display: flex;
+  }
+
+  .first-div-align{
+    width: 300px;
+    float: right;
+  }
+
+  .second-div-align{
+    width: 250px;
+    float: right;
+  }
+  .space{
+    margin-bottom: 40px;
+  }
+
+  .small-space{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  :focus {
+    outline:none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-width: 0px !important;
+  }
+}

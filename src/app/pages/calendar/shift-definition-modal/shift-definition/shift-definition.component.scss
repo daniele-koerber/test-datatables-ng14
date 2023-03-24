@@ -1,0 +1,102 @@
+
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+.flex{
+  display: flex;
+}
+.center-button{
+  margin: auto;
+}
+
+.input-align{
+  margin-top: -22px;
+}
+
+.no-border{
+  border: none;
+}
+
+.nb-card-team-definition{
+  border: 1px solid #f5f3f1;
+  border-radius: 0px;
+  box-shadow: none;
+  height: 100%;;
+}
+
+.color-div{
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1px solid nb-theme(color-basic-500);
+  margin: auto;
+}
+
+
+.text-center {
+  text-align: center;
+  text-transform: capitalize;
+}
+.flex-center{
+  display: flex;
+  justify-content: center;
+}
+
+.sticky-div{
+  padding-top: 16px;
+  padding-bottom: 20px;
+  position: sticky;
+  top: 0px;
+  background-color: nb-theme(color-basic-100);
+}
+
+::ng-deep{
+  .date-mat{
+    width: 120px;
+    text-align: center;
+    border: none;
+  }
+  .nb-theme-texas [nbInput].shape-rectangle {
+    border: none;
+  }
+
+  .nb-theme-texas [nbInput].size-medium {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.5rem;
+      padding: 0.75rem 1rem;
+      color: #0060ff;
+  }
+
+  [nbButton].appearance-ghost.status-basic.btn-disabled {
+    background-color: transparent !important;
+    opacity: 0.5;
+  }
+}
+.hint-text{
+  font-size: 12px;
+  color: nb-theme(color-basic-600);
+}
+
+.bg-spinner{
+  position: absolute;
+  z-index: 2;
+  background: nb-theme(color-basic-control-transparent-600);
+  height: 100%;
+  width: 100%;
+  margin-top: -40px;
+  margin-left: -24px;
+}
+
+.grey-row{
+  background-color: nb-theme(color-basic-200);
+}
+.grey-row:hover{
+  background-color: nb-theme(color-basic-100);
+}
+
+// table.dataTable.hover tbody tr:hover{
+//   background-color: ;
+// }
+
+}

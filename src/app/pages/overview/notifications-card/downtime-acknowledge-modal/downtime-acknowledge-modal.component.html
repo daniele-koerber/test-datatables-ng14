@@ -1,0 +1,49 @@
+<nb-card style="width: 65vw; height: 90vh;min-width: 800px;"[nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'COMMON.Downtimes' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+
+        <ngx-buttons-toggle [optionsArray]="toggleArray" [defaultValue]=" defaultValue " (change)="showFiltered($event)"></ngx-buttons-toggle>
+
+        <table class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+          <thead>
+            <tr>
+              <th style="width:28%">{{ 'OVERVIEW.Production_Order' | translate }}</th>
+              <th style="width:28%">{{ 'OVERVIEW.Product_Code' | translate }}</th>
+              <th style="width:18%">{{ 'OVERVIEW.Occurred_Date_Time' | translate }}</th>
+              <th style="width:15%">{{ 'OVERVIEW.duration' | translate }}</th>
+              <th style="width:10%"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of filteredData">
+              <td style="width:28%">{{ row.productionOrder }}</td>
+              <td style="width:28%">{{ row.productCode }}</td>
+              <td style="width:18%">{{ row.startDate | DateFormatPipe }}</td>
+              <td style="width:15%">{{ displayTime(row.duration/1000) }}</td>
+              <td style="width:10%" class="text-right">
+                <button *ngIf="checkVisibility(false, defaultValue)" [disabled]="allowedToOpen === false" nbButton class= "appearance-filled tertiary" ghost (click)="openDialog(row)">
+                  <div ><nb-icon icon="edit-outline"></nb-icon></div>
+                </button>
+
+                <button *ngIf="checkVisibility(true, defaultValue)" nbButton class= "appearance-filled tertiary" ghost (click)="openDialog(row)">
+                  <nb-icon class="icon-open" icon="book-open-outline"></nb-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <!-- <ngx-server-notifications [processCell]="selectedProcessCell" [topic]="getComponentTopic()" [signalRSubscriptionType] = "getComponentSignalRSubscriptionType()" [signalRListenersNames]="getComponentSignalRListenersNames()" (message)="DowntimesCountChanged($event)"></ngx-server-notifications> -->
+  </nb-card-body>
+</nb-card>

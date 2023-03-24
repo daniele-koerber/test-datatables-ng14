@@ -1,0 +1,73 @@
+
+
+
+.flex{
+  display: flex;
+}
+
+.div-container{
+  display: grid;
+  justify-content: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.first-div-align{
+
+  float: right;
+}
+.second-div-align{
+  margin-left: 5px;
+  float: right;
+}
+.input-align{
+  margin-top: -22px;
+}
+.space{
+  margin-bottom: 40px;
+}
+
+.small-space{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.center-button{
+  margin: auto;
+}
+
+
+
+// th {
+//   //overflow: hidden;
+//   min-width: 100px;
+//   //text-overflow: ellipsis;
+//   //white-space: nowrap;
+//   vertical-align: middle !important;
+
+// }
+
+tbody {
+  display:block;
+  height:552px;
+  overflow:auto;
+}
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;/* even columns width , fix width of table too*/
+}
+th{
+  vertical-align: middle !important;
+  padding: 10px 10px !important;
+  border-left: 0px ;
+  border-right: 0px;
+}
+thead {
+  // width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+

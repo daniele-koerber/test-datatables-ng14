@@ -1,0 +1,27 @@
+.dot{
+    border-radius: 50%;
+    margin-left: 10px;
+    color: white;
+}
+
+.dot nb-icon{
+    font-size:small;
+    z-index: 1;
+}
+
+.error-dot {
+    transform: rotate(20deg);
+    background-color: #ce3800;
+}
+
+.warning-dot {
+    background-color: #ffe32f;
+}
+
+.success-dot{
+    background-color: #00c013;
+}
+
+.undefined-dot{
+    background-color: #90887d;
+}

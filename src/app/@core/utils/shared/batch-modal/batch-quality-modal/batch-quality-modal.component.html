@@ -1,0 +1,58 @@
+<!-- style="height: 700px;width: 1020px;" -->
+<nb-card style="width: 65vw; max-height: 95vh;" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-body>
+    <!-- <ngx-spinner [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading]="isLoading" *ngIf="isLoading" class="bg-spinner"></ngx-spinner> -->
+    <div class="row" [hidden] = "isLoading || serverError">
+      <div class="col-sm-12">
+
+        <div class="div-container">
+          <div class="flex small-space">
+            <div class="first-div-align ">{{ 'OVERVIEW.Production_Order' | translate }}: </div>
+            <div class="second-div-align"> <strong>{{productionOrder.productionOrder}}</strong> </div><br />
+          </div>
+
+          <div class="flex small-space">
+            <div class="first-div-align">{{ 'OVERVIEW.Product_Code' | translate }}: </div>
+            <div class="second-div-align"><strong>{{productionOrder.productCode}}</strong></div><br />
+          </div>
+        </div>
+
+        <!--<div style="max-height: 50vh;" class="small-space scrollable scrollable-container"></div>-->
+        <table class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+          <thead>
+            <tr>
+              <th>{{ 'CALENDAR.Quality_form' | translate }}</th>
+              <th>{{ 'OVERVIEW.Done_Date' | translate }}</th>
+              <th>{{ 'REPORT.User' | translate }}</th>
+              <th class="text-center">{{ 'REPORT.Compliant' | translate }}</th>
+              <th class="text-center">{{ 'CALENDAR.Open_Form' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of data">
+              <td>{{ row.formTitle }}</td>
+              <td>{{ row.acknowledgeDateTimeUtc | DateFormatPipe}}</td>
+              <td>{{ row.username }}</td>
+              <td class="text-center">
+                <span class="dot" [style.background]="getValue(row?.compliance)"></span>
+              </td>
+              <td class="text-center">
+                <button (click)=" openQualityReport(row, row.id) " nbButton ghost class= "appearance-filled tertiary">
+                  <nb-icon class="icon-open" icon="book-open-outline"></nb-icon>
+                </button>
+              </td>
+
+            </tr>
+          </tbody>
+
+        </table>
+
+
+      </div>
+    </div>
+    <p *ngIf="(serverError)">
+      {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+    </p>
+  </nb-card-body>
+</nb-card>
+

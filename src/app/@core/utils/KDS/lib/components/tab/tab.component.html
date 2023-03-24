@@ -1,0 +1,13 @@
+<kds-tab>
+  <ng-container *ngFor="let tab of tabItems.items; let i=index" >
+    <kds-tab-title slot="title"
+      [active]=" tab.active ? 'active' : ''"
+      [disabled]="tab.disabled"
+      (click)="emitClick(i)">
+      <ng-container *ngTemplateOutlet="tab.title"></ng-container>
+      <ng-container *ngTemplateOutlet="tab.icon"></ng-container>
+    </kds-tab-title>
+  </ng-container>
+</kds-tab>
+
+

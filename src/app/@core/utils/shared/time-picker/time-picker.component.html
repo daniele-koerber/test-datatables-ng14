@@ -1,0 +1,5 @@
+<div style="display: flex;align-items: center;">
+  <input [ngModel]="realDate" nbInput type="text" [nbTimepicker]="timepicker" class="timepicker">
+  <div style="position: relative; left: -18px; pointer-events: none;" class="mat-select-arrow-wrapper"><div class="mat-select-arrow"></div></div>
+</div>
+<nb-timepicker #timepicker (onSelectTime)="timeChange($event)" [twelveHoursFormat]="is12H"></nb-timepicker>

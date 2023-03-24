@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h5>{{ 'PRODUCT_DEFINITION.Product_Definition' | translate }}</h5>
+
+
+    <nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" style="min-height: 200px;">
+
+      <nb-card-body [hidden]="firstLoading">
+
+        <button *ngIf="canManageProductDefinition" (click)=' addNew() ' nbButton class="appearance-filled secondary">
+          {{ 'COMMON.Add_New' | translate }}
+        </button>
+
+        <table class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+          <thead>
+            <tr>
+              <th>{{ 'OVERVIEW.Product_Code' | translate }}</th>
+              <th>{{ 'PRODUCT_DEFINITION.Production_Description' | translate }}</th>
+              <th class="text-right">{{ 'PRODUCT_DEFINITION.Version' | translate }}</th>
+              <th>{{ 'PRODUCT_DEFINITION.Last_Modifier' | translate }}</th>
+              <th>{{ 'PRODUCT_DEFINITION.Last_Change' | translate }}</th>
+              <th class="text-center">{{ 'PRODUCT_DEFINITION.Valid' | translate }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of data" >
+              <td>{{ row?.productCode }}</td>
+              <td>{{ row?.productDescription }}</td>
+              <td class="text-right">{{ row?.version }}</td>
+              <td>{{ row?.modifierUserName }}</td>
+              <td>{{ row?.dateModifiedUtc | DateFormatPipe }}</td>
+              <td>
+                <div class="dot"
+                  [style.background-color]=" getValidationColor(row?.isValid) "></div>
+              </td>
+              <td class="text-right">
+                <button nbButton status="primary" ghost (click)="rowclick($event,row)">
+                  <nb-icon style="pointer-events: none;"icon="more-vertical-outline"></nb-icon>
+                </button>
+                <!-- <button nbButton status="primary" ghost (click)="duplicateProductDefinition(row.id)">
+                  <nb-icon pack="texas" icon="duplicate"></nb-icon>
+                </button>
+                <button nbButton status="primary" ghost (click)="editProductDefinition(row.id)">
+                  <nb-icon pack="texas" icon="edit"></nb-icon>
+                </button>
+                <button *ngIf="canManageProductDefinition" [disabled]= "!row.canBeDeleted" nbButton status="danger" ghost (click)="deleteProductDefinition(row?.id)">
+                    <nb-icon pack="texas" icon="delete"></nb-icon>
+                </button> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </nb-card-body>
+    </nb-card>
+    <ngx-server-notifications
+                              from="product-definition"
+                              [topic]="getComponentTopic()"
+                              [signalRSubscriptionType] = "getComponentSignalRSubscriptionType()"
+                              [signalRListenersNames]="getComponentSignalRListenersNames()"
+                              (message)="ProductDefinitionsChanged($event)">
+  </ngx-server-notifications>
+  </div>
+</div>
+
+
+<div #option class='custom-menu'>
+  <nb-card  class="options-popover-card">
+    <div class="options-div">
+      <div>
+        <nb-icon icon="more-vertical-outline"></nb-icon>
+      </div>
+    </div>
+
+
+    <span class="btn-group">
+      <button nbButton size="small" status="basic" class='option-button grey' (click)="editProductDefinition(productDefinition?.id)">
+        <nb-icon pack="texas" icon="edit"></nb-icon>Edit
+      </button>
+
+      <button nbButton size="small" status="basic" class='option-button white' (click)="duplicateProductDefinition(productDefinition?.id)">
+        <nb-icon pack="texas" icon="duplicate"></nb-icon> Duplicate
+      </button>
+
+      <button nbButton size="small" status="basic" class='option-button grey' [hidden]="!productDefinition?.canBeDeleted" (click)="deleteProductDefinition(productDefinition?.id)">
+        <nb-icon pack="texas" icon="delete"></nb-icon>Delete
+      </button>
+    </span>
+  </nb-card>
+</div>

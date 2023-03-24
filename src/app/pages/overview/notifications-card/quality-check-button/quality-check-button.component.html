@@ -1,0 +1,22 @@
+<button [matBadgeSize]="(notDoneQualityChecksCount < badgeThreshold ? 'medium' : 'medium')" mat-stroked-button
+        [class]="(notDoneQualityChecksCount < badgeThreshold ? 'primary' : 'primary')"
+        matBadgePosition="after"
+        matBadgeColor="warn"
+        [matBadgeHidden]="!(notDoneQualityChecksCount>0)"
+        [matBadge]=" notDoneQualityChecksCount "
+        (mousedown)=' openQualityCheck() '
+
+
+        >
+        <div [innerHTML]="'COMMON.Quality_Checks' | translate "></div>
+</button>
+
+<ngx-server-notifications
+                          *ngIf="selectedProcessCell"
+                          from="quality-check-button"
+                          [processCell]="selectedProcessCell"
+                          [topic]="getComponentTopic()"
+                          [signalRSubscriptionType] = "getComponentSignalRSubscriptionType()"
+                          [signalRListenersNames]="getComponentSignalRListenersNames()"
+                          (message)="QualityCountChangedFn($event)">
+</ngx-server-notifications>

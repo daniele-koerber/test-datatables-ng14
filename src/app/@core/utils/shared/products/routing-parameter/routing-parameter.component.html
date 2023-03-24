@@ -1,0 +1,17 @@
+<div class="justify-content-between" *ngIf=" optionsArray.length ">
+  <form [formGroup]="formGroup">
+    <div *ngIf="showControl">
+      <ngx-material-multiple-select
+      ngDefaultControl
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [formControlName]="parameterDefinitionName + '_' + path + '_formField'"
+      (selectChanged)="selectChanged($event)"
+      [selectedChoices]=" selectedChoices "
+      [optionsArray]=" optionsArray "></ngx-material-multiple-select>
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_formField'].hasError('required')">
+        {{ 'COMMON.Field_is_required' | translate }}
+      </mat-error>
+    </div>
+  </form>
+</div>

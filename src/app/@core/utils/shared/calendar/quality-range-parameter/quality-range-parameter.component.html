@@ -1,0 +1,38 @@
+<form [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-label>{{ 'COMMON.MIN' | translate }}</mat-label>
+      <input ngDefaultControl  (change)=" onFieldChange($event, 'ValueMIN') " [readonly]="readonly" type="text"
+      [formControlName]="parameterDefinitionName + '_' + path +'_ValueMIN'"
+        matInput placeholder="">
+    <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMIN']?.hasError('required')">
+          {{ 'COMMON.Field_is_required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMIN']?.hasError('value') && formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMIN'].touched">
+          {{ 'COMMON.MIN_value_cannot_be_greater_than_SP_and_MAX_value' | translate }}
+        </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ 'COMMON.Setpoint' | translate }}</mat-label>
+    <input ngDefaultControl  (change)=" onFieldChange($event, 'ValueSP') " [readonly]="readonly" type="text"
+    [formControlName]="parameterDefinitionName + '_' + path +'_ValueSP'"
+      matInput placeholder="">
+    <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueSP']?.hasError('required')">
+          {{ 'COMMON.Field_is_required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueSP']?.hasError('value') && formGroup.controls[parameterDefinitionName + '_' + path + '_ValueSP'].touched">
+          {{ 'COMMON.SP_value_must_be_between_MIN_and_MAX_values' | translate }}
+        </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ 'COMMON.MAX' | translate }}</mat-label>
+    <input ngDefaultControl  (change)=" onFieldChange($event, 'ValueMAX') " [readonly]="readonly" type="text"
+    [formControlName]="parameterDefinitionName + '_' + path +'_ValueMAX'"
+      matInput placeholder="">
+    <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMAX']?.hasError('required')">
+          {{ 'COMMON.Field_is_required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMAX']?.hasError('value') && formGroup.controls[parameterDefinitionName + '_' + path + '_ValueMAX'].touched">
+          {{ 'COMMON.MAX_value_cannot_be_smaller_than_MIN_and_SP_value' | translate }}
+        </mat-error>
+  </mat-form-field>
+</form>

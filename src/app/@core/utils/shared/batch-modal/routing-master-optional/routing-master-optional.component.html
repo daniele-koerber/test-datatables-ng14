@@ -1,0 +1,16 @@
+<div class="justify-content-between">
+  <!-- <form [formGroup]="formGroup"> -->
+    <div *ngIf="showControl">
+      <div class="first-div-align v-bottom">{{ batchParameter.parameterDescription }}: </div>
+      <div class="second-div-align">
+        <ngx-material-multiple-select
+        (selectChanged)="selectChanged($event)"
+        [selectedChoices]=" selectedChoices "
+        [showLabel]="false"
+        [optionsArray]=" optionsArray "></ngx-material-multiple-select>
+      </div>
+
+
+    </div>
+  <!-- </form> -->
+</div>

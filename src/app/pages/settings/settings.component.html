@@ -1,0 +1,246 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h5>{{ 'SETTINGS.Settings' | translate }}</h5>
+    <div>
+      <button *ngIf="canManageUsers" class="appearance-filled secondary" nbButton outline (mousedown)="goToUsersSettings()">{{ 'SETTINGS.Users_settings' | translate }}</button>
+    </div>
+
+    <nb-card  *ngIf="canEditQualitySettings" class="qualityCard">
+      <nb-card-body>
+
+        <div>
+          <h6 >{{ 'OVERVIEW.Quality' | translate }}</h6>
+          <br />
+          <div Style="margin-left: 16px; margin-right: 16px;">
+          <div style="margin-bottom: 6px;"> <b>{{ 'SETTINGS.Time_for_generate_new_quality_form' | translate }}</b></div>
+          <div class="">
+            <table class="table table-bordered table-sm row-border hover dataTable no-footer"  >
+              <thead>
+                <tr>
+                  <th>{{ 'SETTINGS.Quality_Form' | translate }}</th>
+                  <th>{{ 'SETTINGS.Checking_Time_H' | translate }}</th>
+                  <th>{{ 'SETTINGS.Checking_Time_M' | translate }}</th>
+                  <th class="text-center">{{ 'SETTINGS.Uptime_Only' | translate }}</th>
+                  <th class="text-center">{{ 'SETTINGS.Reset_Time' | translate }}*</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of filteredData">
+                  <td>{{row.name}}</td>
+                  <td>
+                    <div >
+                      <mat-form-field class="input-align">
+                        <input matInput type="number"
+                        [(ngModel)]="row.repeateAfterHours"
+                        (ngModelChange) =" onChange() "
+                        [value]="row.repeateAfterHours"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                        step="1">
+                      </mat-form-field>
+                    </div>
+                  </td>
+                  <td>
+                    <div >
+                      <mat-form-field class="input-align">
+                        <input matInput type="number"
+                        [(ngModel)]="row.repeatAfterMinutes"
+                        (ngModelChange) =" onChange() "
+                        [value]="row.repeatAfterMinutes"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0').replace(/[6-9][0-9]+|[1-9]\d{2,}/,'59');"
+                        step="1">
+                      </mat-form-field>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="flex-center">
+                      <mat-checkbox (ngModelChange) =" onChange() " [(ngModel)]="row.countOnlyUptime" [checked]="row.reset"></mat-checkbox>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="flex-center">
+                      <mat-checkbox (ngModelChange) =" onChange() " [(ngModel)]="row.reset" [checked]="row.reset"></mat-checkbox>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+          <p class="info-paragraph">{{ 'SETTINGS.Reset_checking_time_when_new_order_starts' | translate }}</p>
+        </div>
+      </div>
+      </nb-card-body>
+    </nb-card>
+    <br />
+
+    <nb-card *ngIf="canEditDowntimeSettings" class="DowntimeCard">
+      <nb-card-body>
+
+        <div>
+          <h6 >{{ 'COMMON.Downtime' | translate }}</h6>
+          <br />
+          <div Style="margin-left: 16px; margin-right: 16px;">
+          <div class="">
+            <table class="table table-bordered table-sm row-border hover dataTable no-footer"  >
+              <thead>
+                <tr>
+                  <th>{{ 'SETTINGS.Settings' | translate }}</th>
+                  <th>{{ 'SETTINGS.Checking_Time_H' | translate }}</th>
+                  <th>{{ 'SETTINGS.Checking_Time_M' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding-top: 12px;padding-bottom: 14px;">{{ 'SETTINGS.time_to_auto-archive' | translate }}</td>
+                  <td style="padding-top: 12px;padding-bottom: 14px;">
+                    <div >
+                      <mat-form-field class="input-align">
+                        <input matInput type="number"
+                        [(ngModel)]="downtimeMaxLifetime"
+                        (ngModelChange) =" onChange() "
+                        [value]="downtimeMaxLifetime"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                        step="1">
+                      </mat-form-field>
+                    </div>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td style="padding-top: 12px;padding-bottom: 14px;">{{ 'SETTINGS.delay_for_downtime_begin' | translate }}</td>
+                  <td style="padding-top: 12px;padding-bottom: 14px;">
+                    <div >
+                      <mat-form-field class="input-align">
+                        <input matInput type="number"
+                        (ngModelChange) =" onChange() "
+                        [(ngModel)]="refMachineDelayForDowntimeBegin.hours"
+                        [value]="refMachineDelayForDowntimeBegin.hours"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                        step="1">
+                      </mat-form-field>
+                    </div>
+                  </td>
+                  <td style="padding-top: 12px;padding-bottom: 14px;">
+                    <div >
+                      <mat-form-field class="input-align">
+                        <input matInput type="number"
+                        (ngModelChange) =" onChange() "
+                        [(ngModel)]="refMachineDelayForDowntimeBegin.minutes"
+                        [value]="refMachineDelayForDowntimeBegin.minutes"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0').replace(/[6-9][0-9]+|[1-9]\d{2,}/,'59');"
+                        step="1">
+                      </mat-form-field>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding-top: 12px;padding-bottom: 14px;">{{ 'SETTINGS.delay_for_downtime_end' | translate }}</td>
+                  <td style="padding-top: 12px;padding-bottom: 14px;">
+                    <div >
+                      <mat-form-field class="input-align">
+                        <input matInput type="number"
+                        (ngModelChange) =" onChange() "
+                        [(ngModel)]="refMachineDelayForDowntimeEnd.hours"
+                        [value]="refMachineDelayForDowntimeEnd.hours"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                        step="1">
+                      </mat-form-field>
+                    </div>
+                  </td>
+                  <td style="padding-top: 12px;padding-bottom: 14px;">
+                    <div >
+                      <mat-form-field class="input-align">
+                        <input matInput type="number"
+                        (ngModelChange) =" onChange() "
+                        [(ngModel)]="refMachineDelayForDowntimeEnd.minutes"
+                        [value]="refMachineDelayForDowntimeEnd.minutes"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                        step="1">
+                      </mat-form-field>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+
+        </div>
+      </div>
+      </nb-card-body>
+    </nb-card>
+    <br />
+
+    <nb-card *ngIf="canEditCalendarSettings" class="calendarCard">
+      <nb-card-body>
+        <div>
+          <h6 >{{ 'CALENDAR.Calendar' | translate }}</h6>
+          <br />
+          <div Style="margin-left: 16px; margin-right: 16px;">
+            <div class="">
+              <table class="table table-bordered table-sm row-border hover dataTable no-footer" >
+              <thead>
+                <tr>
+                    <th>{{ 'SETTINGS.Settings' | translate }}</th>
+                    <th class="text-center">{{ 'SETTINGS.Enable' | translate }}</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ 'SETTINGS.Auto_suspend_orders_on_no_production_shifts' | translate }}</td>
+                  <td >
+                    <div class="flex-center">
+                      <mat-checkbox (ngModelChange) =" onChange() " [(ngModel)]="autoSuspendInDowntimeOnNoProductionSlot"></mat-checkbox>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </nb-card-body>
+    </nb-card>
+    <br />
+
+    <nb-card class="localCard">
+      <nb-card-body>
+        <div>
+          <h6 >{{ 'COMMON.local' | translate }}</h6>
+          <br />
+          <div Style="margin-left: 16px; margin-right: 16px;">
+          <div style="margin-bottom: 6px;"> <b>{{ 'SETTINGS.Display_group_selection' | translate }}</b></div>
+            <div class="">
+              <table class="table table-bordered table-sm row-border hover dataTable no-footer" >
+              <thead>
+                <tr>
+                  <th>{{ 'SETTINGS.Settings' | translate }}</th>
+                  <th >{{ 'CALENDAR.Value' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ 'SETTINGS.Display_group' | translate }}</td>
+                  <td>
+                    <div>
+                      <ngx-material-select
+                        (selectionChanged)="setValue($event)"
+                        [defaultVoidMenuVoice]="defaultVoidMenuVoice"
+                        [selectedChoice]="selectedDisplayGroup?.value"
+                        [optionsArray]="displayGroupsArray"></ngx-material-select>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </nb-card-body>
+    </nb-card> 
+
+
+    <br />
+
+  </div>
+</div>

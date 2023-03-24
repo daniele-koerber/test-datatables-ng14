@@ -1,0 +1,101 @@
+<nb-card class="nb-card-team-definition">
+  <nb-card-header>{{ 'CALENDAR.Shift_definition_creation' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body class="box">
+    <ngx-spinner  [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading]="isLoading" *ngIf="isLoading" class="bg-spinner"></ngx-spinner>
+    <div style="width: 100%;">
+      <div style="width: 100%; padding: 0px 0 20px 0; display: grid; grid-template-columns: 45% 55%">
+        <div style="display: flex;align-items: center; justify-content: center;">
+          <span style="font-size: 16px; font-weight: bold;">{{'CALENDAR.Starting_date_of_shift_definition' | translate}}</span>
+        </div>
+        <div style="display: flex; ">
+
+          <!-- <button style="float: left;padding: 4px;" [hidden] =" today === date " (click)=" incrementDaysDate(-1) " nbButton ghost ><nb-icon class="date-icon" icon="chevron-left-outline" ></nb-icon></button>
+          <input style="cursor: pointer;" class="date-mat" nbInput placeholder="Pick Date" [nbDatepicker]="formcontrol" [formControl]="formControl" [value] = "date" >
+          <button style="float: right;padding: 4px;" (click)=" incrementDaysDate(1) " nbButton ghost ><nb-icon class="date-icon" icon="chevron-right-outline" ></nb-icon></button>
+          <nb-datepicker [min]="momentMinDate" (dateChange)="changeDaysDate($event)" #formcontrol></nb-datepicker> -->
+
+
+        <ngx-date-picker [date]="rawDate" [min]="minDate" (dateChange)="changeDaysDate($event)"></ngx-date-picker>
+
+        </div>
+      </div>
+    </div>
+
+    <div #daysContainer class="days-container">
+      <div class="single-day-container" *ngFor="let day of shiftsDividedByDay; let i = index">
+        <div class="day-title-container">
+          <div>
+            <div class="day-number-container">{{'COMMON.Day' | translate}} {{day.dayNumber}}</div>
+            <div class="full-day-container">{{day.date | DateFormatPipe: false :true}}</div>
+            <button nbButton *ngIf="(shiftsDividedByDay.length - 1) === i" (click)="duplicateDay(day)" class="center-button size-medium appearance-filled tertiary shape-round nb-transition"> {{'CALENDAR.Duplicate_This_Day' | translate}} </button >
+          </div>
+
+        </div>
+        <div class="shifts-container">
+          <div class="single-shift-container" *ngFor="let shift of day.shifts; let i = index" [id]="day.dayNumber + '-' + i">
+            <div class="flex-center delete-button">
+              <button nbButton class= "appearance-filled tertiary round-shaped-button" status="danger" ghost (click)=" deleteShift(day, shift) " [disabled]="shiftsDividedByDay.length === 1 && day.shifts.length === 1">
+                <nb-icon pack="texas" icon="delete"></nb-icon>
+              </button>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <div class="grey-text">{{ 'SHARED.From' | translate}}</div>
+              <!-- <dx-date-box [(value)]="shift.slotStart" type="time" displayFormat="HH:mm"> </dx-date-box> -->
+              <ngx-time-picker [(time)]='shift.slotStart' (timeChanged)="shift.slotStart = $event"></ngx-time-picker>
+            </div>
+            <div style="margin-bottom: 10px;">
+              <div class="grey-text">{{ 'SHARED.To' | translate}}</div>
+              <!-- <dx-date-box [(value)]="shift.slotEnd" type="time" displayFormat="HH:mm"> </dx-date-box> -->
+              <ngx-time-picker [(time)]='shift.slotEnd' (timeChanged)="shift.slotEnd = $event"></ngx-time-picker>
+            </div>
+            <div class="grey-text">{{ 'OVERVIEW.Team' | translate}}</div>
+            <div class="team-div">
+              <div>
+                <mat-form-field style="width: 120px;">
+                  <mat-select [compareWith]="compareObjects" [(ngModel)]="shift.team" (selectionChange)="teamChanged(shift, $event.value)">
+                    <mat-option value="null" >{{ 'COMMON.No_production' | translate }}</mat-option>
+                    <mat-option *ngFor="let team of teams" [value]="team">{{ team.teamName }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div style="margin-top: 8px;">
+                <div *ngIf="shift.teamColor !== null && shift.teamColor !== undefined" class="color-div" [style.background]="shift.teamColor"></div>
+              </div>
+              </div>
+          </div>
+        </div>
+        <div class="add-shift-container">
+          <button nbButton (click)="addShift(day, $event)" class="center-button size-medium appearance-filled tertiary shape-round nb-transition"> {{'CALENDAR.Add_Shift' | translate}} </button >
+        </div>
+      </div>
+       <div class="add-new-day-container">
+        <button nbButton (click)="addDay()" class="center-button size-medium appearance-filled tertiary shape-round nb-transition"> {{'CALENDAR.Add_New_Day' | translate}} </button >
+      </div>
+
+    </div>
+
+    <span class="hint-text">{{'CALENDAR.Overlapping_schedules_are_not_allowed._Times_not_included_in_the_definition_of_day_shift_will_be_considered' | translate}} "{{'COMMON.No_production' | translate}}"</span>
+
+
+  </nb-card-body>
+  <nb-card-footer class="no-border">
+      <div class="flex">
+        <button nbButton
+                (click)='saveChanges()'
+                class="appearance-filled secondary" style="margin: 0 auto;">
+          {{ 'COMMON.Save' | translate }}
+        </button >
+      </div>
+    </nb-card-footer>
+</nb-card>
+
+
+
+

@@ -1,0 +1,12 @@
+
+<div style="padding-right:10px">
+  <mat-form-field>
+  <mat-label [hidden]=" showLabel === false " floatLabel="always">{{ 'SHARED.Select' | translate }}</mat-label>
+  <mat-select [matBadgeHidden]="badgeHidden || readonly || disabled" [matBadge]="badgeNumber"
+  matBadgeSize="small" matBadgeOverlap="true"
+  [disabled]="readonly || disabled" multiple
+  [(ngModel)]=" disabled ? null : selectedChoices" (ngModelChange)="selectionChange($event)" >
+    <mat-option [disabled]=" option.disabled " *ngFor="let option of optionsArray" [value]=" option.value ">{{ option.name }}</mat-option>
+  </mat-select>
+</mat-form-field>
+</div>

@@ -1,0 +1,19 @@
+<nb-card style="width: 90vw; height: 90vh;" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card-header>
+        <div class="d-flex justify-content-between">
+            <h5>{{'SHARED.Machines_Speed' | translate}}</h5>
+            <button style="float: right;padding: 4px;" (click)="closeModal()" nbButton ghost >
+                <nb-icon icon="close-outline"></nb-icon>
+            </button>    
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <ngx-machines-speed-chart 
+        [dateStart]="dateStart" 
+        [dateEnd]="dateEnd" 
+        [processCellPath]="processCellPath"
+        [canExportData]="canExportData"
+        [showActualValue]="showActualValue"
+        (loadingFinished)="loadingFinish()"></ngx-machines-speed-chart>
+    </nb-card-body>
+</nb-card>

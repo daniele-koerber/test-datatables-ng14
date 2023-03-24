@@ -1,0 +1,39 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card-header>
+        <h5 class="card-title">{{'SHARED.Production_Speed' | translate}}</h5>
+    </nb-card-header>
+
+    <nb-card-body *ngIf="isLoading === false " class="d-flex flex-column justify-content-between">
+        <div class="d-flex" *ngIf="speedUoM">
+            <div *ngIf="(actualSpeed === setPointSpeed)"><nb-icon icon="checkmark-outline" style="color: #00c013;"></nb-icon></div>
+            <div *ngIf="(actualSpeed > setPointSpeed)"><nb-icon icon="arrow-upward-outline" style="color: #ce3800;"></nb-icon></div>
+            <div *ngIf="(actualSpeed < setPointSpeed)"><nb-icon icon="arrow-downward-outline" style="color: #ce3800;"></nb-icon></div>
+            <span class="nb-font-semibold mr-1">{{actualSpeed}} </span> <span >{{speedUoM}} </span>
+        </div>
+        <ngx-smoothed-line-chart
+            [data]="chartData"
+            [UoM]="speedUoM"
+            [fill]="'#ff7c30'"
+            [chartId]="chartId"
+            [height]="'260px'"
+            [isOrder]="isOrder"
+            [isShift]="isShift"
+            [isLine]="isLine"
+            [processCellPath]="processCellPath"
+            [isLoading]="isLoading"
+            [noData]="noData"
+            [serverError]="serverError"
+            [machinePath]="machinePath"
+            [hideDateAxis]="hideDateAxis"
+            [hoursToDisplay]="hoursToDisplay"
+        ></ngx-smoothed-line-chart>
+    </nb-card-body>
+
+    <nb-card-footer>
+        <div class="d-flex justify-content-end">
+            <button nbButton size="small" [disabled]="noData === true || isLoading === true" (mousedown)='goToMachinesSpeed()' class="tertiary">
+                {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-footer>
+</nb-card>

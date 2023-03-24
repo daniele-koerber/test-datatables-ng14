@@ -1,0 +1,16 @@
+<form [formGroup]="formGroup">
+  <mat-form-field>
+
+      <input (change)=" onFieldChange($event, processCellPath, row.value) "
+      ngDefaultControl [readonly]="readonly" type="text"
+
+      [formControlName]="parameterDefinitionName + '_' + path +'_formField'"
+      [disabled]="disabled" matInput placeholder="">
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path +'_formField']?.errors?.required === true">
+        {{ 'COMMON.Field_is_required' | translate }}
+      </mat-error>
+      <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path +'_formField']?.errors?.value === true">
+        {{ 'COMMON.Field_value_must_be_a_number_greater_than_zero' | translate }}
+      </mat-error>
+  </mat-form-field>
+</form>

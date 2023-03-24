@@ -1,0 +1,53 @@
+<nb-card style="height: 800px;width: 1400px;">
+  <nb-card-header>{{ 'CALENDAR.Orders_from_ERP' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <ngx-spinner [isLoading]="isLoading" *ngIf="isLoading" class="bg-spinner"></ngx-spinner>
+    <div class="row">
+      <div class="col-sm-12">
+        <ngx-buttons-toggle [optionsArray]="toggleArray" [defaultValue]=" defaultValue " (change)="showFiltered($event)"></ngx-buttons-toggle>
+
+        <table class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+          <thead>
+            <tr>
+              <th>{{ 'OVERVIEW.Production_Order' | translate }}</th>
+              <th>{{ 'OVERVIEW.Product_Code' | translate }}</th>
+              <th>{{ 'CALENDAR.Quantity' | translate }}</th>
+              <th>{{ 'CALENDAR.Import_Date_Time' | translate }}</th>
+              <th>{{ 'REPORT.Process_Cells' | translate }}</th>
+              <th>{{ 'SHARED.Status' | translate }}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of filteredData">
+              <td>{{ row.productionOrder }}</td>
+              <td>{{ row.productCode }}</td>
+              <td>{{ row.quantity }}
+                <!-- {{ row.um }} --> <!-- ci sono ordini senza PC o con PC multiple, serve UM a livello plant -->
+              </td>
+              <td>{{ row.importDatetime  | DateFormatPipe }}</td>
+              <td>{{ row.processCellNames  }}</td>
+              <td>{{ getOrderStatus(row.status) }}<span class="dot" [style.background]="getOrderStatusColor(row.statusValue)"></span> </td>
+              <td class="text-center">
+                <button [hidden]=" canDeleteOrders !== true || (row?.status !== 0 && row?.status !== 1 && row?.status !== 2)"
+                nbButton status="danger" class= "appearance-filled tertiary" ghost
+                (click)="deleteOrder(row?.productionOrder)">
+                  <nb-icon icon="trash-2-outline"></nb-icon>
+                </button>
+
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

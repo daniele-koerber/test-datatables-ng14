@@ -1,0 +1,6 @@
+<div>
+
+  <ngx-date-picker [hidden]="!dateStart" [date]="this.rawDate" [min]="minDate" [max]="maxDate" (dateChange)="dateChanged($event)"></ngx-date-picker>
+
+  <div width="100%" [style.height]="height" id= "{{chartId}}"> </div>
+</div>

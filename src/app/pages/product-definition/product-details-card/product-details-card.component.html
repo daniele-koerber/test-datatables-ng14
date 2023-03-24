@@ -1,0 +1,59 @@
+<div>
+  <div class="row" *ngIf="!(definition && readonly)">
+    <div class="col-sm-5"><label for="productCode">
+
+      <div *ngIf="definition">{{ 'PRODUCT_DEFINITION.Product_Code' | translate }}</div>
+      <div *ngIf="!definition">{{ 'PRODUCT_DEFINITION.New_Product_Definition' | translate }}</div>
+
+    </label></div>
+    <div class="col-sm-7">
+      <mat-form-field [class]="readonly ? 'readonly': ''">
+            <input (input)="checkProductionCode($event.target.value); updateDefinition($event);" [value]="definition?.productCode " matAutofocus="false" id="productCode" [readonly]="readonly" type="text" matInput placeholder="">
+            <mat-hint *ngIf="productionCodeError === true">
+              {{ 'PRODUCT_DEFINITION.Production_code_already_exists' | translate }}
+
+            </mat-hint>
+          </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!(definition && readonly)">
+    <div class="col-sm-5"><label for="productDescription">{{ definition ? '' : translatedNew }}
+      {{ 'PRODUCT_DEFINITION.Product_Description' | translate }}:</label></div>
+    <div class="col-sm-7">
+      <mat-form-field [class]="readonly ? 'readonly': ''">
+        <input #productDescription (input)="updateDefinition($event)" [value]=" definition?.productDescription " matAutofocus="false" id="productDescription" [readonly]="readonly" type="text" matInput placeholder="">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="div-container" *ngIf="definition && readonly">
+    <div class="flex small-space">
+      <div class="first-div-align">{{ 'PRODUCT_DEFINITION.Product_Code' | translate }}: </div>
+      <div class="second-div-align"> <strong>{{definition.productCode}}</strong> </div><br />
+    </div>
+    <div class="flex small-space">
+      <div class="first-div-align">{{ 'PRODUCT_DEFINITION.Product_Description' | translate }}: </div>
+      <div class="second-div-align"> <strong>{{definition.productDescription}}</strong> </div><br />
+    </div>
+    <div class="flex small-space">
+      <div class="first-div-align">{{ 'PRODUCT_DEFINITION.Version' | translate }}: </div>
+      <div class="second-div-align"> <strong>{{definition.version}}</strong> </div><br />
+    </div>
+  </div>
+
+  <!-- <div class="row" *ngIf="definition && readonly">
+    <div class="col-sm-5">{{ 'PRODUCT_DEFINITION.Product_Code' | translate }}: </div>
+    <div class="col-sm-7"><strong>{{ definition.productCode }}</strong></div>
+  </div>
+  <div  class="small-space"> </div>
+  <div class="row" *ngIf="definition && readonly">
+    <div class="col-sm-5">{{ 'PRODUCT_DEFINITION.Product_Description' | translate }}: </div>
+    <div class="col-sm-7"><strong>{{ definition.productDescription }}</strong></div>
+  </div>
+  <div  class="small-space"> </div>
+  <div class="row" *ngIf="definition && readonly">
+    <div class="col-sm-5">{{ 'PRODUCT_DEFINITION.Version' | translate }}: </div>
+    <div class="col-sm-7"><strong>{{ definition ? +definition.version + 1 : 1 }}</strong></div>
+  </div> -->
+</div>

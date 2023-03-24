@@ -1,0 +1,33 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius:100%;
+    margin-left: 10px;
+    margin-top: 1em;
+  }
+
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  ::ng-deep .mat-form-field.readonly{
+    .mat-form-field-infix { background-color:white; }
+    .mat-form-field-ripple { background-color:nb-theme(grey-text); }
+  }
+  ::ng-deep {
+    .mat-form-field {
+      margin: 20px 4px 0;
+    }
+    .mat-form-field-infix {
+      width: 60px !important;
+    }
+  }
+
+}

@@ -1,0 +1,27 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" [size]="'small'" style="width: 95vw; height: 95vh;">
+  <nb-card-header>
+      {{ 'SHARED.Machines_Status_in_Minutes' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button [disabled]=" (helpPageLinkDestination === '#') " style="float: right;padding: 4px;" (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close" icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+
+          <ngx-machine-status-report-chart
+            [chartId]= "'report-machine-details-status-chart-Id'"
+            [isDetails] = "isDetails"
+            [serverError]="serverError"
+            [machineStatus]="machinesStatus"
+            [showMachineInUse]="showMachineInUse"
+          ></ngx-machine-status-report-chart>
+
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+

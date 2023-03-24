@@ -2,6 +2,52 @@
 @import '@nebular/theme/styles/theming';
 // @nebular out of the box themes
 @import '@nebular/theme/styles/themes';
+// material themes
+@import './material/material-light';
+// import custom font
+// @import '../../../assets/fonts/fonts.scss';
+@import 'src/assets/fonts/fonts.scss';
+
+$nb-themes: nb-register-theme((
+  blue-color: #0060ff,
+  black-color: header-text-color,
+  grey-text: #90887d,
+  layout-background-color: #fff,
+  layout-padding: 1.25rem 1.25rem 0.75rem,
+
+  header-background-color: #fff,
+  header-shadow: none,
+  header-padding: 1rem 1rem 0 1rem,
+  header-text-color: #262523,
+  header-height: 4rem,
+
+  menu-background-color: #262523,
+  menu-text-color: #ffffff,
+  menu-item-divider-color: #3f3932,
+  menu-item-icon-color: #ffffff,
+  menu-item-active-background-color: #ffffff,
+  menu-item-active-text-color: #262523,
+  menu-item-icon-active-color: #262523,
+  menu-item-hover-text-color:#262523,
+  menu-item-icon-hover-color:#262523,
+  menu-item-hover-background-color : #ffffff,
+  menu-text-font-weight: 800,
+  sidebar-background-color: #262523,
+
+
+  footer-text-color: #262523,
+  footer-background-color: #fff,
+
+  button-background-color: #fff,
+
+  text-alternate-color:#262523,
+
+  font-family-primary: Koerber,
+  font-family-bold: Koerber-Bold,
+  font-family-semibold: Koerber-Semibold,
+  font-family-light: Koerber-Light,
+  layout-padding-top: 1.25rem,
+), dproduction, material-light);
 
 $nb-themes: nb-register-theme((
   layout-padding-top: 2.25rem,

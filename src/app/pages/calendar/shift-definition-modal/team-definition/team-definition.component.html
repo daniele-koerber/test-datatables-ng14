@@ -1,0 +1,84 @@
+<nb-card class="nb-card-team-definition" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'CALENDAR.Team_definition' | translate }}</nb-card-header>
+
+  <nb-card-body style="padding: 0.5rem 0.5rem;">
+    <!-- <ngx-spinner  [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading]="isLoading" *ngIf="isLoading" class="bg-spinner"></ngx-spinner> -->
+
+    <table class="table table-bordered table-sm row-border hover dataTable no-footer"  style="table-layout: fixed; "   >
+      <thead>
+        <tr>
+          <th style="width: 35%;" class="text-center">{{ 'CALENDAR.Team_name' | translate }}</th>
+          <th style="width: 22%;" class="text-center">{{ 'CALENDAR.Team_color' | translate }}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let team of teamsToUpdate">
+          <td style="padding-bottom: 0 !important;">
+            <div >
+              <mat-form-field style="width: 100%; height: 40px; margin-top: -5px;" [ngClass]="errorTeam?.id === team.id ? 'mat-error' : ''">
+                <mat-hint *ngIf="errorTeam?.id === team.id" class="error-hint">
+                    {{ 'CALENDAR.Names_cant_be_the_same' | translate }}
+                </mat-hint>
+                <input matInput type="text" (keyup)="changeTeam(team, $event)" type="text" [(value)]=" team.teamName" >
+
+              </mat-form-field>
+            </div>
+          </td>
+          <td style="padding-bottom: 0 !important;">
+            <div class="flex-center">
+                  <dx-color-box [(value)]="team.teamColor" (onValueChanged)="newTeamColorChanged($event)"></dx-color-box>
+            </div>
+          </td>
+          <td style="padding-bottom: 0 !important;">
+            <div class="flex-center">
+              <button nbButton class= "appearance-filled tertiary round-shaped-button" status="danger" ghost (click)=" deleteTeam(team.id) ">
+                <nb-icon pack="texas" icon="delete"></nb-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <tr >
+          <td style="padding-bottom: 0 !important;">
+            <div >
+              <mat-form-field style="width: 100%; height: 40px; margin-top: -5px;" [ngClass]="newTeamError ? 'mat-error' : ''">
+                <mat-hint *ngIf="newTeamError" class="error-hint">
+                  {{ 'CALENDAR.Names_cant_be_the_same' | translate }}
+                </mat-hint>
+                <mat-label *ngIf="!newTeamError">{{ 'CALENDAR.Type_here_new_team_name' | translate }}</mat-label>
+                <input matInput type="text" [(ngModel)]=" newTeamName " (keyup)="newTeamNameChanged($event)">
+              </mat-form-field>
+            </div>
+          </td>
+          <td style="padding-bottom: 0 !important;">
+            <div class="flex-center">
+              <dx-color-box [(value)]="newTeamColor" (onValueChanged)="newTeamColorChanged($event)"></dx-color-box>
+            </div>
+          </td>
+          <td style="padding-bottom: 0 !important;">
+            <div class="flex-center">
+              <button (click)=" addTeam() " nbButton ghost class= "appearance-filled tertiary round-shaped-button"
+                      [disabled]= "(newTeamName === '' || newTeamColor === '') || newTeamError">
+                <nb-icon icon="plus-outline"></nb-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+
+
+  </nb-card-body>
+  <nb-card-footer class="no-border">
+      <div class="flex">
+        <button nbButton
+                [disabled]="(errorTeam !== null && errorTeam !== undefined) || newTeamError"
+                (click)=" saveChanges() "
+                class="appearance-filled secondary" style="margin: 0 auto;">
+          {{ 'COMMON.Save' | translate }}
+        </button >
+      </div>
+    </nb-card-footer>
+</nb-card>

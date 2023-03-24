@@ -1,9 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-
+import { AuthGuardService } from '../@core/utils/services/auth-guard.service';
 import { PagesComponent } from './pages.component';
 
-import { ECommerceComponent } from './e-commerce/e-commerce.component';
+import { ProductDefinitionComponent } from './product-definition/product-definition.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { ReportComponent } from './report/report.component';
+import { ReportDetailsComponent } from './report/report-details/report-details.component';
+import { SettingsComponent } from './settings/settings.component';
+
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 
 const routes: Routes = [{
@@ -11,12 +16,40 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [
     {
-      path: 'dashboard',
-      component: ECommerceComponent,
+      path: 'overview',
+      canActivate: [AuthGuardService],
+      // component: OverviewComponent,
+      loadChildren: () => import('./overview/overview.module').then(m => m.OverviewModule)
     },
     {
+      path: 'product-definition',
+      canActivate: [AuthGuardService],
+      component: ProductDefinitionComponent,
+    },
+    {
+      path: 'calendar',
+      canActivate: [AuthGuardService],
+      component: CalendarComponent,
+    },
+    {
+      path: 'report',
+      canActivate: [AuthGuardService],
+      component: ReportComponent,
+    },
+    {
+      path: 'report-details',
+      canActivate: [AuthGuardService],
+      component: ReportDetailsComponent,
+    },
+    {
+      path: 'settings',
+      canActivate: [AuthGuardService],
+      component: SettingsComponent
+    },
+
+    {
       path: '',
-      redirectTo: 'dashboard',
+      redirectTo: 'overview',
       pathMatch: 'full',
     },
     {

@@ -1,0 +1,92 @@
+
+
+
+.flex{
+  display: flex;
+}
+
+.div-container{
+  display: grid;
+  justify-content: center;
+}
+.first-div-align{
+  float: right;
+}
+
+.uppercase {
+  text-transform: uppercase
+}
+
+
+.second-div-align{
+  margin-left: 5px;
+  float: right;
+}
+
+.input-align{
+  margin-top: -22px;
+}
+.space{
+  margin-bottom: 40px;
+}
+
+.small-space{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+}
+nb-icon {
+  font-size: 2rem;
+}
+
+.center-button{
+  margin: auto;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius:100%;
+  margin:auto;
+  margin-top: 0;
+}
+
+.icon-open{
+  color:  #0060ff;
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: 0px ;
+}
+
+// th {
+//   //overflow: hidden;
+//   min-width: 156px;
+//   //text-overflow: ellipsis;
+//   //white-space: nowrap;
+//   vertical-align: middle !important;
+
+// }
+
+tbody {
+  display:block;
+  height:552px;
+  overflow:auto;
+}
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;/* even columns width , fix width of table too*/
+}
+th{
+  vertical-align: middle !important;
+  padding: 10px 10px !important;
+}
+thead {
+  // width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+
+
+

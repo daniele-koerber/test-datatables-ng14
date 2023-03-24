@@ -1,0 +1,78 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  ul { list-style-type: none; margin: 0; padding: 0; display: flex; justify-content: space-between;
+    li { display: inline-block; margin-right: 10px; line-height:0;
+      p { display: inline-block; vertical-align: top; font-size: .7em; margin: 0; line-height: 1.4em }
+    }
+  }
+  .dot {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius:25%;
+    margin-left: 0;
+    margin-right: 4px;
+    margin-top: 0;
+  }
+
+  .legend-description {
+    font-size: 14px !important;
+
+  }
+
+  :focus {
+    outline:none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-width: 0px !important;
+  }
+
+
+
+
+  .amcharts-amexport-top .amcharts-amexport-item > .amcharts-amexport-menu {
+    top: -3px!important;
+    left: 20px!important;
+  }
+
+  .date-time-input{
+    text-align: center;
+    z-index: 2;
+    width: 20rem;
+  }
+
+  .date-icon{
+    z-index: 1;
+    // margin-right: -30px;
+    color: #0060ff;
+  }
+
+}
+::ng-deep{
+  .date-mat{
+    width: 120px;
+    text-align: center;
+    border: none;
+  }
+
+  .button-mat{
+    color: #0060ff;
+  }
+  .nb-theme-texas [nbInput].shape-rectangle {
+    border: none;
+  }
+
+  .nb-theme-texas [nbInput].size-medium {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.5rem;
+      padding: 0.75rem 1rem;
+      color: #0060ff;
+  }
+
+  [nbButton].appearance-ghost.status-basic.btn-disabled {
+    background-color: transparent !important;
+    opacity: 0.5;
+  }
+}

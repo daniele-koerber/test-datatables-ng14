@@ -1,0 +1,37 @@
+
+
+
+
+<nb-card style="max-height: 90vh; width: 90vw" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ machineName }} {{ 'SHARED.Data_Details' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <ngx-date-picker [hidden] =" !showCalendar "
+    [date]="this.rawDate" [min]="min" [max]="max" (dateChange)="dateChanged($event)"></ngx-date-picker>
+
+
+    <div [hidden]="!hasProductionCounter">
+      <h6 style= " font-size: medium; ">{{ 'SHARED.Machine_Speed' | translate }}</h6>
+      <ngx-multi-line-speed-chart [chartData]="speedData" [speedUoM]="speedUoM" [minBetweenTwoPoint]="minBetweenTwoPointSpeed" [serverError]="serverErrorSpeed" [noDataAvailable]="noDataAvailable" [canExportData]="canExportData" [showActualValue]="true"></ngx-multi-line-speed-chart>
+      <div [hidden]="!hasLiveData" class= "dividing-line"> </div>
+    </div>
+
+    <div [hidden]="!hasLiveData || (liveData === [] && isLoading === false)">
+      <div [hidden]="isLoading === true" *ngFor="let chart of liveData; let i = index">
+        <h6 style= "font-size: medium; ">{{chart.description}}</h6>
+        <!-- [chartId]="'liveData' + i" -->
+
+        <ngx-line-speed-chart  [chartData]="chart" [chartColor]="chart?.color" [chartUoM]="chart?.uom" [minBetweenTwoPoint]="chart?.minBetweenTwoPoint" [canExportData]="canExportData" [serverError]="serverErrorLiveData" [showActualValue]="true"></ngx-line-speed-chart>
+        <div class= "dividing-line"> </div>
+      </div>
+    </div>
+
+
+  </nb-card-body>
+</nb-card>

@@ -34,13 +34,18 @@
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/ionicons/scss/ionicons.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
+              "node_modules/@fortawesome/fontawesome-pro/scss/fontawesome.scss",
               "node_modules/socicon/css/socicon.css",
-              "node_modules/nebular-icons/scss/nebular-icons.scss",
+              
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
               "node_modules/leaflet/dist/leaflet.css",
               "src/app/@theme/styles/styles.scss",
               
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+              "node_modules/devextreme/dist/css/dx.common.css",
+              "node_modules/devextreme/dist/css/dx.light.css",
+
+              "./node_modules/@koerberdigitaldevteam/koerber-design-system-web/css/bundle.css"
               
             ],
             "scripts": [
@@ -63,7 +68,23 @@
               "echarts",
               "lodash",
               "zrender/lib/svg/svg",
-              "zrender/lib/vml/vml"
+              "zrender/lib/vml/vml",
+              "core-js",
+              "js-sha256",
+              "base64-js",
+              "devextreme-quill",
+              "devexpress-gantt",
+              "devexpress-diagram",
+              "jszip",
+              "eva-icons",
+              "jquery",
+              "pdfmake",
+              "xlsx",
+              "rgbcolor",
+              "raf",
+              "@babel/runtime/regenerator",
+              "chart.js",
+              "html2canvas"
             ],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -140,9 +161,10 @@
               "node_modules/ionicons/scss/ionicons.scss",
               "node_modules/font-awesome/scss/font-awesome.scss",
               "node_modules/socicon/css/socicon.css",
-              "node_modules/nebular-icons/scss/nebular-icons.scss",
+             
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
               "src/app/@theme/styles/styles.scss"
+              
             ],
             "assets": [
               "src/assets",

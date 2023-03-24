@@ -1,0 +1,36 @@
+<nb-card style="min-width: 500px;">
+  <nb-card-header style="vertical-align: middle;">{{ 'CALENDAR.Shift_Details' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+
+        <!-- <div> {{ 'CALENDAR.Do_you_want_to_browse_the_shift_report?' | translate }} </div>  -->
+
+
+        <div class="flex small-space-details">
+          <div class="first-div-align">{{ 'CALENDAR.Team_name' | translate }}: </div>
+          <div class="second-div-align"><strong >{{team?.teamName}} </strong></div>
+        </div>
+
+        <div class="flex small-space-details">
+          <div class="first-div-align">{{ 'CALENDAR.Shift_start_time' | translate }}: </div>
+          <div class="second-div-align"><strong >{{shiftStartDatetime | DateFormatPipe}} </strong></div>
+        </div>
+
+        <div class="flex small-space-details">
+          <div class="first-div-align">{{ 'CALENDAR.Shift_end_time' | translate }}: </div>
+          <div class="second-div-align"><strong >{{shiftEndDatetime | DateFormatPipe}} </strong></div>
+        </div>
+
+  </nb-card-body>
+  <nb-card-footer [hidden] = "team?.teamName == No_production">
+    <button nbButton  (click)=" cancel() " class="appearance-filled secondary">{{ 'COMMON.Cancel' | translate }}</button>
+    <button nbButton  (click)=" goToReport() "class="appearance-filled status-primary" style="float: right;">{{ 'CALENDAR.Go_To_Report' | translate }}</button>
+  </nb-card-footer>
+
+</nb-card>

@@ -1,0 +1,50 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+
+
+  .v-bottom { vertical-align:bottom }
+
+
+  .first-div-align{
+    min-width: 180px ;
+    float: left;
+    font-family: nb-theme(font-family-primary);
+    font-size: 15px;
+  }
+  .second-div-align{
+    min-width: 180px;
+    float: left;
+    font-family: nb-theme(font-family-primary);
+  }
+
+  ::ng-deep{
+    mat-form-field { margin: 0!important; }
+    .mat-form-field-infix { border:0!important; padding-top:0!important;  }
+  }
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius:100%;
+    margin-left: 10px;
+    margin-top: 1em;
+  }
+
+  ::ng-deep {
+    .mat-form-field {
+      margin: 20px 4px 0;
+    }
+    .mat-form-field-infix {
+      width: 200px !important;
+    }
+  }
+
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+}

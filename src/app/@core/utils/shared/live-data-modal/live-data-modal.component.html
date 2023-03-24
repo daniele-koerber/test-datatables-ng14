@@ -1,0 +1,23 @@
+<nb-card style="width: 90vw; height: 90vh;" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" [size]="'small'" >
+    <nb-card-header>
+        <div class="d-flex justify-content-between">
+            <h5>{{'SHARED.Live_Data' | translate}}</h5>
+            <button style="float: right;padding: 4px;" (click)="closeModal()" nbButton ghost >
+                <nb-icon icon="close-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+
+      <ngx-date-picker [date]="this.rawDate" [min]="min" [max]="max" (dateChange)="dateChanged($event)"></ngx-date-picker>
+
+        <div [hidden]="liveData === [] && isLoading === false">
+          <div [hidden]="isLoading === true" *ngFor="let chart of liveData">
+            <h6 style= " font-size: medium; ">{{chart.description}}</h6>
+            <ngx-line-speed-chart [chartData]="chart" [chartColor]="chart?.color" [chartUoM]="chart?.uom" [minBetweenTwoPoint]="chart?.minBetweenTwoPoint" [canExportData]="canExportData" [showActualValue]="showActualValue"></ngx-line-speed-chart>
+            <div class= "dividing-line"> </div>
+          </div>
+        </div>
+    </nb-card-body>
+</nb-card>
+

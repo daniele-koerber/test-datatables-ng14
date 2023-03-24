@@ -1,0 +1,7 @@
+<div [id]="chartId" style="width: 100%; height: 45px;"></div>
+<div class="d-flex flex-wrap">
+    <div *ngFor="let data of filterData" class="legend-item">
+        <div class="nb-font-semibold" [style.color]="data.color">{{data.durationText}}</div>
+        <div class="nb-font">{{data.statusName}}</div>
+    </div>
+</div>

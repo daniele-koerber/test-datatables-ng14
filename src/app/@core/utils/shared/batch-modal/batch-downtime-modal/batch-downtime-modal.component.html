@@ -1,0 +1,73 @@
+<!-- style="height: 700px;width: 1020px;" -->
+<nb-card style="width: 65vw; max-height: 95vh;" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-body>
+    <!-- <ngx-spinner  [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading]="isLoading" *ngIf="isLoading" class="bg-spinner"></ngx-spinner> -->
+    <div class="row" [hidden] = "isLoading || serverError">
+      <div class="col-sm-12">
+
+        <div class="div-container">
+          <div class="flex small-space">
+            <div class="first-div-align ">{{ 'OVERVIEW.Production_Order' | translate }}: </div>
+            <div class="second-div-align"> <strong>{{productionOrder.productionOrder}}</strong> </div><br />
+          </div>
+
+          <div class="flex small-space">
+            <div class="first-div-align">{{ 'OVERVIEW.Product_Code' | translate }}: </div>
+            <div class="second-div-align"><strong>{{productionOrder.productCode}}</strong></div><br />
+          </div>
+        <!--
+          <div class="flex small-space">
+            <div class="first-div-align"> {{ 'PRODUCT_DEFINITION.Version' | translate }}: </div>
+            <div class="second-div-align"><strong> {{productionOrder.version}}</strong></div><br />
+          </div>
+
+          <div class="flex small-space">
+            <div class="first-div-align">{{ 'CALENDAR.Quantity' | translate }}: </div>
+            <div class="second-div-align"><strong>{{productionOrder.targetQuantity}}</strong></div><br />
+          </div>
+          -->
+        </div>
+
+        <!--<div class="small-space">-->
+          <table class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+          <thead>
+            <tr>
+              <th>{{ 'REPORT.Date_Time' | translate }}</th>
+              <th>{{ 'REPORT.Duration' | translate }}</th>
+              <th>{{ 'REPORT.User' | translate }}</th>
+              <th>{{ 'REPORT.Machine' | translate }}</th>
+              <th>{{ 'REPORT.Component' | translate }}</th>
+              <th>{{ 'REPORT.Reason' | translate }}</th>
+              <th>{{ 'REPORT.Notes' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of data">
+              <td>{{ row.startTime | DateFormatPipe }}</td>
+              <td>{{ row.duration | SecondsToDurationPipe : ('COMMON.d' | translate) : ('COMMON.h' | translate) : ('COMMON.min' | translate) : ('COMMON.s' | translate)}}</td>
+              <td>{{ row.userName }}</td>
+              <td>{{ row.machineName }}</td>
+              <td>{{ row.componentName }}</td>
+              <td>{{ row.reasonName }}</td>
+              <td>{{ row.note }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+        <!-- </div>-->
+
+        <!-- <div class="flex">
+          <button nbButton
+                  class="center-button appearance-outline size-medium status-primary shape-round nb-transition">
+            Save
+          </button >
+        </div> -->
+
+      </div>
+    </div>
+    <p *ngIf="(serverError)">
+      {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+    </p>
+  </nb-card-body>
+</nb-card>
+

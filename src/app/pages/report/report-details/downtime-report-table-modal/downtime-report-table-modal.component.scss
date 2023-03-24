@@ -1,0 +1,60 @@
+// @import '../../../../../@theme/styles/themes';
+
+// @include nb-install-component() {
+
+// }
+:focus {
+    outline:none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-width: 0px !important;
+  }
+
+
+//   tbody {
+//     display:block;
+//     height:545px;
+//     overflow:auto;
+//   }
+//   thead, tbody tr {
+//     display:table;
+//     width:100%;
+//     table-layout:fixed;/* even columns width , fix width of table too*/
+//   }
+//   th{
+//     vertical-align: middle !important;
+//     padding: 10px 10px !important;
+//     border-left: 0px ;
+//     border-right: 0px;
+//   }
+//   thead {
+//     width: calc( 100% - 1em );/* scrollbar is average 1em/16px width, remove it from thead width */
+//     display:table-header-group;
+//   }
+
+  table thead {
+    display:table-header-group;
+}
+  table tbody {
+    // height: 500px;
+    overflow-y: scroll;
+  }
+
+  table {
+      max-height: 500px;
+  }
+  td{
+    vertical-align: top !important;
+    padding: 10px 10px !important;
+    border-left: 0px ;
+    border-right: 0px;
+  }
+
+
+
+
+
+
+
+
+

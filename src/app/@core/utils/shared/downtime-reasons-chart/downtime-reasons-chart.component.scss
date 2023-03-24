@@ -1,0 +1,24 @@
+
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  ul { list-style-type: none; margin: 0; padding: 0;
+    li { display: inline-block; margin-right: 10px; line-height:0;
+      p { display: inline-block; vertical-align: top; font-size: .7em; margin: 0; line-height: 1.4em }
+    }
+  }
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius:100%;
+    margin-left: 10px;
+    margin-right: 4px;
+    margin-top: 0;
+  }
+  .info-paragraph{
+    font-size: 12px;
+    opacity: .5;
+    margin-top: 8px;
+  }
+}

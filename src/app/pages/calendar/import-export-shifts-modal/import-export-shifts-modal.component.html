@@ -1,0 +1,31 @@
+<nb-card >
+  <nb-card-header>{{ 'CALENDAR.Import_Export_shifts' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body class="no-padding-nb-body">
+
+    <ngx-export-shifts-modal [from]="from" [to]="to" ></ngx-export-shifts-modal>
+    <div class= "dividing-line"> </div>
+
+    <!-- <ngx-import-shifts-modal></ngx-import-shifts-modal> -->
+
+        <div class="flex" style="padding: 1rem 1.5rem;">
+
+          <form [formGroup]="formCSV" class="form-group form-group-lg">
+                <div style ="padding-bottom: 16px;" class='title'>
+                  <b >2 - {{ 'CALENDAR.Import_shift_definition' | translate }}</b>
+                </div>
+
+                <ngx-upload [fileFormat]="'.xlsx'" [lang]='lang' [processCell]='selectedProcessCell?.path'  requireFile [uploadEnabled]='enableUpload' (uploadEvent)="uploading($event)" (uploadedSuccessfully)="importShifts($event)" formControlName="shift"></ngx-upload>
+          </form>
+
+        </div>
+
+
+  </nb-card-body>
+</nb-card>

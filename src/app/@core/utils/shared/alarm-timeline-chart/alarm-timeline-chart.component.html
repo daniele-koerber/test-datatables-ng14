@@ -1,0 +1,21 @@
+<nb-card style="min-height: 300px; max-height: 90vh; width: 95vw" id='alarmtimeline' [nbSpinner]="chartLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'SHARED.Alarm_timeline' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div > {{ 'OVERVIEW.Alarm' | translate }}: <b>{{alarmName}} </b></div>
+
+    <br />
+
+    <div style="height: 200px; width: 100%;margin: 0 auto;" id= "{{chartId}}"> </div>
+
+  </nb-card-body>
+</nb-card>
+
+
+

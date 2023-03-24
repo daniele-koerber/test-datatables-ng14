@@ -1,0 +1,34 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" >
+  <nb-card-header>
+    <h5 class="card-title d-flex">
+      {{ 'SHARED.Alarms_summary' | translate }}
+    </h5>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+
+      <ngx-alarm-chart [chartId]= "chartId"
+                                  [processCell]="processCellPath"
+                                  [start]="componentData?.dateStart"
+                                  [end]="componentData?.dateEnd"
+                                  [chartData]="componentData?.chartData"
+                                  [rowNumberToShow]="componentData?.rowNumberToShow"
+                                  [machinePath]="machinePath"
+                                  [serverError]="serverError"
+                                  [isLoading]="isLoading"
+                                  [noData]="noData"
+                                  [status]=componentData?.status
+        ></ngx-alarm-chart>
+
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button (mousedown)=' goToDetails() ' [disabled]="componentData?.chartData.length === 0 || noData === true || isLoading === true || serverError === true"  nbButton style="float: right;" class= "appearance-filled tertiary"  size="small">
+      {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>
+
+

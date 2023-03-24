@@ -1,0 +1,73 @@
+// @import '../../../../../@theme/styles/themes';
+
+// @include nb-install-component() {
+
+
+
+// }
+.bg-spinner{
+    position: absolute;
+    z-index: 2;
+    background: black;
+    height: 100%;
+    width: 100%;
+    opacity: .5;
+    margin-top: -16px;
+    margin-left: -24px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius:100%;
+  margin-left: 10px;
+  margin-right: 4px;
+  margin-top: 0;
+}
+
+.small-space{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+table.dataTable {
+  th { white-space: nowrap; }
+}
+
+tbody {
+    display:block;
+    height:540px;
+    overflow:auto;
+    overflow-x: hidden;
+  }
+  thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+  }
+  th{
+    vertical-align: middle !important;
+    padding: 10px 10px !important;
+  }
+  .verySmall{
+    width:5%;
+  }
+  thead {
+    // width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+  }
+  // table {
+  //   width:1400px;
+  // }
+
+  :focus {
+    outline:none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-width: 0px !important;
+  }
+
+  .nb-theme-texas [nbButton].appearance-ghost.status-primary[disabled],
+  .nb-theme-texas [nbButton].appearance-ghost.status-primary.btn-disabled {
+    background-color: none!important;
+  }

@@ -1,0 +1,37 @@
+<nb-card>
+  <nb-card-header>{{ 'SHARED.Order_details' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button [disabled]=" (helpPageLinkDestination === '#') " style="float: right;padding: 4px;" (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close" icon="question-mark-circle-outline"></nb-icon>
+    </button>
+
+
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+
+        <nb-tabset (changeTab)="onChangeTab($event)" fullWidth>
+          <nb-tab active="true" [tabId]="tabs[0].id" [tabTitle]=" tabs[0].title " [disabled]=" tabs[0]?.disabled ">
+            <ngx-batch-details-modal (tabDisabled)=" setTabDisabled($event) " [tabIndex]=" 0 " [batch]=" batch " ></ngx-batch-details-modal>
+          </nb-tab>
+
+          <nb-tab [tabId]="tabs[1].id" [tabTitle]=" tabs[1].title " [tabIcon]="(batch.parametersModified ? 'hash-outline' : '')" [disabled]=" tabs[1]?.disabled ">
+            <ngx-batch-parameters-modal (tabDisabled)=" setTabDisabled($event) " [tabIndex]=" 1 " [batch]=" batch " [processCellPath]=" processCellPath "></ngx-batch-parameters-modal>
+          </nb-tab>
+
+          <nb-tab [tabId]="tabs[3].id" [tabTitle]=" tabs[3].title " [disabled]=" tabs[3]?.disabled || !(isBatchCompleted(batch?.status) || isBatchActive(batch?.status)) ? 'true' : 'false'">
+            <ngx-batch-quality-modal (tabDisabled)=" setTabDisabled($event) " [tabIndex]=" 3 " [batch]=" batch " [processCellPath]="processCellPath"></ngx-batch-quality-modal>
+          </nb-tab>
+
+          <nb-tab [tabId]="tabs[4].id" [tabTitle]=" tabs[4].title " [disabled]=" tabs[4]?.disabled || !(isBatchCompleted(batch?.status) || isBatchActive(batch?.status)) ? 'true' : 'false'">
+            <ngx-batch-downtime-modal (tabDisabled)=" setTabDisabled($event) " [tabIndex]=" 4 " [batch]=" batch " [processCellPath]="processCellPath"></ngx-batch-downtime-modal>
+          </nb-tab>
+
+        </nb-tabset>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

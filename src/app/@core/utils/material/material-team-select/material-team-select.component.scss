@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+mat-form-field {
+  display: block;
+
+  label, mat-radio-button {
+    margin-right: 1rem;
+  }
+
+  textarea {
+    min-height: 3rem;
+  }
+}

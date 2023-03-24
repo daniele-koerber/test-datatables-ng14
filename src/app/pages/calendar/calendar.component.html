@@ -1,0 +1,55 @@
+<h5>{{ 'CALENDAR.Calendar' | translate }}</h5>
+<div class="flex">
+  <button [hidden]="hideErpOrders" (mousedown)=' openOrdersDialog() ' nbButton  class= "appearance-filled tertiary"  size="medium">
+    {{ 'CALENDAR.Orders' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+  </button>
+
+  <button (mousedown)=' openShiftDefinitionDialog() ' nbButton  class= "appearance-filled tertiary"  size="medium">
+    {{ 'CALENDAR.Shifts_Definition' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+  </button>
+
+  <!-- <button (mousedown)=' openImportExportShiftDialog(from, to) ' nbButton  class= "appearance-filled tertiary" size="medium">
+    {{ 'CALENDAR.Import_Export_shifts' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+  </button> -->
+
+  <!-- <a class="pointer"  (click)=" openOrdersDialog() ">{{ 'CALENDAR.Orders' | translate }} <nb-icon class="icon-arrow" icon="chevron-right-outline"></nb-icon></a>
+  <a *ngIf="canEditShifts" class="pointer" (click)=" openWeeklyShiftDialog() ">{{ 'CALENDAR.Weekly_shift' | translate }} <nb-icon class="icon-arrow" icon="chevron-right-outline"></nb-icon></a>
+  <a *ngIf="canEditShifts" class="pointer" (click)=" openImportExportShiftDialog(from, to) ">{{ 'CALENDAR.Import_Export_shifts' | translate }} <nb-icon class="icon-arrow" icon="chevron-right-outline"></nb-icon></a>-->
+
+  <button [disabled]=" donwloadInProgress === true || isLoading || serverError" [hidden]="!canExportData" nbButton class="appearance-filled tertiary" size="medium" (mousedown)="print()" style="float: right;">
+    <span [hidden] ="donwloadInProgress === true">{{ 'REPORT.Download_PDF' | translate }} <nb-icon icon="arrow-downward-outline"></nb-icon></span>
+    <span [hidden] ="donwloadInProgress === false">{{ 'REPORT.Downloading_PDF' | translate }}</span>
+  </button>
+</div>
+<div  class="space"> </div>
+
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" style="height: auto;">
+
+  <nb-card-body>
+    <div  class="space"> </div>
+
+    <div [hidden] ="serverError" >
+      <button *ngIf="canPlanOrder" (click)=' addNew() ' nbButton class="appearance-filled secondary">
+        {{ 'COMMON.Plan_Order' | translate }}
+      </button>
+      <div id="exportArea">
+        <h2 style="text-align:center" [hidden] ="donwloadInProgress === false">{{selectedProcessCell?.name}}</h2>
+        <full-calendar #calendar id='calendar' *ngIf="initialized" [options]="calendarOptions"></full-calendar>
+      </div>
+    </div>
+    <ngx-server-notifications
+                              [from]="'calendar'"
+                              *ngIf="selectedProcessCell"
+                              [processCell]="selectedProcessCell"
+                              [topic]="getComponentTopic()"
+                              [signalRSubscriptionType] = "getComponentSignalRSubscriptionTypeGroup()"
+                              [signalRListenersNames]="getComponentSignalRListenersNamesGroup()"
+                              (message)="UpdateCalendarAfterNotification($event)">
+    </ngx-server-notifications>
+    <!-- <ngx-server-notifications *ngIf="selectedProcessCell" [processCell]="selectedProcessCell" [topic]="getComponentTopic()" [signalRSubscriptionType] = "getComponentSignalRSubscriptionTypeBroadcast()" [signalRListenersNames]="getComponentSignalRListenersNamesBroadcast()" (message)="UpdateCalendarAfterNotification($event)"></ngx-server-notifications> -->
+    <p *ngIf="(serverError)">
+      {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+    </p>
+
+  </nb-card-body>
+</nb-card>

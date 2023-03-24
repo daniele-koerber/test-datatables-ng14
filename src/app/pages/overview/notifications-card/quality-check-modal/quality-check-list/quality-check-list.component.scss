@@ -1,0 +1,68 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  ::ng-deep{
+  .mat-ripple-element {
+    background-color: nb-theme(black-color) !important;
+    height: 48px !important;
+    width: 48px !important;
+  }
+
+  .mat-radio-outer-circle, .mat-radio-inner-circle{
+    border-color  : nb-theme(black-color);
+    height: 24px;
+    width: 24px;
+  }
+  .mat-radio-button.mat-accent .mat-radio-inner-circle{
+    background-color  : nb-theme(black-color);
+    height: 28px;
+    width: 28px;
+    left: -2px;
+    top: -2px;
+  }
+
+  .mat-radio-button.mat-accent .mat-radio-outer-circle{
+    border-color  : nb-theme(black-color);
+    border: 1px solid;
+  }
+  .mat-radio-button{
+    font-family: inherit;
+    font-weight: bold;
+    color  : nb-theme(black-color);
+  }
+
+  .mat-radio-button .mat-radio-ripple{
+    left: calc(50% - 34px);
+    top: calc(50% - 34px);
+    height: 64px;
+    width: 64px;
+  }
+
+  .mat-radio-label-content{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-left: 15px;
+    margin-top: 5px;
+    cursor: pointer;
+    position: relative;
+
+    ;
+  }
+}
+
+.flex-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+:focus {
+  outline:none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+}
+
+}

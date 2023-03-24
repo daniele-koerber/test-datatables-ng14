@@ -1,0 +1,30 @@
+<nb-card style="width: 95vw; max-height: 95vh;">
+  <nb-card-header>{{ 'SHARED.Alarms_details' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="flex small-space">
+      <div >{{ 'REPORT.Reason' | translate }}: <strong >{{reasonName}} </strong> </div>
+    </div>
+    <br />
+    <div [hidden]="isJustifyReason == true"  class="flex small-space" style="padding-top: 5px;">
+      <div >{{ 'OVERVIEW.Machine' | translate }}: <strong >{{machineName}} </strong> </div>
+      <!-- <div class="first-div-align">{{ 'OVERVIEW.Machine' | translate }}: </div>
+      <div class="second-div-align"><strong >{{machineName}} </strong></div> -->
+    </div>
+
+
+
+    <div style="min-height: 150px; width: 100%;margin: 0 auto;" id= "{{chartId}}"> </div>
+    <p [hidden]="showInfo == false"  class="info-paragraph">{{ 'SHARED.Click_on_chart_bars_for_details' | translate }}</p>
+
+  </nb-card-body>
+</nb-card>
+
+
+

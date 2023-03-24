@@ -1,0 +1,129 @@
+<div  style="overflow-x: auto;" *ngIf="ordersData?.length > 0" >
+  <dx-tree-list
+  itemsExpr="childrens"
+  dataStructure="tree"
+  [height]=" tableHeight "
+  [columnAutoWidth]="true"
+  [showRowLines]="true"
+  [showBorders]="false"
+  [showColumnLines]="false"
+  [autoExpandAll]="false"
+  [hoverStateEnabled]="true"
+  [dataSource]="ordersData">
+  <!-- (onRowClick)="toggleRow($event)"> GVA: temporanemente commentato perchè con questo evento non funziona l'espansione cliccando nella freccia a dx-->
+
+    <!-- Columns -->
+    <dxi-column
+    [fixed]="true"
+    dataField="name"
+    cellTemplate="cellNameTemplate"
+    minWidth="200"
+    [caption]="'REPORT.Order' | translate">
+    </dxi-column>
+
+    <dxi-column
+    dataField="startTime"
+    dataType="date"
+    sortOrder="desc"
+    cellTemplate="cellDateTemplate"
+    alignment="left"
+    [caption]="'SHARED.From' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="endTime"
+    dataType="date"
+    alignment="left"
+    cellTemplate="cellDateTemplate"
+    [caption]="'SHARED.To' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="processCell"
+    [caption]="'REPORT.Process_Cell' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="oee"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.OEE' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="availability"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.Availability' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="performance"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.Performance' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="quality"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.Quality' | translate"></dxi-column>
+
+
+    <dxi-column
+    dataField="targetPieces"
+    alignment="left"
+    cellTemplate="cellPiecesTemplate"
+    [caption]="'COMMON.Target' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="goodPieces"
+    alignment="left"
+    cellTemplate="cellPiecesTemplate"
+    [caption]="'COMMON.Good_Pieces' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="defectivePieces"
+    alignment="left"
+    cellTemplate="cellPiecesTemplate"
+    [caption]="'COMMON.Defective' | translate"></dxi-column>
+
+    <!-- Options -->
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <!--<dxo-paging [enabled]="true" [pageSize]="10"> </dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10, 100, 1000]"
+      [showNavigationButtons]="true"
+      [showInfo]="true">
+    </dxo-pager> -->
+
+    <!-- Templates -->
+    <ng-container *dxTemplate="let cell of 'cellNameTemplate'">
+      <span *ngIf="cell.data.isParent === true" (click)="openDetails(cell.data)" class="order-link"> {{ cell.value }}</span>
+      <span *ngIf="cell.data.isParent === false"> {{ cell.value }}</span>
+
+      <span *ngIf="cell.data.isParent === true"
+      [class]=" 'warning ' + (cell.data.hasNoCompliantQualityChecks === true ? '' : 'transparent')">
+      
+        <nb-icon [matTooltip]="tooltipText" matTooltipPosition="right" icon="alert-circle"></nb-icon>
+      </span>
+    </ng-container>
+    <ng-container *dxTemplate="let cell of 'cellDateTemplate'">
+      <div>
+        {{ cell.value | DateFormatPipe }}
+      </div>
+    </ng-container>
+    <ng-container *dxTemplate="let cell of 'cellPercentageTemplate'">
+      <div style="white-space:nowrap;" class="formatNumber" [class]=" 'text-' + getValueColorClass(cell.value) ">
+        {{ cell.value | number : '1.2-2' }} %
+      </div>
+    </ng-container>
+    <ng-container *dxTemplate="let cell of 'cellPiecesTemplate'">
+      <div class="formatNumber">
+        {{ cell.value | number : '1.2-2' | removeComma }} {{ (cell.value !== null ? cell.data.uom : '') }}
+      </div>
+    </ng-container>
+  </dx-tree-list>
+
+</div>
+<div *ngIf="(ordersData?.length <= 0 || !ordersData) && !isLoading" class="no-data">
+  <p style="font-size: 20px;">
+    {{ 'SHARED.No_Data_Available' | translate }}
+  </p>
+</div>

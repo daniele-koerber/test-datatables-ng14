@@ -1,0 +1,97 @@
+<!-- style="width: 1020px;" [ngStyle]="{'height': showUpdatePageAlert == true ? '750px' : '700px' }" -->
+<nb-card style="width: 65vw; max-height: 95vh" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-body>
+    <!-- <ngx-spinner  [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading]="isLoading" *ngIf="isLoading" class="bg-spinner"></ngx-spinner> -->
+    <div class="row">
+      <div class="col-sm-12">
+        <form [formGroup]="mainForm">
+          <div class="div-container">
+            <div class="flex small-space">
+              <div class="first-div-align">{{ 'OVERVIEW.Production_Order' | translate }}: </div>
+              <div class="second-div-align"> <strong>{{productionOrder.productionOrder}}</strong> </div><br />
+            </div>
+
+            <div class="flex small-space">
+              <div class="first-div-align">{{ 'OVERVIEW.Product_Code' | translate }}: </div>
+              <div class="second-div-align"><strong>{{productionOrder.productCode}}</strong>
+                {{ (productionOrder.parametersModified ? '(' + translated_text_with_changes + ')' : "") }}
+              </div><br />
+            </div>
+
+            <div class="flex small-space">
+              <div class="first-div-align">{{ 'PRODUCT_DEFINITION.Version' | translate }}: </div>
+              <div class="second-div-align"><strong> {{productionOrder.version}}</strong></div><br />
+            </div>
+          </div>
+
+          <table class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+            <thead>
+              <tr>
+                <th>{{ 'CALENDAR.Parameter_Description' | translate }}</th>
+                <th>{{ 'CALENDAR.Value' | translate }}</th>
+                <th>{{ 'CALENDAR.UoM' | translate }}</th>
+                <th class="text-center">{{ 'CALENDAR.Parameter_Changes' | translate }}</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let row of data?.productParameterValues; let i = index">
+
+
+                  <td>{{ row?.parameterDescription}}</td>
+                  <td>
+                    <div [ngSwitch]=" row?.parameterType ">
+                    <ngx-calendar-working-parameter                     [processCellPath]="processCellPath" [formGroup]="mainForm" (emitChange)="emitChangeF(row)" *ngSwitchCase=" 'WorkingParameter' "                       [readonly]="isCompleted === true || canEditParameters !== true || productionOrder.status ===5 || isReport == true " [disabled]="canEditParameters !== true || productionOrder.status ===5  || isReport == true" [changed]=" row.changed " [row]="row"></ngx-calendar-working-parameter>
+                    <ngx-calendar-mandatory-parameter-speed             [processCellPath]="processCellPath" [formGroup]="mainForm" (emitChange)="emitChangeF(row)" *ngSwitchCase=" 'MandatoryParameterSpeed' "                [readonly]="isCompleted === true || canEditParameters !== true || productionOrder.status ===5 || isReport == true " [disabled]="canEditParameters !== true || productionOrder.status ===5  || isReport == true" [changed]=" row.changed " [row]="row" ></ngx-calendar-mandatory-parameter-speed>
+                    <ngx-calendar-mandatory-parameter-speed             [processCellPath]="processCellPath" [formGroup]="mainForm" (emitChange)="emitChangeF(row)" *ngSwitchCase=" 'MandatoryParameterReferenceSpeed' "       [readonly]="isCompleted === true || canEditParameters !== true || productionOrder.status ===5 || isReport == true " [disabled]="canEditParameters !== true || productionOrder.status ===5  || isReport == true" [changed]=" row.changed " [row]="row" ></ngx-calendar-mandatory-parameter-speed>
+                    <ngx-calendar-mandatory-parameter-unit-conversion   [processCellPath]="processCellPath" [formGroup]="mainForm" (emitChange)="emitChangeF(row)" *ngSwitchCase=" 'MandatoryParameterUnitConversion' "       [readonly]="isCompleted === true || canEditParameters !== true || productionOrder.status ===5 || isReport == true " [disabled]="canEditParameters !== true || productionOrder.status ===5  || isReport == true" [changed]=" row.changed " [row]="row" ></ngx-calendar-mandatory-parameter-unit-conversion>
+                    <ngx-calendar-quality-range-parameter               [processCellPath]="processCellPath" [formGroup]="mainForm" (emitChange)="emitChangeF(row)" *ngSwitchCase=" 'QualityRangeParameter' "                  [readonly]="isCompleted === true || canEditParameters !== true || productionOrder.status ===5 || isReport == true " [disabled]="canEditParameters !== true || productionOrder.status ===5  || isReport == true" [changed]=" row.changed " [row]="row" ></ngx-calendar-quality-range-parameter>
+                    <ngx-calendar-quality-type-parameter                [processCellPath]="processCellPath" [formGroup]="mainForm" (emitChange)="emitChangeF(row)" *ngSwitchCase=" 'QualityTypeParameter' "                   [readonly]="isCompleted === true || canEditParameters !== true || productionOrder.status ===5 || isReport == true " [disabled]="canEditParameters !== true || productionOrder.status ===5  || isReport == true" [changed]=" row.changed " [row]="row" ></ngx-calendar-quality-type-parameter>
+                    <ngx-calendar-routing-parameter                     [processCellPath]="processCellPath" [formGroup]="mainForm" (emitChange)="emitChangeF(row)" *ngSwitchCase=" 'MandatoryParameterRouting' "              [readonly]="isCompleted === true || canEditParameters !== true || productionOrder.status ===5 || isReport == true " [disabled]="canEditParameters !== true || productionOrder.status ===5  || isReport == true" [changed]=" row.changed " [row]="row" [unitPath]=" data.unitPath "   ></ngx-calendar-routing-parameter>
+                      <div *ngSwitchDefault></div>
+                    </div>
+
+                  </td>
+                  <td>{{ row.parameterUoM }}</td>
+                  <td>
+                    <div class="flex">
+                      <span [class]=" row.hasValueBeenModified ? 'enabled' : 'disabled' " class="center-button" (click)=" showParameterChanges(row) ">
+                        <!-- <nb-icon icon="clock-outline"></nb-icon> -->
+                        <i class="far fa-clock"></i>
+                      </span>
+                    </div>
+                  </td>
+
+              </tr>
+
+              <tr>
+                <td class="line_residence_time">{{ 'PRODUCT_DEFINITION.line_residence_time' | translate }}</td>
+                <td>
+                  <mat-form-field class='inline'><input matInput readonly="readonly" [name]=" 'hours' " type="number" min="0" max="23" [value]=" getTrunk(data.changeoverTime, 0) " /></mat-form-field> :
+                  <mat-form-field class='inline'><input matInput readonly="readonly" [name]=" 'minutes' " type="number" min="0" max="59" [value]=" getTrunk(data.changeoverTime, 1) " /></mat-form-field> :
+                  <mat-form-field class='inline'><input matInput readonly="readonly" [name]=" 'seconds' " type="number" min="0" max="59" [value]=" getTrunk(data.changeoverTime, 2) " /></mat-form-field>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+
+            </tbody>
+          </table>
+          <div [hidden] = " !showUpdatePageAlert  " class="text-danger text-center" >
+            <br /> {{ 'COMMON.update_page_routing_modified' | translate }}
+          </div>
+          <div class="flex medium-space">
+            <button nbButton
+                    [disabled]=" isCompleted === true || !canFormBeSaved || canEditParameters === false || isReport == true "
+                    (mousedown)= "saveChanges()"
+                    class="appearance-filled secondary" style="margin:0 auto">
+              {{ 'COMMON.Save' | translate }}
+            </button >
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+

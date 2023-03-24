@@ -1,0 +1,31 @@
+.col {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+}
+
+.card-title{
+  font-family: nb-theme(font-family-semibold);
+  font-size: 18px;
+  margin: 0px;
+}
+
+.shift-property{
+  display: flex;
+  // margin-bottom: 1rem;
+  align-items: center;
+  width: 100%;
+}
+
+.shift-property span{
+  width: 50%;
+  margin: 5px;
+}
+
+.color-picker-read{
+  min-width: 22px;
+  min-height: 22px;
+  border-radius: 6px;
+  border: 1px solid #90887d;
+  margin: auto;
+}

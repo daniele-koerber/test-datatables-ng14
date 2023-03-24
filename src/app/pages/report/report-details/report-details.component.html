@@ -1,0 +1,323 @@
+
+<div class="row justify-content-between">
+  <div class="col-4">
+    <h5>{{ 'REPORT.Report_Details' | translate }}</h5>
+  </div>
+  <div class="col-4">
+    <ngx-report-buttons-card
+      [dateStart]="dateStart"
+      [dateEnd]="dateEnd"
+      [processCell]="processCellPath"  
+    ></ngx-report-buttons-card>
+  </div>
+</div>
+
+<div class="flex">
+  <button nbButton class="appearance-filled tertiary" size="medium" (mousedown)="redirectToReport()" >
+    <nb-icon icon="chevron-left-outline"></nb-icon> {{ 'COMMON.Back' | translate }}
+  </button>
+
+  <button [disabled]=" donwloadInProgress === true " [hidden]="!canExportData" nbButton class="appearance-filled tertiary" size="medium" (mousedown)="print()" style="float: right;">
+    <span [hidden] ="donwloadInProgress === true">{{ 'REPORT.Download_PDF' | translate }} <nb-icon icon="arrow-downward-outline"></nb-icon></span>
+    <span [hidden] ="donwloadInProgress === false">{{ 'REPORT.Downloading_PDF' | translate }}</span>
+
+  </button>
+</div>
+<div id='exportArea'>
+  <div class="col-12">
+    <div class="d-flex flex-wrap">
+      <div class="col-12 mt-3" *ngIf="isOrderReport">
+        <ngx-actual-order-card
+        [batch]="acutalOrderCard?.batch"
+        [batchQuantities]="acutalOrderCard?.batchQuantity"
+        [isLoading]="acutalOrderCard?.isLoading"
+        [serverError]="acutalOrderCard?.serverError"
+        [processCellPath]="processCellPath"
+        [processCellName]="processCellName"
+        [isPrevOrderEnable]="acutalOrderCard?.isPrevOrderEnable"
+        [isNextOrderEnable]="acutalOrderCard?.isNextOrderEnable"
+        [nextOrderPC]="acutalOrderCard?.nextOrderPC"
+        [prevOrderPC]="acutalOrderCard?.prevOrderPC"
+        [UoM] = "UoM"
+        (prevOrderClick)="changeBatch(false)"
+        (nextOrderClick)="changeBatch(true)"></ngx-actual-order-card>
+      </div>
+
+      <div class="col-6 mt-3" *ngIf="isShiftReport">
+        <ngx-actual-shift-report-card
+        [shift]="actualShiftCard?.shift"
+        [shiftQuantities]="actualShiftCard?.shiftQuantities"
+        [isLoading]="actualShiftCard?.isLoading"
+        [serverError]="actualShiftCard?.serverError"
+        [processCellPath]="processCellPath"
+        [processCellName]="processCellName"
+        [isPrevShiftEnable]="actualShiftCard?.isPrevShiftEnable"
+        [isNextShiftEnable]="actualShiftCard?.isNextShiftEnable"
+        [nextShiftPC]="actualShiftCard?.nextShiftPC"
+        [prevShiftPC]="actualShiftCard?.prevShiftPC"
+        [UoM] = "UoM"
+        (prevShiftClick)="changeShift(false)"
+        (nextShiftClick)="changeShift(true)"></ngx-actual-shift-report-card>
+      </div>
+
+      <div class="col-6 mt-3" *ngIf="isShiftReport">
+        <ngx-orders-list-report-card
+        [ordersList]="ordersListCard.ordersList"
+        [isLoading]="ordersListCard.isLoading"></ngx-orders-list-report-card>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="d-flex flex-wrap mt-3" [hidden]="orderMachineOEELoading ">
+    <div class="col-sm-12" [hidden]="orderMachineOEEServerError">
+      <ngx-realtime-tab
+                        (machinesTabChanged)="onMachinesTabChanged($event)"
+                        [machinesArray]="tabMachinesArray"
+                        [hidePrimaryTab]="true"
+                        [resetTabSel] ="resetTabSel"
+      ></ngx-realtime-tab>
+    </div>
+    <p *ngIf="(orderMachineOEEServerError)">
+      {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+    </p>
+  </div>
+
+  <div class="col-12">
+    <div class="d-flex flex-wrap">
+      <div class="col-lg-3 col-md-6 mt-3">
+        <ngx-oee-card
+        [oee]="oeeCard?.oee"
+        [chartId]="'oee-chart-report'"
+        [isOrder]="oeeCard?.isOrder"
+        [isShift]="oeeCard?.isShift"
+        [isLine]="oeeCard?.isLine"
+        [processCellPath]="processCellPath"
+        [isLoading]="oeeCard?.isLoading"
+        [noData]="oeeCard?.noData"
+        [serverError]="oeeCard?.serverError"
+        [machinePath]="oeeCard?.machinePath"
+        [dateStart]="dateStart"
+        [dateEnd]="dateEnd"
+        ></ngx-oee-card>
+      </div>
+      <div class="col-lg-3 col-md-6 mt-3">
+        <ngx-availability-card
+        [oee]="oeeCard?.oee"
+        [chartId]="'availability-chart-report'"
+        [isOrder]="oeeCard?.isOrder"
+        [isShift]="oeeCard?.isShift"
+        [isLine]="oeeCard?.isLine"
+        [processCellPath]="processCellPath"
+        [isLoading]="oeeCard?.isLoading"
+        [noData]="oeeCard?.noData"
+        [serverError]="oeeCard?.serverError"
+        [machinePath]="oeeCard?.machinePath"
+        [dateStart]="dateStart"
+        [dateEnd]="dateEnd"
+        ></ngx-availability-card>
+      </div>
+      <div class="col-lg-3 col-md-6 mt-3">
+        <ngx-performance-card
+        [oee]="oeeCard?.oee"
+        [chartId]="'performance-chart-report'"
+        [isOrder]="oeeCard?.isOrder"
+        [isShift]="oeeCard?.isShift"
+        [isLine]="oeeCard?.isLine"
+        [processCellPath]="processCellPath"
+        [isLoading]="oeeCard?.isLoading"
+        [noData]="oeeCard?.noData"
+        [serverError]="oeeCard?.serverError"
+        [machinePath]="oeeCard?.machinePath"
+        [dateStart]="dateStart"
+        [dateEnd]="dateEnd"
+        ></ngx-performance-card>
+      </div>
+      <div class="col-lg-3 col-md-6 mt-3">
+        <ngx-quality-card
+        [oee]="oeeCard?.oee"
+        [chartId]="'quality-chart-report'"
+        [isOrder]="oeeCard?.isOrder"
+        [isShift]="oeeCard?.isShift"
+        [isLine]="oeeCard?.isLine"
+        [processCellPath]="processCellPath"
+        [isLoading]="oeeCard?.isLoading"
+        [noData]="oeeCard?.noData"
+        [serverError]="oeeCard?.serverError"
+        [machinePath]="oeeCard?.machinePath"
+        [dateStart]="dateStart"
+        [dateEnd]="dateEnd"
+        ></ngx-quality-card>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-12">
+    <div class="d-flex flex-wrap">
+      <div [ngClass]="selectedMachinePath ? 'col-lg-3 col-md-12 mt-3' : 'col-12 col-xxxl-6 mt-3'" >
+        <ngx-machine-status-card
+                                  [machinesStatus]="machineStatusInMinutes"
+                                  [machinesStatusFull]="machineStatusInMinutesFull"
+                                  [machineStatus]="machineStatusCard.machineStatusInMinutes"
+                                  [isLoading]="selectedMachinePath ? machineStatusCard?.isLoading : machineStatusInMinutes?.isLoading || machineStatusInMinutesFull?.isLoading"
+                                  [serverError]="selectedMachinePath ? machineStatusCard?.serverError : machineStatusInMinutes?.serverError || machineStatusInMinutesFull?.serverError"
+                                  [processCellPath]="processCellPath"
+                                  [machinePath]="selectedMachinePath"
+                                  [dateStart]="dateStart"
+                                  [dateEnd]="dateEnd"
+                                  [showMachineInUse]="true"
+        ></ngx-machine-status-card>
+      </div>
+
+     <!-- <div *ngIf="selectedMachinePath && !(liveDataCard.chartData1?.length > 0  || liveDataCard.chartData2?.length > 0)" class="'col-12 col-xxxl-9 mt-3'"> -->
+      <div *ngIf="selectedMachinePath && !(liveDataCard.chartData1?.length > 0  || liveDataCard.chartData2?.length > 0)" [ngClass]="liveDataCard.chartData1?.length > 0  || liveDataCard.chartData2?.length > 0? 'col-12 col-xxxl-9 mt-3' : 'col-12 col-xxxl-9 mt-3'">
+
+          <ngx-machine-history-card
+          [componentData]="componentDataMachineHistory"
+          [machineSpeeds]="machineSpeeds"
+          [parameterSpeeds]="parameterSpeeds"
+          [productionCounter]="productionCounter"
+          [occurrencesList]="alarmOccurrences"
+          [hoursToDisplay]="hoursToDisplay"
+          [isLoading]="componentDataMachineHistory.isLoading"
+          [noData]="componentDataMachineHistory.noData"
+          [serverError]="componentDataMachineHistory.serverError"
+          [processCellPath]="processCellPath"
+          [machinePath]="selectedMachinePath"
+          [dateStart]="dateStart"
+          [dateEnd]="dateEnd"
+          [machineSpeedsUoM]="machineSpeedUoM"
+          [hideDateAxis]="false"
+          [showScrollBarX]="false"
+          ></ngx-machine-history-card>
+      </div>
+
+      <div *ngIf="!selectedMachinePath && !(liveDataCard.chartData1?.length > 0  || liveDataCard.chartData2?.length > 0)" class="'col-lg-6 col-md-12 mt-3'">
+        <ngx-end-line-speed-card
+        [chartData]="endLineSpeedCard.chartData"
+        [chartId]="'endLineRepChartID'"
+        [UoM]="endLineSpeedCard.UoM"
+        [actualSpeed]="endLineSpeedCard.actualSpeed"
+        [setPointSpeed]="endLineSpeedCard.setPointSpeed"
+        [timeUoM]="endLineSpeedCard.timeUoM"
+        [hideDateAxis]="false"
+        [isLoading]="endLineSpeedCard.isLoading"
+        [serverError]="endLineSpeedCard.serverError"
+        [noData]="endLineSpeedCard.noData"
+        [processCellPath]="processCellPath"
+        [dateStart]="dateStart"
+        [dateEnd]="dateEnd"
+        [showActualValue]="false"
+        ></ngx-end-line-speed-card>
+      </div>
+      
+      <div *ngIf="liveDataCard.chartData1?.length > 0 || liveDataCard.chartData2?.length > 0"  [ngClass]="selectedMachinePath? 'col-12 col-xxxl-9 mt-3' : 'col-lg-6 col-md-12 mt-3'">
+        <ngx-live-data-card
+        [titleChart1]="liveDataCard.titleChart1"
+        [titleChart2]="liveDataCard.titleChart2"
+        [chartData1]="liveDataCard.chartData1"
+        [chartData2]="liveDataCard.chartData2"
+        [UoM1]="liveDataCard.UoM1"
+        [UoM2]="liveDataCard.UoM2"
+        [hideDateAxis]="false"
+        [isLoading]="liveDataCard.isLoading"
+        [serverError]="liveDataCard.serverError"
+        [noData]="liveDataCard.noData"
+        [processCellPath]="processCellPath"
+        [dateStart]="dateStart"
+        [dateEnd]="dateEnd"
+        [machinePath]="selectedMachinePath"
+        [showActualValue]="false"
+        ></ngx-live-data-card>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="d-flex flex-wrap">
+      <div *ngIf="!selectedMachinePath && (liveDataCard.chartData1?.length > 0  || liveDataCard.chartData2?.length > 0)" class="col-lg-12 col-md-12 mt-3">
+        <ngx-end-line-speed-card
+        [chartData]="endLineSpeedCard.chartData"
+        [chartId]="'endLineRepChartID_full'"
+        [UoM]="endLineSpeedCard.UoM"
+        [actualSpeed]="endLineSpeedCard.actualSpeed"
+        [setPointSpeed]="endLineSpeedCard.setPointSpeed"
+        [timeUoM]="endLineSpeedCard.timeUoM"
+        [hideDateAxis]="false"
+        [isLoading]="endLineSpeedCard.isLoading"
+        [serverError]="endLineSpeedCard.serverError"
+        [noData]="endLineSpeedCard.noData"
+        [processCellPath]="processCellPath"
+        [dateStart]="dateStart"
+        [dateEnd]="dateEnd"
+        [showActualValue]="false"
+        ></ngx-end-line-speed-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="d-flex flex-wrap">
+      <div *ngIf="selectedMachinePath && (liveDataCard.chartData1?.length > 0  || liveDataCard.chartData2?.length > 0)" class="col-lg-12 col-md-12 mt-3">
+        <ngx-machine-history-card
+        [componentData]="componentDataMachineHistory"
+        [machineSpeeds]="machineSpeeds"
+        [parameterSpeeds]="parameterSpeeds"
+        [productionCounter]="productionCounter"
+        [occurrencesList]="alarmOccurrences"
+        [hoursToDisplay]="hoursToDisplay"
+        [isLoading]="componentDataMachineHistory.isLoading"
+        [noData]="componentDataMachineHistory.noData"
+        [serverError]="componentDataMachineHistory.serverError"
+        [processCellPath]="processCellPath"
+        [machinePath]="selectedMachinePath"
+        [dateStart]="dateStart"
+        [dateEnd]="dateEnd"
+        [machineSpeedsUoM]="machineSpeedUoM"
+        [hideDateAxis]="false"
+        [showScrollBarX]="false"
+        ></ngx-machine-history-card>
+    </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="d-flex flex-wrap">
+      <div class="col-lg-12 col-md-12 mt-3">
+        <!-- Downtime -->
+        <ngx-downtime-alarm-card  [componentData]="downtimeAlarmCard.downtimes"
+                                  [chartId]="'downtime-alarm-chart-report'"
+                                  [serverError]= "downtimeAlarmCard?.serverError"
+                                  [processCellPath]="downtimeAlarmCard.processCellPath"
+                                  [isLoading]= "downtimeAlarmCard?.isLoading"
+                                  [processCellPath]="processCellPath"
+                                  [machinePath]="selectedMachinePath"
+                                  [dateStart]="dateStart"
+                                  [dateEnd]="dateEnd"
+        ></ngx-downtime-alarm-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="d-flex flex-wrap">
+      <div class="col-lg-12 col-md-12 mt-3">
+        <!-- Alarms -->
+        <ngx-alarm-summary-card [componentData]="alarmSummaryCard.alarms"
+                                [chartId]="'alarm-summary-chart-report'"
+                                [serverError]= "alarmSummaryCard?.serverError"
+                                [isLoading]= "alarmSummaryCard?.isLoading"
+                                [processCellPath]="processCellPath"
+                                [machinePath]="selectedMachinePath"
+                                [dateStart]="dateStart"
+                                [dateEnd]="dateEnd"
+        ></ngx-alarm-summary-card>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="flex">
+</div>

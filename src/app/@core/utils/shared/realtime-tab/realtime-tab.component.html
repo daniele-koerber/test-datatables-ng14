@@ -1,0 +1,46 @@
+    <div class=" padding-top-20 ">
+      <div class="overflow" *ngIf="hidePrimaryTab === false" style="display: flex;" [ngStyle]="{'margin-left': hideScrollButtons ? '0px' : '40px'}">
+
+        <ng-kds-tab (change)="emitChangeMainFilter($event)">
+          <ng-kds-tab-container>
+            <ng-kds-tab-item [active]=" i === primaryTabSelIndex " [disabled]="mainSelect.disabled" *ngFor=" let mainSelect of mainFilterArray; let i = index">
+              <ng-template #title>{{mainSelect.title }}</ng-template>
+            </ng-kds-tab-item>
+          </ng-kds-tab-container>
+        </ng-kds-tab>
+      </div>
+
+      <div>
+
+        <div class="overflow" style="display: flex;" #secondaryTabContainer>
+          <div class="left-button-container" [ngClass]="hideScrollButtons || machinesArray?.length <= 0 ? 'hide-element' : ''">
+            <button nbButton class="appearance-filled tertiary" size="medium" (mousedown)="slideLeft()" (mouseup)="resetTimer()" (mouseleave)="resetTimer()">
+              <nb-icon icon="chevron-left-outline"></nb-icon>
+            </button>
+          </div>
+
+          <ng-kds-tab id="secondaryTab" *ngIf=" machinesArray?.length > 0 && hideMachinesTab === false" (change)="emitChangeMachine($event)">
+            <ng-kds-tab-container>
+              <ng-kds-tab-item [active]=" i === machineTabSelIndex " *ngFor=" let machineOee of machinesArray; let i = index">
+                <ng-template #title>{{ machineOee?.title }}</ng-template>
+
+                <ng-template #icon>
+                  <ngx-oee-badge-status [status]="machineOee?.status" class="d-flex align-items-center"></ngx-oee-badge-status>
+                </ng-template>
+
+              </ng-kds-tab-item>
+
+            </ng-kds-tab-container>
+          </ng-kds-tab>
+          <div class="right-button-container" [ngClass]="hideScrollButtons || machinesArray?.length <= 0 ? 'hide-element' : ''">
+            <button nbButton class="appearance-filled tertiary" size="medium" (mousedown)="slideRight()" (mouseup)="resetTimer()" (mouseleave)="resetTimer()">
+              <nb-icon icon="chevron-right-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>

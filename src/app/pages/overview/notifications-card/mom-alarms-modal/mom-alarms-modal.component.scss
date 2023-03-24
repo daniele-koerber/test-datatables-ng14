@@ -1,0 +1,36 @@
+table.dataTable {
+  th { white-space: nowrap; }
+}
+.hidden { display: none }
+
+.break {
+  white-space: pre-line;
+}
+
+tbody {
+  display:block;
+  height:550px;
+  overflow:auto;
+}
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;/* even columns width , fix width of table too*/
+}
+th{
+  vertical-align: middle !important;
+  padding: 10px 10px !important;
+}
+thead {
+  // width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+// table {
+//   width:1400px;
+// }
+
+:focus {
+  outline:none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+}

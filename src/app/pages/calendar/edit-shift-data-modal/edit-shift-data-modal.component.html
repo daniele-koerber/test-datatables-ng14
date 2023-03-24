@@ -1,0 +1,58 @@
+<nb-card style="min-width: 450px;">
+  <nb-card-header style="vertical-align: middle;">{{ 'CALENDAR.Edit_Shift_Data' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+        <b >{{ 'SHARED.Time' | translate }}</b>
+        <div style="display: flex; justify-content: space-between; margin-left: 16px;">
+          <div style="margin-bottom: 10px; display: flex; align-items: center;">
+            <div class="grey-text">{{ 'OVERVIEW.Start_Time' | translate}}</div>
+            <!-- <dx-date-box [(value)]="shift.slotStart" type="time" displayFormat="HH:mm"> </dx-date-box> -->
+            <ngx-time-picker [(time)]='startTime' (timeChanged)="startTime = $event; touched = true"></ngx-time-picker>
+          </div>
+          <div style="margin-bottom: 10px; display: flex; align-items: center;">
+            <div class="grey-text">{{ 'OVERVIEW.End_Time' | translate}}</div>
+            <!-- <dx-date-box [(value)]="shift.slotStart" type="time" displayFormat="HH:mm"> </dx-date-box> -->
+            <ngx-time-picker [(time)]='endTime' (timeChanged)="endTime = $event; touched = true"></ngx-time-picker>
+          </div>
+        </div>
+        <!-- <ul>
+          <li *ngFor="let team of data">
+            <input type="radio" [(value)]="team.id" [(name)]="team.teamName" />
+          </li>
+        </ul> -->
+        <b style="margin-top: 16px;">{{ 'REPORT.Team' | translate }}</b>
+        <div style=" margin-left: 16px;">
+          <mat-radio-group  aria-labelledby="example-radio-group-label"
+                            class="flex-radio-group"
+                            [(ngModel)]="currentTeam"
+                            (change)="touched = true">
+            <mat-radio-button class="radio-button"  [checked]="currentTeam.id === team.id" *ngFor="let team of data" [value]="team">
+              <div class="team-radio">
+                <div>{{team.teamName}}</div>
+                <div *ngIf="team.teamColor !== null && team.teamColor !== undefined" class="color-div" [style.background]="team.teamColor"></div>
+              </div>
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="flex">
+          <button
+                  [disabled] = "touched === false"
+                  nbButton
+                  (click) = "saveChanges()"
+                  class="appearance-filled secondary" style="margin: 0 auto;">
+            {{ 'COMMON.Save' | translate }}
+          </button >
+        </div>
+
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

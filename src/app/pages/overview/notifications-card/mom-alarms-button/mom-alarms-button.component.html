@@ -1,0 +1,20 @@
+<button [matBadgeSize]="(alarmsCount < badgeThreshold ? 'medium' : 'medium')" mat-stroked-button
+        [class]="(alarmsCount < badgeThreshold ? 'primary' : 'danger') "
+        matBadgePosition="after"
+        matBadgeColor="warn"
+        [disabled]="!(alarmsCount>0)"
+        [matBadgeHidden]="!(alarmsCount>0)"
+        [matBadge]=" alarmsCount "
+        (mousedown)=' openAlarmsModal() '>
+        <div [innerHTML]="'OVERVIEW.Active_Errors' | translate "></div>
+</button>
+
+<ngx-server-notifications
+                          *ngIf="selectedProcessCell"
+                          from="active-errors-button"
+                          [processCell]="selectedProcessCell"
+                          [topic]="getComponentTopic()"
+                          [signalRSubscriptionType] = "getComponentSignalRSubscriptionType()"
+                          [signalRListenersNames]="getComponentSignalRListenersNames()"
+                          (message)="DowntimesCountChanged($event)">
+</ngx-server-notifications>

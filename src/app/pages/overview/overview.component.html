@@ -1,0 +1,344 @@
+<div class="d-flex flex-wrap justify-content-between">
+  <div class="col-6">
+    <h5 style="display:inline;">{{ 'OVERVIEW.Overview' | translate }}</h5>
+    <div [hidden]= 'hideDisplayGroup' style="display:inline; font-size: large;"> - {{displayGroupName}}</div>
+  </div>
+
+  <div class="col-6">
+    <ngx-notifications-card></ngx-notifications-card>
+  </div>
+</div>
+
+<div class="d-flex flex-wrap">
+  <div class="col-12">
+    <div class="d-flex flex-wrap">
+      <div class="col-lg-9 mt-3">
+        <ngx-actual-order-card
+        [batch]="actualOrderCard.batch"
+        [piecesQty]="batchActualQuantity"
+        [performancePercentage]="actualOrderCard.performancePercentage"
+        [oeePercentage]="actualOrderCard.oeePercentage"
+        [status] = "actualOrderCard.status"
+        [noData]="actualOrderCard.noData"
+        [isLoading]="actualOrderCard.isLoading"
+        [serverError]="actualOrderCard.serverError"
+        [processCellPath]="selectedProcessCellPath"
+        [isStopEnable]="actualOrderCard.isStopEnable"
+        [isPauseEnable]="actualOrderCard.isPauseEnable"
+        [isStartEnable]="actualOrderCard.isStartEnable"
+        (startProductionClick)="startProduction()"
+        (stopProductionClick)="stopProduction()"
+        (pauseProductionClick)="pauseProduction()"
+        (resumeProductionClick)="resumeProduction()"
+        ></ngx-actual-order-card>
+      </div>
+
+      <div class="col-lg-3 mt-3">
+        <ngx-actual-shift-card
+        [oee]="currentShiftCard.oee"
+        [status] = "currentShiftCard.status"
+        [shift]="currentShiftCard.shift"
+        [hasReport]="currentShiftCard.shiftHasReport"
+        [isLoading]="currentShiftCard.isLoading"
+        [serverError]="currentShiftCard.serverError"
+        [processCellPath]="selectedProcessCellPath"
+        ></ngx-actual-shift-card>
+      </div>
+    </div>
+
+    <div  *ngIf="!actualOrderCard.isLoading && !currentShiftCard.isLoading && !actualOrderCard.serverError && !currentShiftCard.serverError" style = "margin-top: 16px; ">
+
+      <h5 class="card-title" style="margin-bottom: 0px;">{{ 'OVERVIEW.Real_Time_Data' | translate }}</h5>
+
+      <div  *ngIf="orderIsActive || shiftIsActive">
+
+        <div class="d-flex flex-wrap">
+          <div class="col-sm-12">
+            <ngx-realtime-tab
+            (primaryTabChanged)=" onPrimaryTabChanged($event) "
+            (machinesTabChanged)=" onMachinesTabChanged($event) "
+            [machinesArray]=" tabMachinesArray  "
+            [resetTabSel] = "resetTabSel"
+            [disableShiftTab]="!shiftIsActive"
+            [disableOrderTab]="!orderIsActive"
+            ></ngx-realtime-tab>
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <div class="col-lg-3 col-md-6 mt-3">
+            <ngx-oee-card
+            [oee]="oeeCard.oee"
+            [isOrder]="oeeCard.isOrder"
+            [isShift]="oeeCard.isShift"
+            [isLine]="oeeCard.isLine"
+            [processCellPath]="selectedProcessCellPath"
+            [isLoading]="oeeCard.isLoading"
+            [noData]="oeeCard.noData"
+            [serverError]="oeeCard.serverError"
+            [machinePath]="oeeCard.machinePath"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            ></ngx-oee-card>
+          </div>
+          <div class="col-lg-3 col-md-6 mt-3">
+            <ngx-availability-card
+            [oee]="oeeCard.oee"
+            [isOrder]="oeeCard.isOrder"
+            [isShift]="oeeCard.isShift"
+            [isLine]="oeeCard.isLine"
+            [processCellPath]="selectedProcessCellPath"
+            [isLoading]="oeeCard.isLoading"
+            [noData]="oeeCard.noData"
+            [serverError]="oeeCard.serverError"
+            [machinePath]="oeeCard.machinePath"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            ></ngx-availability-card>
+          </div>
+          <div class="col-lg-3 col-md-6 mt-3">
+            <ngx-performance-card
+            [oee]="oeeCard.oee"
+            [isOrder]="oeeCard.isOrder"
+            [isShift]="oeeCard.isShift"
+            [isLine]="oeeCard.isLine"
+            [processCellPath]="selectedProcessCellPath"
+            [isLoading]="oeeCard.isLoading"
+            [noData]="oeeCard.noData"
+            [serverError]="oeeCard.serverError"
+            [machinePath]="oeeCard.machinePath"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            ></ngx-performance-card>
+          </div>
+          <div class="col-lg-3 col-md-6 mt-3">
+            <ngx-quality-card
+            [oee]="oeeCard.oee"
+            [isOrder]="oeeCard.isOrder"
+            [isShift]="oeeCard.isShift"
+            [isLine]="oeeCard.isLine"
+            [processCellPath]="selectedProcessCellPath"
+            [isLoading]="oeeCard.isLoading"
+            [noData]="oeeCard.noData"
+            [serverError]="oeeCard.serverError"
+            [machinePath]="oeeCard.machinePath"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            ></ngx-quality-card>
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <div *ngIf="!selectedMachinePath" class="col-lg-6 col-md-12 mt-3">
+            <ngx-line-status-card
+            [processCellPath]="selectedProcessCellPath"
+            [isReport] = "false"
+            [lineStatusChartData]="lineStatusCard.lineStatus"
+            [isLoading]="lineStatusCard.isLoading"
+            [serverError]="lineStatusCard.serverError"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            ></ngx-line-status-card>
+          </div>
+
+          <div *ngIf="selectedMachinePath" class= "col-12 col-xxxl-3 mt-3">
+            <ngx-machine-status-card
+            [actualStatusComponentData]="machineStatusCard.machineActualStatus"
+            [statusInMinComponentData]="machineStatusCard.machineStatusInMinutes"
+            [machineStatusHistory]="machineStatusCard.machineStatusHistory"
+            [machinePath]="selectedMachinePath"
+            [isLoading]="machineStatusCard.isLoadingActualStatus || machineStatusCard.isLoadingStatusInMin || machineStatusCard.isLoadingStatusHistory"
+            [serverError]="machineStatusCard.serverErrorActualStatus || machineStatusCard.serverErrorStatusInMin || machineStatusCard.serverErrorStatusHistory"
+            [processCellPath]="selectedProcessCellPath"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            [machinePath]="selectedMachinePath"
+            [isReport] = "false"
+            [hoursToDisplay]="hoursToDisplay"
+            ></ngx-machine-status-card>
+          </div>
+
+          <div *ngIf="!selectedMachinePath && !liveDataCard.chartData1?.length > 0  && !liveDataCard.chartData2?.length > 0" class= 'col-lg-6 col-md-12 mt-3'>
+            <ngx-end-line-speed-card
+            [chartData]="endLineSpeedCard.chartData"
+            [chartId]="'endLineChartID'"
+            [UoM]="endLineSpeedCard.UoM"
+            [actualSpeed]="endLineSpeedCard.actualSpeed"
+            [setPointSpeed]="endLineSpeedCard.setPointSpeed"
+            [timeUoM]="endLineSpeedCard.timeUoM"
+            [hideDateAxis]="true"
+            [isLoading]="endLineSpeedCard.isLoading"
+            [serverError]="endLineSpeedCard.serverError"
+            [noData]="endLineSpeedCard.noData"
+            [processCellPath]="selectedProcessCellPath"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            [hoursToDisplay]="hoursToDisplay"
+            [showActualValue]="true"
+            ></ngx-end-line-speed-card>
+          </div>
+
+          <div *ngIf="selectedMachinePath && !liveDataCard.chartData1?.length > 0  && !liveDataCard.chartData2?.length > 0" class='col-12 col-xxxl-9 mt-3'> 
+            <ngx-machine-history-card
+            [componentData]="componentDataMachineHistory"
+            [machineSpeeds]="machineSpeeds"
+            [parameterSpeeds]="parameterSpeeds"
+            [productionCounter]="productionCounter"
+            [occurrencesList]="alarmOccurrences"
+            [hoursToDisplay]="hoursToDisplay"
+            [isLoading]="componentDataMachineHistory.isLoading"
+            [noData]="componentDataMachineHistory.noData"
+            [serverError]="componentDataMachineHistory.serverError"
+            [processCellPath]="selectedProcessCellPath"
+            [machinePath]="selectedMachinePath"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            [machineSpeedsUoM]="machineSpeedUoM"
+            [hideDateAxis]="true"
+            ></ngx-machine-history-card>
+          </div>
+
+
+          <div *ngIf="liveDataCard.chartData1?.length > 0 || liveDataCard.chartData2?.length > 0" [ngClass]="selectedMachinePath? 'col-12 col-xxxl-9 mt-3' : 'col-lg-6 col-md-12 mt-3'"> <!--class="col-lg-3 col-md-6 mt-3" -->
+            <ngx-live-data-card
+            [titleChart1]="liveDataCard.titleChart1"
+            [titleChart2]="liveDataCard.titleChart2"
+            [chartData1]="liveDataCard.chartData1"
+            [chartData2]="liveDataCard.chartData2"
+            [UoM1]="liveDataCard.UoM1"
+            [UoM2]="liveDataCard.UoM2"
+            [hideDateAxis]="true"
+            [isLoading]="liveDataCard.isLoading"
+            [serverError]="liveDataCard.serverError"
+            [noData]="liveDataCard.noData"
+            [processCellPath]="selectedProcessCellPath"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            [machinePath]="selectedMachinePath"
+            [hoursToDisplay]="hoursToDisplay"
+            [showActualValue]="true"
+            ></ngx-live-data-card>
+          </div>
+        </div>
+
+        <div *ngIf="!selectedMachinePath && (liveDataCard.chartData1?.length > 0  || liveDataCard.chartData2?.length > 0)" class="col-lg-12 col-md-12 mt-3">
+          <!-- End LIne speed -->
+          <ngx-end-line-speed-card
+          [chartData]="endLineSpeedCard.chartData"
+          [chartId]="'endLineChartID_full'"
+          [UoM]="endLineSpeedCard.UoM"
+          [actualSpeed]="endLineSpeedCard.actualSpeed"
+          [setPointSpeed]="endLineSpeedCard.setPointSpeed"
+          [timeUoM]="endLineSpeedCard.timeUoM"
+          [hideDateAxis]="true"
+          [isLoading]="endLineSpeedCard.isLoading"
+          [serverError]="endLineSpeedCard.serverError"
+          [noData]="endLineSpeedCard.noData"
+          [processCellPath]="selectedProcessCellPath"
+          [dateStart]="dateStart"
+          [dateEnd]="dateEnd"
+          [hoursToDisplay]="hoursToDisplay"
+          [showActualValue]="true"
+          ></ngx-end-line-speed-card>
+        </div>
+
+        <div *ngIf="selectedMachinePath && (liveDataCard.chartData1?.length > 0  || liveDataCard.chartData2?.length > 0)" class="col-lg-12 col-md-12 mt-3">
+          <!-- Machine full history -->
+            <ngx-machine-history-card
+            [componentData]="componentDataMachineHistory"
+            [machineSpeeds]="machineSpeeds"
+            [parameterSpeeds]="parameterSpeeds"
+            [productionCounter]="productionCounter"
+            [occurrencesList]="alarmOccurrences"
+            [hoursToDisplay]="hoursToDisplay"
+            [isLoading]="componentDataMachineHistory.isLoading"
+            [noData]="componentDataMachineHistory.noData"
+            [serverError]="componentDataMachineHistory.serverError"
+            [processCellPath]="selectedProcessCellPath"
+            [machinePath]="selectedMachinePath"
+            [dateStart]="dateStart"
+            [dateEnd]="dateEnd"
+            [machineSpeedsUoM]="machineSpeedUoM"
+            [hideDateAxis]="true"
+            ></ngx-machine-history-card>
+        </div>
+
+        <div class="col-lg-12 col-md-12 mt-3">
+          <!-- Downtime -->
+          <ngx-downtime-alarm-card  [componentData]="downtimeAlarmCard.downtimes"
+                                    [serverError]="downtimeAlarmCard?.serverError"
+                                    [processCellPath]="downtimeAlarmCard.processCellPath"
+                                    [isLoading]="downtimeAlarmCard?.isLoading"
+                                    [noData]="downtimeAlarmCard?.noData"
+                                    [processCellPath]="selectedProcessCellPath"
+                                    [machinePath]="selectedMachinePath"
+                                    [dateStart]="dateStart"
+                                    [dateEnd]="dateEnd"
+          ></ngx-downtime-alarm-card>
+        </div>
+        <div class="col-lg-12 col-md-12 mt-3">
+          <!-- Alarms -->
+
+          <ngx-alarm-summary-card [componentData]="alarmSummaryCard.alarms"
+                                  [serverError]="alarmSummaryCard?.serverError"
+                                  [isLoading]="alarmSummaryCard?.isLoading"
+                                  [noData]="alarmSummaryCard?.noData"
+                                  [processCellPath]="selectedProcessCellPath"
+                                  [machinePath]="selectedMachinePath"
+                                  [dateStart]="dateStart"
+                                  [dateEnd]="dateEnd"
+          ></ngx-alarm-summary-card>
+        </div>
+
+
+      </div>
+
+      <div  *ngIf="!orderIsActive && !shiftIsActive">
+        <div class="col-lg-12 col-md-12 mt-3">
+          <ngx-line-status-card
+          [processCellPath]="selectedProcessCellPath"
+          [isReport] = "false"
+          [lineStatusChartData]="lineStatusCard.lineStatus"
+          [isLoading]="lineStatusCard.isLoading"
+          [serverError]="lineStatusCard.serverError"
+          [dateStart]="dateStart"
+          [dateEnd]="dateEnd"
+          ></ngx-line-status-card>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SignalR Batch -->
+<ngx-server-notifications
+                          [from]="'actual-order'"
+                          *ngIf="selectedProcessCellPath"
+                          [processCell]="selectedProcessCell"
+                          [topic]="getComponentTopic()"
+                          [signalRSubscriptionType]="'group'"
+                          [signalRListenersNames]="getComponentSignalRListenersNames()"
+                          (message)="BatchDataChanged()">
+</ngx-server-notifications>
+
+
+<ngx-server-notifications
+                          [from]="'line-status'"
+                          *ngIf="selectedProcessCellPath"
+                          [processCell]="selectedProcessCell"
+                          [topic]="getComponentTopic()"
+                          [signalRSubscriptionType]="'group'"
+                          [signalRListenersNames]="getComponentSignalRListenersNamesIntegration()"
+                          (message)="MachinesStatusChanged($event)">
+</ngx-server-notifications>
+
+<ngx-server-notifications
+                          [from]="'live-data'"
+                          *ngIf="selectedProcessCellPath"
+                          [processCell]="selectedProcessCell"
+                          [topic]="getComponentTopic()"
+                          [signalRSubscriptionType]="'group'"
+                          [signalRListenersNames]="getComponentSignalRListenersNamesLiveData()"
+                          (message)="LineStatusLiveDataChanged($event)">
+</ngx-server-notifications>

@@ -1,0 +1,26 @@
+
+.no-padding{
+  padding: unset;
+  height: 430px;
+}
+
+.no-padding-nb-body{
+  overflow: unset;
+  border: none;
+}
+
+::ng-deep {
+  .mat-form-field-infix {
+   width:160px ;
+   }
+ .mat-form-field-wrapper {
+   width:auto ;
+  }
+}
+
+:focus {
+  outline:none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+}

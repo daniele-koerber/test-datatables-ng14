@@ -1,0 +1,16 @@
+<nb-card class="nb-card-team-definition" >
+  <!-- <nb-card-header>{{ 'CALENDAR.Import_shifts' | translate }}</nb-card-header> -->
+  <nb-card-body>
+    <div class="flex">
+
+      <form [formGroup]="formCSV" class="form-group form-group-lg">
+            <div style ="padding-bottom: 16px;" class='title'>
+              <b >2 - {{ 'CALENDAR.Import_shift_definition' | translate }}</b>
+            </div>
+
+            <ngx-upload [fileFormat]="'.xlsx'" [lang]='lang' [processCell]='selectedProcessCell?.path'  requireFile [uploadEnabled]='enableUpload' (uploadEvent)="uploading($event)" (uploadedSuccessfully)="importShifts($event)" formControlName="shift"></ngx-upload>
+      </form>
+
+    </div>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,188 @@
+
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+.flex{
+  display: flex;
+}
+.center-button{
+  margin: auto;
+}
+
+.input-align{
+  margin-top: -22px;
+}
+
+.no-border{
+  border: none;
+}
+
+.nb-card-team-definition{
+  border: 1px solid #f5f3f1;
+  // border-radius: 0.25rem;
+  box-shadow: none;
+  height: 95vh;
+  width: 95vw;
+}
+
+.text-center {
+  text-align: center;
+  text-transform: capitalize;
+}
+.flex-center{
+  display: flex;
+  justify-content: center;
+}
+
+
+.days-container{
+    height: 100%;
+    overflow: auto;
+  .single-day-container{
+    display: flex;
+    margin-bottom: 20px;
+    .day-title-container{
+      text-align: end;
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      min-width: 170px;
+      width: 170px;
+      justify-content: flex-end;
+
+      .day-number-container{
+        font-size: 23px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        margin-right: 20px;
+      }
+      .full-day-container{
+        margin-right: 20px;
+      }
+    }
+    .shifts-container{
+      display: flex;
+      .single-shift-container{
+
+        border: 1px solid nb-theme(color-basic-500);
+        border-radius: 0.45rem;
+        margin-right: 30px;
+        min-width: 200px;
+        width: 200px;
+        height: 220px;
+        position: relative;
+        padding: 15px;
+
+        .delete-button{
+          position: absolute;
+          top: 0px;
+          right: 0px;
+        }
+        .team-div{
+          display: flex;
+          justify-content: space-between;
+        }
+        .color-div{
+          width: 22px;
+          height: 22px;
+          border-radius: 6px;
+          border: 1px solid nb-theme(color-basic-500);
+        }
+      }
+    }
+    .add-shift-container{
+      display: flex;
+      align-items: center;
+      position: sticky;
+      right: 0px;
+      background-color: white;
+    }
+  }
+  .add-new-day-container{
+    padding: 1rem 3rem;
+    position: sticky;
+    bottom: 0px;
+    left: 0px;
+    background-color: white;
+  }
+}
+
+
+.bg-spinner{
+  position: absolute;
+  z-index: 2;
+  background: nb-theme(color-basic-control-transparent-600);
+  height: 100%;
+  width: 100%;
+  margin-top: -40px;
+  margin-left: -24px;
+}
+
+.date-icon{
+  z-index: 1;
+  color: #0060ff;
+}
+
+
+::ng-deep{
+  .mat-form-field-infix{
+    border-top: 0;
+  }
+  .date-mat{
+    width: 120px;
+    text-align: center;
+    border: none;
+
+    font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.5rem;
+      padding: 0.75rem 1rem;
+      color: #0060ff;
+  }
+
+  ::ng-deep{
+  .nb-theme-texas [nbInput].shape-rectangle {
+    border: none;
+  }}
+  ::ng-deep{
+  .nb-theme-texas [nbInput].size-medium {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.5rem;
+      padding: 0.75rem 1rem;
+      color: #0060ff;
+  }
+  }
+
+  ::ng-deep{
+  .nb-theme-texas [nbButton].appearance-ghost.status-basic{
+    color: #0060ff;
+  }
+}
+
+  ::ng-deep{
+  [nbButton].appearance-ghost.status-basic.btn-disabled {
+    background-color: transparent !important;
+    opacity: 0.5;
+  }}
+}
+
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.hint-text{
+  font-size: 12px;
+  color: nb-theme(color-basic-600);
+  display: flex;
+  justify-content: center;
+}
+
+.grey-text{
+  color: nb-theme(color-basic-600);
+}
+
+}

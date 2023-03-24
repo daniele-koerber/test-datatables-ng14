@@ -1,0 +1,33 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" [size]="'small'" style="width: 95vw; height: auto;">
+  <nb-card-header>
+    <h5>{{ 'SHARED.Pieces_Speed' | translate }}</h5>
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body style="padding-bottom: 30px;">
+    <div class="row">
+      <div class="col-sm-12">
+
+        <ngx-date-picker [date]="this.rawDate" [min]="min" [max]="max" (dateChange)="dateChanged($event)"></ngx-date-picker>
+
+        <ngx-machine-history-chart  chartId="machineFullHistoryChartDetail" [height]="'800px'"
+                                    [machineSpeeds]= "filteredMachineSpeeds"
+                                    [parameterSpeeds]="filteredParameterSpeeds"
+                                    [productionCounter]="filteredProductionCounter"
+                                    [occurrencesList] = "filteredOccurrencesList"
+                                    [hoursToDisplay]="hoursToDisplay"
+                                    [hideDateAxis]="hideDateAxis"
+                                    [machineSpeedsUoM]="machineSpeedsUoM"
+                                    [showScrollBarX]="showScrollBarX"
+         ></ngx-machine-history-chart>
+
+
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+

@@ -1,0 +1,37 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card-header>
+        <h5 class="card-title d-flex">{{'SHARED.Live_Data' | translate}}</h5>
+    </nb-card-header>
+    <nb-card-body class="d-flex flex-column justify-ßcontent-between">
+        <div *ngIf="chartData1?.length > 0">
+            <div ><span>{{ titleChart1 }} </span> <span *ngIf="showActualValue" class="nb-font-semibold">: {{currentValueChart1}} {{UoM1}}</span></div>
+            <ngx-smoothed-line-chart  [data]="chartData1"
+                                      [UoM]="UoM1"
+                                      [fill]="'#00b828'"
+                                      [chartId]="'liveDataChart1'"
+                                      [height]="chartData2?.length > 0 ? '120px': '250px'"
+                                      [hideDateAxis]="hideDateAxis"
+                                      [hoursToDisplay]="hoursToDisplay"
+                                      ></ngx-smoothed-line-chart>
+        </div>
+
+        <div *ngIf="chartData2?.length > 0">
+            <div ><span >{{ titleChart2 }} </span> <span *ngIf="showActualValue" class="nb-font-semibold">: {{currentValueChart2}} {{UoM2}}</span></div>
+            <ngx-smoothed-line-chart  [data]="chartData2"
+                                      [UoM]="UoM2"
+                                      [fill]="'#006bf9'"
+                                      [chartId]="'liveDataChart2'"
+                                      [height]="chartData1?.length > 0 ? '120px': '250px'"
+                                      [hideDateAxis]="hideDateAxis"
+                                      [hoursToDisplay]="hoursToDisplay"
+                                      ></ngx-smoothed-line-chart>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <div class="d-flex justify-content-end">
+            <button nbButton size="small" [disabled]="noData === true || isLoading === true" (mousedown)='goToDetails()' class="tertiary">
+                {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-footer>
+</nb-card>

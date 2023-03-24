@@ -1,0 +1,6 @@
+<mat-form-field>
+  <mat-label>{{ 'SHARED.Select' | translate }}</mat-label>
+  <mat-select (selectionChange)="selectionChange()" [(value)]="selectedTeam">
+    <mat-option *ngFor="let team of teamArray" [value]=" team ">{{ team.teamName }}</mat-option>
+  </mat-select>
+</mat-form-field>

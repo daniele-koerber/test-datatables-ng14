@@ -1,0 +1,26 @@
+<div >
+    <div class="drop-container">
+      <button nbButton status="basic"  class=" appearance-filled " style="position: relative;" for='fileDropRef'>
+        <input style="cursor: pointer;" type="file" required [accept]=" fileFormat " (change)="fileBrowseHandler($event.target.files)" />
+        {{ 'CALENDAR.Browse_file' | translate }}
+      </button>
+    </div>
+    <div class="files-list">
+      <div [hidden]='!file' class="single-file row">
+        <div class="col-md-6">
+          <img src="./assets/images/dnd/ic-file.svg" width="45px" style="float:left; margin-right: 10px;" alt="file">
+          <h4 class="name">
+            {{ (file?.name ? file?.name : '') }}
+          </h4>
+          <p class="size">
+            {{ (file?.size ? formatBytes(file?.size) : '') }}
+          </p>
+        </div>
+        <div class="col-md-6">
+          <span [hidden]='!file?.uploading'><i class="fa fa-spinner fa-spin"></i></span>
+          <div class="result" [innerHTML]='file?.uploadResult'></div>
+        </div>
+        <br style="clear:both" />
+      </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+
+
+
+
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+ 
+  .details {
+    font-size:14px;
+    color:nb-theme(blue-color);
+    justify-content: flex-end;
+    display: flex;
+    float: right;
+    }
+
+    .card-title{
+      margin: 0px;
+      font-family: nb-theme(font-family-semibold);
+      font-size: 18px;
+    }
+
+    .center-div{
+        width: 100px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+    
+    }
+
+}

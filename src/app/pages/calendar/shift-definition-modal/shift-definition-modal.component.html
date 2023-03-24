@@ -1,0 +1,26 @@
+<nb-card style="height: 95vh; width: 90vw;">
+  <nb-card-header>{{ 'CALENDAR.Shifts_Definition' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body class="no-padding-nb-body" style="height: 88vh;">
+
+    <div class="row" style="height: 100%;">
+      <div class="col-sm-4" style="height: 100%; overflow: hidden;">
+
+        <ngx-team-definition *ngIf="teams" [teams]="teams" (changeData)=" onTeamChange($event) "></ngx-team-definition>
+
+      </div>
+      <div class="no-padding col-sm-8" style="height: 100%;">
+
+        <ngx-shift-definition [teams] = "teams"  (changeData)="onShiftChange($event)" [from]="from" [to]="to"></ngx-shift-definition>
+
+      </div>
+    </div>
+
+  </nb-card-body>
+</nb-card>

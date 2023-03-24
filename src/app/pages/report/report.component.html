@@ -1,0 +1,145 @@
+<div class="full-height row" >
+  <div class="full-height col-sm-12">
+    <div class="box">
+      <div class="header">
+        <div class="header-row">
+          <h5>{{ 'REPORT.Report' | translate }}</h5>
+
+
+          <div style="display: flex;align-items: flex-end;">
+            <dx-autocomplete style="width: 12rem; margin: 0;"
+              label="Production order"
+              labelMode="floating"
+              minSearchLength = "3"
+              valueExpr = "productionOrder"
+              DisplayExpr = "productionOrder"
+              [dataSource]="poAutocompleteList"
+              [(value)]="autocompleteText"
+              (onValueChanged)="autocompleteTextChange($event.value)"
+              (onSelectionChanged)="autocompleteSelectionChange($event.selectedItem)">
+            </dx-autocomplete>
+
+            <button [disabled]="selectedProductionOrder === null || selectedProductionOrder === undefined" (click)="goToReport()" nbButton ghost class="go-button status-primary">
+              <nb-icon icon="arrow-forward-outline"></nb-icon>
+            </button>
+          </div>
+        </div>
+
+        <ngx-buttons-toggle [optionsArray]="toggleArray"
+                            [defaultValue]=" defaultValue "
+                            (change)="toggleChanged($event)"
+                            [disableButtons]="isLoading"></ngx-buttons-toggle>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <ngx-dropdown-datetime (rangeChanged)="rangeChanged($event)" [numberOfDays]="numberOfDays" [numberOfDaysString]="numberOfDaysString" [(pinText)]="pinText" [startTime]="startTime" [endTime]="endTime" (dateTimeChanged)="dateFilterChanged($event)"></ngx-dropdown-datetime>
+          </div>
+
+          <div class="col-sm-3">
+            <mat-form-field>
+              <mat-label floatLabel="always">{{ 'REPORT.Process_Cell' | translate }}</mat-label>
+              <mat-select [compareWith]="compareObjects" [(ngModel)]="selectedProcessCell" (selectionChange)="processCellFilterChanged()" >
+                <mat-option  >{{ 'CALENDAR.All' | translate }}</mat-option>
+                <mat-option *ngFor="let cell of processCellsArray" [value]="cell">{{ cell.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm-3">
+            <div *ngIf="toggleValue === true || toggleValue === 'true'">
+              <mat-form-field>
+                <mat-label floatLabel="always">{{ 'REPORT.Product_Code' | translate }}</mat-label>
+                <mat-select [compareWith]="compareObjects" [(ngModel)]="selectedPO" (selectionChange)="productionOrderFilterChanged()" >
+                  <mat-option  >{{ 'CALENDAR.All' | translate }}</mat-option>
+                  <mat-option *ngFor="let po of productionOrderArray" [value]="po">
+                    <div>
+                      <div style="line-height: 1.1rem; position: relative;top: 4px;">
+                        <div>{{ po.name }}</div>
+                        <div style=" font-size: 12px; "> {{ po.productDescription }}</div>
+                      </div>
+                    </div>
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="toggleValue === false || toggleValue === 'false'">
+              <mat-form-field>
+                <mat-label floatLabel="always">{{ 'REPORT.teamsLabel' | translate }}</mat-label>
+                <mat-select [compareWith]="compareObjects" [(ngModel)]="selectedTeam" (selectionChange)="teamChanged()" >
+                  <mat-option >{{ 'CALENDAR.All' | translate }}</mat-option>
+                  <mat-option *ngFor="let team of teamArray" [value]="team">{{ team.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nb-card class="content" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+        <nb-card-body>
+          <div [hidden]="serverError">
+            <ngx-scatter-chart
+            [startDate]="startTime"
+            [endDate]="endTime"
+            [toggleValue]="toggleValue"
+            [data]='reportValues'
+            [isLoading]="isLoading"
+            (bubbleClick)="chartClicked($event)"></ngx-scatter-chart>
+          </div>
+          <p *ngIf="(serverError)">
+            {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+          </p>
+        </nb-card-body>
+      </nb-card>
+
+
+
+      <nb-card class="content mt-20" [hidden]="toggleValue === true || toggleValue === 'true'" [nbSpinner]="summaryisLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+        <nb-card-header class="card-title d-flex">{{ 'REPORT.Teams_summary' | translate }}</nb-card-header>
+        <nb-card-body>
+
+          <div [hidden]="summaryServerError">
+            <ngx-report-oee-details-table-teams-summary
+            [reportScatterTeamsArr]="reportScatterTeams"
+            [isLoading]='summaryisLoading'
+            ></ngx-report-oee-details-table-teams-summary>
+          </div>
+          <p *ngIf="(summaryServerError)">
+            {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+          </p>
+
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card class="content mt-20"  [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+        <nb-card-header class="card-title d-flex">{{ 'REPORT.Statistics' | translate }}</nb-card-header>
+        <nb-card-body>
+          <div [hidden]="serverError">
+            <button class="appearance-filled secondary" nbButton outline [hidden]="!canExportData" [disabled]="(reportValuesForTable.length <= 0) || exportInProgress || isLoading" (click)="beginExportReport()">{{ 'REPORT.exportReport' | translate }}</button><br /><br />
+
+            <ngx-report-oee-details-table-orders
+            *ngIf="toggleValue === true || toggleValue === 'true'"
+            (rowClick)="tableClicked($event)"
+            [data]='reportValuesForTable'
+            [isLoading]='isLoading'
+            ></ngx-report-oee-details-table-orders>
+
+            <ngx-report-oee-details-table-teams
+            *ngIf="toggleValue === false || toggleValue === 'false'"
+            (rowClick)="tableClicked($event)"
+            [data]='reportValuesForTable'
+            [isLoading]='isLoading'
+            ></ngx-report-oee-details-table-teams>
+
+          </div>
+          <p *ngIf="(serverError)">
+            {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+          </p>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <br style="clear:both" />
+  </div>
+</div>

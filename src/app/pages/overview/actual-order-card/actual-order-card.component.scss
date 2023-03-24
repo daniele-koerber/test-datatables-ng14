@@ -1,0 +1,48 @@
+.nb-font{
+  font-family: nb-theme(font-family-light);
+}
+
+.nb-font-semibold{
+  font-family: nb-theme(font-family-semibold);
+}
+
+.first-div-align{
+  min-width: 160px ;
+  float: right;
+  font-family: nb-theme(font-family-primary);
+  // font-size: 14px;
+}
+
+.second-div-align{
+  width: 150px;
+  float: right;
+  font-family: nb-theme(font-family-semibold);
+  font-size: medium;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius:100%;
+  margin-left: 3px;
+  margin-right: 0;
+  margin-top: 0;
+}
+
+.card-title{
+  margin: 0px;
+  font-family: nb-theme(font-family-semibold);
+  font-size: 18px;
+}
+
+.grid-order-buttons-container{
+  width: 300px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-gap: 5px;
+
+  .order-button{
+    height: 32px; width: fit-content;
+  }
+}

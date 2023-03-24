@@ -1,0 +1,54 @@
+
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+:focus {
+  outline:none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+}
+
+
+.date-time-input{
+  text-align: center;
+  z-index: 2;
+  width: 20rem;
+}
+
+.date-icon{
+  z-index: 1;
+  // margin-right: -30px;
+  color: #0060ff;
+}
+
+
+::ng-deep{
+  .date-mat{
+    width: 120px;
+    text-align: center;
+    border: none;
+  }
+
+  .button-mat{
+    color: #0060ff;
+  }
+  .nb-theme-texas [nbInput].shape-rectangle {
+    border: none;
+  }
+
+  .nb-theme-texas [nbInput].size-medium {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.5rem;
+      padding: 0.75rem 1rem;
+      color: #0060ff;
+  }
+
+  [nbButton].appearance-ghost.status-basic.btn-disabled {
+    background-color: transparent !important;
+    opacity: 0.5;
+  }
+}
+}

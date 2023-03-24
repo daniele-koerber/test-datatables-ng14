@@ -5,14 +5,27 @@
  */
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, LOCALE_ID, APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './@core/shared.module';
+import { ConfigService } from './@core/utils/services';
+import { KeycloakService } from 'keycloak-angular';
+import { initializeKeycloak } from './@core/utils/init/keycloak-init.factory';
+import { ConfigInitService } from './@core/utils/init/config-init.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { getLanguage } from './@core/utils/services/config.service';
+
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+
+import { TokenInterceptor } from './@core/utils/services/token.interceptor';
+import { LogoutInterceptor } from './@core/utils/services/logout.interceptor';
+
 import {
-  NbChatModule,
   NbDatepickerModule,
   NbDialogModule,
   NbMenuModule,
@@ -36,6 +49,10 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+// FullCalendarModule.registerPlugins([
+//   dayGridPlugin,
+// ]);
+
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [AppComponent],
@@ -44,6 +61,7 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    SharedModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -52,6 +70,7 @@ export function createTranslateLoader(http: HttpClient) {
     NbToastrModule.forRoot(),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    FullCalendarModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -61,6 +80,19 @@ export function createTranslateLoader(http: HttpClient) {
     }),
   ],
   bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService, ConfigInitService],
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LogoutInterceptor, multi: true },
+    KeycloakService,
+    ConfigService,
+    { provide: LOCALE_ID, deps: [ConfigService, HttpClient], useFactory: getLanguage },
+  ],
 })
 export class AppModule {
 }

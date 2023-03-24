@@ -1,0 +1,10 @@
+<form [formGroup]="formGroup">
+  <mat-form-field>
+    <input ngDefaultControl [readonly]="readonly"
+    [formControlName]="parameterDefinitionName + '_' + path +'_formField'"
+    type="text" (change)="selectionChange($event)" matInput placeholder="">
+    <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path +'_formField']?.hasError('value')">
+      {{ 'COMMON.Field_value_is_not_correct' | translate }}
+    </mat-error>
+  </mat-form-field>
+</form>

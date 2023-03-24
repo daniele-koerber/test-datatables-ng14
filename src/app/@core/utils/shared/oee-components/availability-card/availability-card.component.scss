@@ -1,0 +1,35 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  nb-card-header {
+    font-family: nb-theme(font-family-semibold);
+    padding-bottom: 0px;
+    padding-top: 8px;
+    border: none;
+  }
+  nb-card {
+    padding-left: 0px;
+    height: 100%;
+    border: none;
+    box-shadow: none;
+    border-radius: 20px;
+    background-color: white;//nb-theme(color-primary-500);
+  }
+
+  nb-card-footer {
+    border: none;
+    padding-top: 0px;
+    padding-bottom: 8px;
+    border-top: 0px;
+  }
+
+
+
+    .card-title{
+      margin: 0px;
+      font-family: nb-theme(font-family-semibold);
+      font-size: 18px;
+    }
+
+
+}

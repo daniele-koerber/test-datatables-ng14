@@ -1,0 +1,30 @@
+<nb-card style="min-height: 700px;min-width: 800px;">
+  <nb-card-header>{{ 'OVERVIEW.Quality_Check_Form' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        {{ 'OVERVIEW.Production_Order' | translate }}: <strong>{{ row.productionOrderId }}</strong><br />
+        {{ 'OVERVIEW.Product_Code' | translate }}: {{ row.productCode }}<br />
+
+        {{ 'OVERVIEW.Occurred_Date_Time' | translate }}: {{ row.scheduledDateUtc | DateFormatPipe }} ({{ dateAgo(row.scheduledDateUtc) }})
+        <div *ngIf="componetsDisabled">{{ 'OVERVIEW.Done_Date_Time' | translate }}: {{ row.acknowledgeDateTimeUtc | DateFormatPipe }} ({{ dateAgo(row.acknowledgeDateTimeUtc) }})</div>
+        <br />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
+        </form>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

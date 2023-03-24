@@ -1,0 +1,50 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+  .title, .content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  p{
+    margin: 0;
+    &::before {
+      content:" ";
+      width:10px;
+      height:10px;
+      margin-right: 10px;
+      line-height:10px;
+      border-radius:50%;
+      display:inline-block;
+    }
+  }
+
+  p.danger::before {
+    background: nb-theme(color-danger-default);
+  }
+
+  p.success::before {
+    background: nb-theme(color-success-default);
+  }
+
+::ng-deep{
+  .mat-form-field.mat-form-field-invalid .mat-form-field-label{
+    color: nb-theme(color-danger-default);
+    .mat-form-field-required-marker{
+      color: nb-theme(color-danger-default);
+    }
+  }
+  .mat-form-field.mat-form-field-invalid .mat-form-field-ripple, .mat-form-field.mat-form-field-invalid .mat-form-field-ripple.mat-accent{
+    background: nb-theme(color-danger-default);
+  }
+}
+
+.hint-text{
+  font-size: 12px;
+  color: nb-theme(color-basic-600)
+}
+
+
+}

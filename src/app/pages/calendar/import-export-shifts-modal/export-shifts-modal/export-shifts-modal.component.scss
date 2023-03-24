@@ -1,0 +1,45 @@
+@import '../../../../@theme/styles/themes.scss';
+
+@include nb-install-component() {
+  ::ng-deep{
+    .date-mat{
+      //width: 120px;
+      text-align: left;
+      border: none;
+      padding: 0;
+      // font-size: 0.9375rem;
+      // font-weight: 700;
+      // line-height: 1.5rem;
+      // padding: 0.75rem 1rem;
+      // color: #0060ff;
+    }
+    .mat-form-field-infix{
+      width: 110px;
+      border-top: 0;
+      padding: 0 5px;
+    }
+  }
+
+  .nb-card-team-definition{
+    height: unset;
+  }
+
+  .grey-text{
+    color: nb-theme(color-basic-600);
+    text-transform: capitalize;
+  }
+
+  .flex{
+    display: flex;
+  }
+
+  .flex-spaced{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .margin-hz{
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}

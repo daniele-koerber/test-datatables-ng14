@@ -1,0 +1,108 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+.autoHeight { height: auto!important; border-bottom: 0}
+
+.flex{
+  display: flex;
+}
+.center-button{
+  margin: auto;
+}
+.inline { display: inline-block!important; max-width:50px;
+  input { color: nb-theme(grey-text) }
+}
+
+.div-container{
+  display: grid;
+  justify-content: center;
+}
+.first-div-align{
+  float: right;
+}
+.second-div-align{
+  margin-left: 5px;
+  float: right;
+}
+
+.input-align{
+  margin-top: -22px;
+  height: 2rem;
+  width: 4rem;
+}
+.space{
+  margin-bottom: 40px;
+}
+
+
+
+.small-space{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.medium-space{
+  margin-top:1rem;
+}
+
+
+.enabled { color:  #0060ff}
+.disabled { color:  #bfb8af }
+
+}
+
+.text-center { text-align: center }
+
+// th {
+//   //overflow: hidden;
+//   min-width: 205px;
+//   //text-overflow: ellipsis;
+//   //white-space: nowrap;
+// }
+
+//  th {
+//   vertical-align: middle !important;
+// }
+
+tbody {
+  display:block;
+  height:472px;
+  overflow:auto;
+  ::ng-deep {
+
+    .mat-form-field-infix {
+      width:60px !important;
+      }
+    .mat-form-field-wrapper {
+      width:auto !important;
+    }
+
+
+  }
+}
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;/* even columns width , fix width of table too*/
+}
+th{
+  vertical-align: middle !important;
+  padding: 10px 10px !important;
+}
+thead {
+  // width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+}
+
+
+
+
+
+
+
+
+
+
+

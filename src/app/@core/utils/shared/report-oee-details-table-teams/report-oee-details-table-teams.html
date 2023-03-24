@@ -1,0 +1,131 @@
+<div style="overflow-x: auto" *ngIf="shiftsData?.length > 0" >
+
+  <dx-tree-list
+  itemsExpr="childrens"
+  dataStructure="tree"
+  [height]=" tableHeight "
+  [columnAutoWidth]="true"
+  [showRowLines]="true"
+  [showBorders]="false"
+  [showColumnLines]="false"
+  [autoExpandAll]="false"
+  [hoverStateEnabled]="true"
+  [dataSource]="shiftsData">
+  <!-- (onRowClick)="toggleRow($event)"> GVA: temporanemente commentato perchè con questo evento non funziona l'espansione cliccando nella freccia a dx-->
+
+    <!-- Columns -->
+    <dxi-column
+    dataField="name"
+    [fixed]="true"
+    cellTemplate="cellNameTemplate"
+    minWidth="200"
+    [caption]="'REPORT.Team' | translate">
+    </dxi-column>
+
+    <dxi-column
+    dataField="startTime"
+    dataType="date"
+    cellTemplate="cellDateTemplate"
+    sortOrder="desc"
+    alignment="left"
+    [caption]="'SHARED.From' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="endTime"
+    dataType="date"
+    alignment="left"
+    cellTemplate="cellDateTemplate"
+    [caption]="'SHARED.To' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="processCell"
+    [caption]="'REPORT.Process_Cell' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="oee"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.OEE' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="availability"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.Availability' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="performance"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.Performance' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="quality"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.Quality' | translate"></dxi-column>
+
+    <!-- task 22602 https://dev.azure.com/KodisTreviso/d.operations/_backlogs/backlog/Giga%20Doge%20Team/Stories/?workitem=22602 -->
+    <!-- <dxi-column
+    dataField="targetPieces"
+    alignment="left"
+    cellTemplate="cellPiecesTemplate"
+    [caption]="'COMMON.Target' | translate"></dxi-column> -->
+
+    <dxi-column
+    dataField="goodPieces"
+    alignment="left"
+    cellTemplate="cellPiecesTemplate"
+    [caption]="'COMMON.Good_Pieces' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="defectivePieces"
+    alignment="left"
+    cellTemplate="cellPiecesTemplate"
+    [caption]="'COMMON.Defective' | translate"></dxi-column>
+
+    <!-- Options -->
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <!-- <dxo-paging [enabled]="true" [pageSize]="10"> </dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10, 100, 1000]"
+      [showNavigationButtons]="true"
+      [showInfo]="true">
+    </dxo-pager> -->
+
+    <!-- Templates -->
+    <ng-container *dxTemplate="let cell of 'cellNameTemplate'">
+      <span *ngIf="cell.data.isParent === true" (click)="openDetails(cell.data)" class="order-link"> {{ cell.value }}</span>
+      <span *ngIf="cell.data.isParent === false"> {{ cell.value }}</span>
+
+      <span *ngIf="cell.data.isParent === true"
+      [class]=" 'warning ' + (cell.data.hasNoCompliantQualityChecks === true ? '' : 'transparent')">
+        <nb-icon icon="alert-circle"></nb-icon>
+      </span>
+
+      <div [hidden]="cell.data.color === null" class="color-picker-read" [style.background-color]="cell.data.color"></div>
+    </ng-container>
+    <ng-container *dxTemplate="let cell of 'cellDateTemplate'">
+      <div>
+        {{ cell.value | DateFormatPipe }}
+      </div>
+    </ng-container>
+    <ng-container *dxTemplate="let cell of 'cellPercentageTemplate'">
+      <div style="white-space:nowrap;" class="formatNumber" [class]=" 'text-' + getValueColorClass(cell.value) ">
+        {{ cell.value | number : '1.2-2' }} %
+      </div>
+    </ng-container>
+    <ng-container *dxTemplate="let cell of 'cellPiecesTemplate'">
+      <div class="formatNumber">
+        {{ cell.value | number : '1.2-2' | removeComma }} {{ (cell.value !== null ? cell.data.uom : '') }}
+      </div>
+    </ng-container>
+  </dx-tree-list>
+
+</div>
+<div *ngIf="(shiftsData?.length <= 0 || !shiftsData) && !isLoading" class="no-data">
+  <p style="font-size: 20px;">
+    {{ 'SHARED.No_Data_Available' | translate }}
+  </p>
+</div>

@@ -1,0 +1,115 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+  input { max-width:100% }
+
+  .div_maintb td:nth-child(1) {
+    position: sticky;
+    left: 0;
+  }
+
+  td {
+    border-top:1px solid nb-theme(color-basic-300) !important;
+    border-bottom: none;
+    height: .8rem;
+  }
+
+  th{
+    width: 330px !important;
+    border-top:1px solid nb-theme(color-basic-hover) !important;
+    height: 1.3rem;
+  }
+
+
+
+  tbody {
+    display:block;
+    height:750px;
+    max-width:90vw;
+    overflow:auto;
+  }
+  // thead, tbody tr {
+  //   display:table;
+  //   width:100%;
+  //   table-layout:fixed;/* even columns width , fix width of table too*/
+  // }
+  // th{
+  //   vertical-align: middle !important;
+  //   padding: 10px 10px !important;
+  // }
+  // thead {
+  //   // width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+  // }
+  // table {
+  //  //  width:1500px;
+  // }
+
+
+  .icon-open{
+    color:  #0060ff;
+  }
+
+  .button-arrow{
+    padding: unset !important;
+    height: 20px;
+    width: 40px;
+  }
+
+  .error{
+    color: nb-theme(color-danger-active);
+  }
+
+  :focus {
+    outline:none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-width: 0px !important;
+  }
+
+}
+
+
+
+
+
+
+// .div_maintb {
+
+//   overflow: scroll;
+// }
+
+.div_maintb table {
+  border-spacing: 0;
+}
+
+.div_maintb th {
+  position: sticky;
+  top: 0;
+  width: 100px;
+  min-width: 100px;
+
+}
+
+.div_maintb td {
+  text-align: center;
+}
+
+.div_maintb th:nth-child(1),
+.div_maintb td:nth-child(1) {
+  position: sticky;
+  left: 0;
+}
+
+.div_maintb td:nth-child(1) {
+  background: #e6e2dc;
+  z-index: 200;
+  border-top: 1px solid #f5f3f1!important;
+  font-weight: bold;
+  text-align: left;
+}
+
+.div_maintb th:nth-child(1) {
+  z-index: 300;
+  border-top: 1px solid #e6e2dc!important;
+}

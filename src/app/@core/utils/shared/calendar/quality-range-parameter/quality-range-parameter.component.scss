@@ -1,0 +1,21 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+  [nbButton].appearance-outline.status-primary {
+    background-color: nb-theme(button-background-color);
+    text-decoration: capitalize;
+  }
+
+  ::ng-deep {
+    .mat-form-field {
+      margin: 0 4px;
+    }
+    .mat-form-field-infix {
+      // width:60px;
+    }
+  }
+
+  .mat-error { font-size:12px }
+
+}

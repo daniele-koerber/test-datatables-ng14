@@ -1,0 +1,26 @@
+<nb-card >
+  <nb-card-header>{{title}}</nb-card-header>
+  <nb-card-body style="display: flex;justify-content: center;align-items: center;">
+
+    <!-- <mat-form-field>
+      <mat-label>{{'REPORT.Select_process_cell' | translate }}</mat-label>
+      <mat-select [(value)]="selectedProcessCell">
+        <mat-option *ngFor="let cell of processCellOptions" [value]="cell.path">
+          {{cell.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+    <div style="display: grid;">
+      <button nbButton (click)='submit(cell.path)' *ngFor="let cell of processCellOptions" style="display: flex;justify-content: space-between;" class="size-medium appearance-filled tertiary shape-round nb-transition">
+        <div>{{ cell.name }}</div>
+        <div style="margin-left: 20px;"><nb-icon icon="arrow-ios-forward-outline"></nb-icon></div>
+      </button>
+    </div>
+
+  </nb-card-body>
+  <nb-card-footer style="display: flex;justify-content: center;">
+    <button nbButton status="basic" (click)=" cancel() " class="appearance-filled secondary">{{'COMMON.Cancel' | translate }}</button>
+    <!-- <button nbButton status="primary" (click)=" submit() "class="float-right">{{'REPORT.Go_to_report' | translate }}</button> -->
+  </nb-card-footer>
+</nb-card>

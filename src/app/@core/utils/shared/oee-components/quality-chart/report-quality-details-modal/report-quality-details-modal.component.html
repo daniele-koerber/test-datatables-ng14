@@ -1,0 +1,85 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary"  style="width: 90vw; max-height: 90vh; min-height: 30vh;">
+  <nb-card-header>{{ 'OVERVIEW.Quality_Details' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body >
+
+    <h6 *ngIf="data.length == 0 && !isLoading">{{ 'SHARED.No_Data_Available' | translate }}</h6>
+    <div [hidden]="data.length == 0"  class="row">
+      <div  class="col-sm-12">
+
+
+        <div class="row" [hidden]="isLoading === true">
+          <div class="col-sm-12">
+            <h6 style= "font-size: medium; margin-bottom: 5px; ">{{ 'REPORT.Pieces_chart_per_machine' | translate }} ({{UoM}})</h6>
+            <p class="info-paragraph">{{ 'OVERVIEW.This_chart_shows_all_produced_pieces_per_machine_in_finalUoM' | translate }} {{UoM}}</p>
+
+            <div style="height: 350px; width: 900px; margin: 0 auto;" id="{{chartId}}"> </div>
+            <div class="legend" style="margin-bottom: 32px;margin-left: 16px;margin-right: 16px;" [hidden]="isLoading === true">
+              <ul>
+                <li >
+                  <div class="dot" [style.background-color]="goodColor"></div>
+                  <p class="legend-description"> {{ 'SHARED.Total_pieces_good' | translate }}: <b>{{totGood | number : '1.0-2' : 'en' | removeComma}}</b> ({{UoM}}) </p>
+                </li>
+                <li >
+                  <div class="dot" [style.background-color]="lostColor"></div>
+                  <p class="legend-description"> {{ 'SHARED.Total_lost_pieces' | translate }}: <b>{{totLost | number : '1.0-2' : 'en' | removeComma}}</b> ({{UoM}}) </p>
+                </li>
+                <li >
+                  <div class="dot" [style.background-color]="rejectedColor"></div>
+                  <p class="legend-description"> {{ 'SHARED.Total_pieces_rejected' | translate }}: <b>{{totRejected | number : '1.0-2' : 'en' | removeComma}}</b> ({{UoM}}) </p>
+                </li>
+                <!-- <li class="legend-description" style="margin-top: 10px;">{{ 'REPORT.Total_discarded_pieces' | translate }}: <b>{{totPieces}}</b> ({{UoM}})  </li> -->
+
+              </ul>
+              <!-- <div  class= "total" style="margin-bottom: 0px;margin-top: 16px; text-align: center;"> {{ 'SHARED.Total_defective_pieces' | translate }}: <b>{{totPieces}}</b> ({{UoM}})   </div> -->
+            </div>
+
+
+            <div class= "pieces-table" >
+              <div class= "space"> </div>
+              <h6 style= "font-size: medium; margin-bottom: 5px;">{{ 'REPORT.Pieces_table_per_machine' | translate }}</h6>
+              <p class="info-paragraph" >{{ 'OVERVIEW.This_table_shows_all_produced_pieces_per_machine_based_on_the_machines_induvidual_Unit_Of_Measure' | translate }}</p>
+
+              <table class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+
+                <thead>
+                  <tr>
+                    <th>{{ 'REPORT.Machine' | translate }}</th>
+                    <th>{{ 'REPORT.Produced' | translate }}</th>
+                    <th>{{ 'REPORT.Lost' | translate }}</th>
+                    <th>{{ 'SHARED.Rejected' | translate }}</th>
+                    <th>{{ 'REPORT.Surplus' | translate }}</th>
+
+                    <th>{{ 'CALENDAR.UoM' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of data">
+                    <td>{{ row.machine }}</td>
+                    <td class="text-right">{{ row.ProducedPartsMachineUoM | number : '1.0-2' : 'en' | removeComma }}</td>
+                    <td class="text-right">{{ row.LostPartsMachineUoM | number : '1.0-2' : 'en' | removeComma}}</td>
+                    <td class="text-right">{{ row.RejectedPartsMachineUoM | number : '1.0-2' : 'en' | removeComma}}</td>
+                    <td class="text-right">{{ row.SurplusPartsMachineUoM | number : '1.0-2' : 'en' | removeComma}}</td>
+                    <td>{{ row.machineUoM }}</td>
+                  </tr>
+                  <tr [hidden]="data.length > 0">
+                    <td colspan="6">{{ 'SHARED.No_Data_Available' | translate }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,11 @@
+<mat-form-field>
+  <mat-label floatLabel="always">{{ 'SHARED.Select' | translate }}</mat-label>
+  <mat-select [disabled]="disabled || readonly"
+
+  [(ngModel)]="selectedChoice"
+
+  (selectionChange)="selectionChange($event.value)" >
+    <mat-option [hidden]="hideChoiceZero === true" [value]="0" >{{defaultVoidMenuVoice}}</mat-option>
+    <mat-option *ngFor="let option of optionsArray" [value]="option.value">{{ option.name }}</mat-option>
+  </mat-select>
+</mat-form-field>

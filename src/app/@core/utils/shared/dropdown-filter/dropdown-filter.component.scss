@@ -1,0 +1,101 @@
+@import '../../../../@theme/styles/themes';
+@include nb-install-component() {
+  .filters-popover-dates{
+    width: 250px;
+    position: absolute;
+    z-index: 1;
+    // background-color: #e5e2dc;
+    padding: 0px;
+    top: 64px;
+
+    .filters-popover-div{
+      position: absolute;
+      top: -64px;
+      left: 0px;
+      // background-color: #e6e2dc;
+      padding: 10px;
+      padding-bottom: 15px;
+    }
+
+    .filters-container{
+      background-color: #f5f3f1;
+    }
+    .div-filter-container{
+      padding: 20px;
+      .input-label {
+        font-weight: inherit;
+      }
+    }
+
+    .div-filter-container-checkbox{
+      overflow: hidden;
+      .input-label {
+        font-weight: inherit;
+      }
+    }
+
+    .div-filter-container:hover{
+      background-color: #CCDFFF !important;
+      border-color: #CCDFFF !important;
+      cursor: pointer;
+    }
+
+    .div-filter-buttons-container{
+      display: flex;
+      background-color: #f5f3f1;
+      padding: 5px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      justify-content: space-between;
+    }
+  }
+
+  .filters-container{
+    background-color: #f5f3f1;
+  }
+
+  .div-filter-container{
+    padding: 20px;
+    .input-label {
+      font-weight: inherit;
+    }
+  }
+
+  .daterange-picker{
+    border-bottom-color: #90887d00 !important;
+    background-color: #f5f3f100 !important;
+    position: absolute;
+    top: 482px !important;
+    left: 0;
+    border: 0 !important;
+    height: 60px !important;
+    width: 100%;
+    padding-left: 0px !important;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  // [nbButton]{
+  //   // border-radius: 100px;
+  //   margin-bottom: 0px;
+  //   margin-top: 0px;
+  //   background-color: transparent;
+  //   border-radius: 2rem;
+  //   font-family: nb-theme(font-family-semibold);
+  //   color: nb-theme(color-primary-default);
+  //   border-color: nb-theme(color-primary-default-border);
+  //   border-width: 1px;
+  //   line-height: 1.3rem;
+  //   padding-top:4px;
+  //   padding-bottom:4px; 
+  //   text-transform: capitalize;
+  // }
+
+  // [nbButton]:hover{
+  //   border-color: nb-theme(color-primary-default-border);
+  //   background-color: transparent;
+  // }
+
+
+}
+

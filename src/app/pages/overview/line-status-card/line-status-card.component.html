@@ -1,0 +1,22 @@
+<nb-card  [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>
+    <h5 class="card-title">{{ 'OVERVIEW.Line_Status' | translate }}</h5>
+  </nb-card-header>
+
+  <nb-card-body [hidden]="isLoading === true">
+    <ngx-line-status-chart
+    [detailsOpen] = "detailsOpen"
+    [rawDataChart]="lineStatusChartData"
+    [isLoading]="isLoading"
+    [serverError]="serverError"
+    [dateStart]="dateStart"
+    [dateEnd]="dateEnd"
+    ></ngx-line-status-chart>
+  </nb-card-body>
+
+  <nb-card-footer class="d-flex flex-wrap justify-content-end">
+    <button (mousedown)=' goToDetails() '  [disabled]="noData === true || isLoading === true" nbButton style="float: right;" class= "appearance-filled tertiary"  size="small">
+      {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>

@@ -1,0 +1,58 @@
+<nb-card style="min-width: 500px;" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" >
+  <nb-card-header>
+    <span>{{ 'COMMON.Edit_Target_Quantity' | translate }}</span>
+
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+
+    <button style="float: right;padding: 4px;" (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body style="min-height: 80px;">
+
+    <div style="display: flex;">
+      <div >
+      <div class="flex small-space-batch-details" style="margin: 0">
+          <div class="first-div-align"></div>
+          <div class="second-div-align" style="width: max-content;"><strong><span style="width: 5rem;">{{ 'SHARED.Actual' | translate }}</span></strong>
+          </div>
+        </div>
+      </div>
+      <div style="margin-right: 2.5rem;width: 100%;display: flex;justify-content: flex-end;">
+        <div class="flex small-space-batch-details" style="margin: 0">
+          <div class="first-div-align" style="width: max-content; display: flex;">
+            <div><strong><span style="width: 5rem;">{{ 'COMMON.New_Quantity' | translate }}</span></strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div style="display: flex;">
+      <div>
+        <div class="flex small-space-batch-details">
+          <div class="first-div-align">{{ 'CALENDAR.Target_Quantity' | translate }}: </div>
+          <div class="second-div-align" style="width: max-content;"><strong>{{actualTargetQuantity}} {{ uom }}</strong>
+          </div>
+        </div>
+      </div>
+      <div style="margin-left: 2rem;">
+        <div class="flex small-space-batch-details">
+          <div class="first-div-align" style="width: max-content; display: flex;">
+            <div><input matInput #input [(ngModel)]="adjustedTargetQuantity" type="number" style="width: 5rem;"></div>
+            <div><strong>{{ uom }}</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p [hidden]="canEditTargetQuantity"  class="info-paragraph">{{ 'SHARED.No_permission_pieces_adjust' | translate }}</p>
+
+  </nb-card-body>
+
+  <nb-card-footer>
+    <button [disabled]="isLoading" nbButton status="basic" (click)=" cancel() " class="appearance-filled secondary">{{ 'COMMON.Cancel' | translate }}</button>
+    <button [disabled]="isLoading || !canEditTargetQuantity" nbButton status="basic" (click)=" submit() " class="float-right appearance-filled primary">{{ 'COMMON.Save' | translate }}</button>
+  </nb-card-footer>
+</nb-card>

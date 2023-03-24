@@ -1,0 +1,19 @@
+<div class="row justify-content-end">
+  <div class="col">
+    <button nbButton outline [disabled]="!enableDowntimeTableButton" class="appearance-filled secondary" (mousedown)="openDowntimeTable() "  >
+      {{ 'COMMON.Downtimes' | translate }}
+    </button>
+  </div>
+    <div class="col">
+      <button nbButton outline class="appearance-filled secondary" (mousedown)="openQualityCheckTable() " [disabled]="!enableQualityTableButton" >
+        <span *ngIf="hasNonCompliantChecks === true" style="float:right; margin-right: 8px;" [class]=" 'warning' ">
+          <nb-icon icon="alert-circle"></nb-icon>
+        </span>
+        {{ 'COMMON.Quality_Checks' | translate }}
+      </button>
+  </div>
+</div>
+
+
+
+

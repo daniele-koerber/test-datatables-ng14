@@ -1,0 +1,29 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius:100%;
+    margin-left: 10px;
+    margin-top: 1em;
+  }
+
+  ::ng-deep {
+    .mat-error { background-color:transparent; }
+    .mat-form-field {
+      margin: 20px 4px 0;
+    }
+    .mat-form-field-infix {
+      width: 200px !important;
+    }
+  }
+
+  .flex-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+}

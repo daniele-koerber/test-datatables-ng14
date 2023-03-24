@@ -1,0 +1,30 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'REPORT.MACHINES_OEE' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body style="max-height: 90vh;">
+    <div class="row">
+
+      <ngx-machine-oee-chart style="min-height: 300px; min-height: 300px; width: 950px;" 
+      [processCell]="processCell" 
+      [from]="dateStart" 
+      [to]="dateEnd" 
+      [id]="id"
+      [isOrder]="isOrder"
+      [isShift]="isShift"
+      [isLine]="isLine"
+      (loadingFinished)="isLoading = false"></ngx-machine-oee-chart>
+
+    </div>
+
+
+  </nb-card-body>
+</nb-card>
+
+
+

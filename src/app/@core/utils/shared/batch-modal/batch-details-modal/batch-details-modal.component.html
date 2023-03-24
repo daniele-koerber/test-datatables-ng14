@@ -1,0 +1,152 @@
+<!-- "height: 700px;width: 1020px;" -->
+<nb-card style="width: 65vw; max-height: 95vh;" [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+        <div  class="space"> </div>
+
+          <div class="flex small-space-batch-details">
+            <div class="first-div-align">{{ 'OVERVIEW.Production_Order' | translate }}: </div>
+            <div class="second-div-align"><strong >{{productOrder}} </strong>
+            </div>
+          </div>
+
+          <div class="flex small-space-batch-details">
+            <div class="first-div-align">{{ 'OVERVIEW.Product_Code' | translate }}: </div>
+            <div class="second-div-align"><strong >{{productCode}} </strong>
+                {{ (parametersModified ? '(' + translated_text_with_changes + ')' : "") }}
+
+            </div>
+          </div>
+          <div class="flex small-space-batch-details">
+            <div class="first-div-align">{{ 'PRODUCT_DEFINITION.Product_Description' | translate }}: </div>
+            <div class="second-div-align"><strong >{{productDescription}} </strong>
+            </div>
+          </div>
+
+          <div class="flex small-space-batch-details">
+            <div class="first-div-align">{{ 'PRODUCT_DEFINITION.Product_Version' | translate }}: </div>
+            <div class="second-div-align"><strong >{{version}} </strong>
+            </div>
+          </div>
+
+
+          <div class="flex small-space-batch-details">
+            <div class="first-div-align">
+              <span [hidden]=" isBatchActive(batch.status) ">{{ 'SHARED.Scheduled_Start_Time' | translate }}</span>
+              <span [hidden]=" !isBatchActive(batch.status) ">{{ 'OVERVIEW.Start_Time' | translate }}</span>: </div>
+            <div class="second-div-align">
+              <strong >{{startDateTime | DateFormatPipe}} </strong>
+            </div>
+          </div>
+
+          <div  class="flex small-space-batch-details">
+            <div class="first-div-align">
+              <span [hidden]=" !isBatchCompleted(batch.status) ">{{ 'SHARED.Scheduled_End_Time' | translate }}</span>
+              <span [hidden]=" isBatchCompleted(batch.status) ">{{ 'OVERVIEW.End_Time' | translate }}</span>: </div>
+            <div class="second-div-align">
+              <strong >{{endDateTime | DateFormatPipe}} </strong>
+            </div>
+          </div>
+
+
+          <div [hidden]="(!isBatchActive(batch.status))" class="flex small-space-batch-details">
+            <div class="first-div-align">{{ 'SHARED.Duration' | translate }}: </div>
+            <div class="second-div-align"><strong >{{duration | TicksToDurationPipe : ('COMMON.d' | translate) : ('COMMON.h' | translate) : ('COMMON.min' | translate)}}</strong></div>
+          </div>
+
+          <div [hidden]="(batch?.status === batchStatus.Completed)" class="flex small-space-batch-details">
+            <div class="first-div-align">{{ 'CALENDAR.Estimated_Duration' | translate }}: </div>
+            <div class="second-div-align"><strong >{{estimatedDuration | TicksToDurationPipe : ('COMMON.d' | translate) : ('COMMON.h' | translate) : ('COMMON.min' | translate) }}</strong><br /></div>
+          </div>
+
+
+        <div>
+          <div class="flex small-space-batch-details">
+            <div class="first-div-align">{{ 'SHARED.Status' | translate }}: </div>
+            <div class="second-div-align"><strong >{{status}}</strong><span class="dot" [style.background]="getStatusColor(statusEng)"></span><br /></div>
+          </div>
+
+          <div style=" display: flex; ">
+            <div class="flex small-space-batch-details">
+              <div class="first-div-align">{{ 'CALENDAR.Target_Quantity' | translate }}: </div>
+              <div class="second-div-align-small" ><strong >{{targetQuantity}} {{ uom }}</strong>
+              </div>
+            </div>
+            <div class="center-adjust-button">
+              <button nbButton (click)='editTargetQuantity()' [hidden]="(statusEng == 'Completing' || statusEng == 'Completed') || !canAdjustPieces"
+                      class="center-button size-medium appearance-filled tertiary shape-round nb-transition">
+                {{ 'COMMON.Edit' | translate }}
+              </button >
+            </div>
+          </div>
+
+          <div style=" display: flex; ">
+            <div>
+              <div [hidden]="statusEng == 'Planned' || statusEng == 'Delayed'" class="flex small-space-batch-details">
+                <div class="first-div-align">{{ 'SHARED.Total_pieces_good' | translate }}: </div>
+                <div class="second-div-align-small" ><strong >{{goodCount}} {{ uom }}</strong>
+                </div>
+              </div>
+              <div [hidden]="statusEng == 'Planned' || statusEng == 'Delayed'" class="flex small-space-batch-details">
+                <div class="first-div-align">{{ 'SHARED.Total_pieces_rejected' | translate }}: </div>
+                <div class="second-div-align-small" ><strong >{{rejectedCount}} {{ uom }}</strong>
+                </div>
+              </div>
+            </div>
+            <div class="center-adjust-button">
+              <button nbButton (click)='adjustQuantity()' [hidden]="(statusEng !== 'Completing' && statusEng !== 'ActiveOnTime' && statusEng !== 'ActiveDelayed') || !canAdjustPieces"
+                      class="center-button size-medium appearance-filled tertiary shape-round nb-transition">
+                {{ 'COMMON.Adjust_Quantity' | translate }}
+              </button >
+            </div>
+          </div>
+
+
+          <div [hidden]="statusEng == 'Planned' || statusEng == 'Delayed'" class="flex small-space-batch-details">
+            <div class="first-div-align">{{ 'SHARED.Total_lost_pieces' | translate }}: </div>
+            <div class="second-div-align"><strong >{{lostCount}} {{ uom }}</strong>
+            </div>
+          </div>
+          <div [hidden]="statusEng == 'Planned' || statusEng == 'Delayed'" class="flex small-space-batch-details">
+            <div class="first-div-align">{{ 'SHARED.Total_defective_pieces' | translate }}: </div>
+            <div class="second-div-align"><strong >{{defectiveCount}} {{ uom }}</strong></div>
+          </div>
+
+        </div>
+        <br />
+
+        <div class="small-space-batch-details" [hidden]=" !controlRecipe || controlRecipe?.batchParameterValues.length === 0">
+          <h5 style="opacity: 0.6">{{ 'SHARED.Order_parameters' | translate }}</h5>
+          <div *ngFor="let param of controlRecipe?.batchParameterValues" class="flex small-space-batch-details">
+            <div class="first-div-align">{{ param.parameterDescription }}: </div>
+            <div class="second-div-align"><strong >{{getMachinesName(param.value.SelectedDestinations)}} </strong></div>
+
+            <!-- <b>{{ param.parameterDescription }}</b>: {{ getMachinesName(param.value.SelectedDestinations) }} -->
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer [hidden]="( statusEng !== 'Planned' && statusEng !== 'Delayed')">
+    <div class="flex">
+      <button nbButton
+        [hidden]="canPlanOrder === false"
+              (click)=' deleteOrder(productOrder) '
+              class="center-button appearance-outline size-medium status-danger shape-round nb-transition">
+        {{ 'COMMON.Delete' | translate }}
+      </button >
+    </div>
+  </nb-card-footer>
+  <nb-card-footer [hidden]="(statusEng !== 'ActiveOnTime' && statusEng !== 'ActiveDelayed' && statusEng !== 'Completed') || batch.isReport == true">
+
+    <button (mousedown)=' gotoReport(productOrder) ' nbButton [hidden]="!canViewReportPage" class= "appearance-filled tertiary" size="medium">
+      {{ 'REPORT.Report' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+    </button>
+
+
+  </nb-card-footer>
+</nb-card>
+

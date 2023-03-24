@@ -1,0 +1,121 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+  .pointer{
+    cursor: pointer;
+    color: nb-theme(blue-color);
+    text-decoration: unset;
+    margin-right: 15px;
+    font-size: medium
+  }
+
+  .icon-arrow{
+    transform: scale(1.5,1);
+    margin-left: 10px;
+  }
+
+  .flex{
+    display: flex;
+  }
+
+  .uppercase {
+    text-transform: uppercase;
+  }
+
+  .first-div-align{
+    width: 250px;
+    float: right;
+  }
+
+
+  .second-div-align{
+    width: 350px;
+    float: right;
+  }
+  .small-space-batch-details{
+    font-size: medium;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+
+  .input-align{
+    margin-top: -22px;
+  }
+  .space{
+    margin-bottom: 40px;
+  }
+
+  .small-space{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .center-button{
+    margin: auto;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius:100%;
+    margin-left: 10px;
+    margin-right: 4px;
+    margin-top: 0;
+  }
+
+  .disabled{
+    pointer-events: none !important;
+  }
+
+  .po-select {
+    margin-top: -22px !important;
+    width: 180px;
+
+    label, mat-radio-button {
+      margin-right: 1rem;
+    }
+
+    textarea {
+      min-height: 3rem;
+    }
+  }
+  .icon-arrow{
+    transform: scale(2, 1.2);
+    color: nb-theme(blue-color);
+  }
+
+  .col-sm-12 {
+    padding: 12;
+}
+.bg-spinner{
+  position: absolute;
+  z-index: 2;
+  background: nb-theme(color-basic-control-transparent-600);
+  height: 100%;
+  width: 100%;
+  margin-top: -40px;
+  margin-left: -24px;
+}
+
+}
+
+.dividing-line{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-top: 1px solid;
+  border-color: grey;
+}  
+.info-paragraph{
+  font-size: 12px;
+  opacity: .5;
+  margin-top: 8px;
+}
+:focus {
+  outline:none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+}

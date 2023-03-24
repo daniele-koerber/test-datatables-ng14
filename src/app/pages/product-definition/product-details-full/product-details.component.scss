@@ -1,0 +1,101 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+
+  [nbButton].appearance-outline.status-primary {
+    background-color: nb-theme(button-background-color);
+    text-decoration: capitalize;
+  }
+
+  .check-box-ED {
+    padding-left: 1em;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius:100%;
+    margin-left: 0px;
+    margin-right: 4px;
+    margin-top: 4px;
+  }
+
+  .mat-checkbox-disabled{
+    opacity: 50%;
+    cursor: not-allowed;
+  }
+
+  ::ng-deep {
+    .note {
+      font-size: 15px;
+      color: nb-theme(color-basic-500);
+    }
+
+    .flex{
+      display: flex;
+    }
+
+    .center-button{
+      margin: auto;
+    }
+
+
+
+    .mat-form-field.readonly .mat-form-field-infix { background: nb-theme(color-basic-300); }
+    input { padding-left: 5px }
+
+    mat-error {
+      background: white;
+    }
+
+    .mat-checkbox {
+
+      .mat-checkbox-inner-container {width: 24px; height: 24px;}
+
+      .mat-checkbox-ripple .mat-ripple-element {
+          background-color: nb-theme(black-color);
+      }
+      .mat-checkbox-frame {
+          border-color: nb-theme(black-color);
+      }
+    }
+    .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+      background-color: nb-theme(black-color);
+    }
+  }
+  .space{
+      margin-bottom: 15px;
+  }
+
+  tbody {
+    display:block;
+    height:550px;
+    overflow:auto;
+  }
+  thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+    overflow-x: hidden;
+    overflow: auto;
+  }
+  th{
+    vertical-align: middle !important;
+    padding: 10px 10px !important;
+  }
+  thead {
+    width: calc( 100% - 2px );
+    // width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+  }
+  table {
+    // width:1500px;
+  }
+
+  :focus {
+    outline:none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    border-width: 0px !important;
+  }
+}

@@ -1,0 +1,54 @@
+$custom-file-text: ();
+@import '../../../../@theme/styles/themes';
+@import 'node_modules/bootstrap/scss/mixins/breakpoints';
+@import 'node_modules/@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+
+  button {
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 1.5rem;
+    font-family: nb-theme(font-family-semibold);
+    color: nb-theme(color-primary-default);
+    border-color: nb-theme(color-primary-default-border);
+    line-height: 1.3rem;
+    padding-top:5px;
+    padding-bottom:5px;
+
+    &[disabled] {
+      background-color: nb-theme(background-basic-color-1);
+      color: nb-theme(color-primary-disabled);
+      border-color: nb-theme(color-primary-disabled-border);
+    }
+
+    &.danger {
+      color: nb-theme(color-danger-default);
+      border-color: nb-theme(color-danger-default-border);
+    }
+  }
+
+  button:not([disabled]):hover {
+    background-color: #CCDFFF !important;
+    border-color: #CCDFFF !important;
+    color: #262523  !important;
+  }
+  button:focus {
+    background-color: #CCDFFF !important;
+    border-color: #262523!important;
+    color: #262523 !important;
+  }
+  button:not([disabled]):active {
+    background-color: #92BAFE !important;
+    border-color: #92BAFE !important;
+    color: #262523  !important;
+  }
+
+  button:disabled {
+    opacity: 0.3;
+    color: #0060ff;
+    border-color: #0060ff;
+    background-color: #ffffff;
+  }
+
+}

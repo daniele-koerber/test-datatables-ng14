@@ -1,0 +1,55 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+    <nb-card-header>
+        <h5 class="card-title d-flex">
+            {{ 'SHARED.Machines_Status' | translate }}
+          </h5>
+    </nb-card-header>
+
+    <nb-card-body >
+        <div *ngIf="(!serverError)">
+            <ngx-machine-actual-status
+                [componentData]="actualStatusComponentData"
+            ></ngx-machine-actual-status>
+
+            <div style="padding-top: 25px">{{'SHARED.Status_History' | translate}}</div>
+            <ngx-machine-status-history-chart
+            [componentData]="machineStatusHistory"
+            [chartId]="'machineStatusHistorychartId'"
+            [processCellPath]="processCellPath"
+            [isLoading]="isLoading"
+            [noData]="noData"
+            [serverError]="serverError"
+            [machinePath]="machinePath"
+            [height]="'70px'"
+            [hoursToDisplay]="hoursToDisplay"
+            ></ngx-machine-status-history-chart>
+
+            <div style="padding-top: 25px; padding-bottom:5px ;">{{'SHARED.Status_Analysis' | translate}}</div>
+            <ngx-machine-status-analysis-chart
+                [chartId]="'machineStatusInMinchartId'"
+                [componentData]="statusInMinComponentData"
+                [isOrder]="isOrder"
+                [isShift]="isShift"
+                [isLine]="isLine"
+                [processCellPath]="processCellPath"
+                [isLoading]="isLoading"
+                [noData]="noData"
+                [serverError]="serverError"
+                [machinePath]="machinePath"
+                [hoursToDisplay]="hoursToDisplay"
+            ></ngx-machine-status-analysis-chart>
+        </div>
+        <p *ngIf="(serverError)">
+            {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+        </p>
+
+    </nb-card-body>
+
+    <nb-card-footer>
+        <div class="d-flex justify-content-end">
+            <button nbButton size="small" [disabled]="noData === true || isLoading === true" (mousedown)='goToDetails()' class="tertiary">
+                {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+            </button>
+        </div>
+    </nb-card-footer>
+</nb-card>

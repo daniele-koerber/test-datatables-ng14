@@ -1,0 +1,45 @@
+:focus {
+  outline:none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+}
+.flex{
+  display: flex;
+}
+.center-button{
+  margin: auto;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+.div-container{
+  display: grid;
+  justify-content: center;
+}
+.first-div-align{
+  float: right;
+}
+.second-div-align{
+  margin-left: 5px;
+  float: right;
+}
+.input-align{
+  margin-top: -22px;
+  height: 2rem;
+}
+.space{
+  margin-bottom: 40px;
+}
+
+.small-space{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+

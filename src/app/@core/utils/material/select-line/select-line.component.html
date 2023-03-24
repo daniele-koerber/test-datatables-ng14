@@ -1,0 +1,21 @@
+<div>
+  <h5>Process Cell</h5>
+  <!-- <button mat-stroked-button color="primary" (click)="goToPreviousProcessCell()"
+    [disabled]=" !isGoToPreviousProcessCellButtonEnabled "
+    [class]=" (isGoToPreviousProcessCellButtonEnabled ? 'enabled' : 'disabled') ">
+    <nb-icon [class]=" (isGoToPreviousProcessCellButtonEnabled ? '' : 'disabled') "
+      icon="chevron-left"></nb-icon>
+  </button>
+  <button mat-stroked-button color="primary" (click)="goToNextProcessCell()"
+    [disabled]=" !isGoToNextProcessCellButtonEnabled "
+    [class]=" (isGoToNextProcessCellButtonEnabled ? 'enabled' : 'disabled') ">
+    <nb-icon [class]=" (isGoToNextProcessCellButtonEnabled ? '' : 'disabled') "
+      icon="chevron-right"></nb-icon>
+  </button> -->
+
+  <mat-form-field>
+    <mat-select [disabled]="menuDisabled" [(value)]=" selectedProcessCell.key " (selectionChange)="selectionChange($event)" >
+      <mat-option *ngFor="let option of processCellsArray" [value]=" option.key ">{{ option?.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

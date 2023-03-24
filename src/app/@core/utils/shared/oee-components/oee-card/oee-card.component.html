@@ -1,0 +1,27 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" [size]="'small'" >
+  <nb-card-header>
+    <h5 class="card-title d-flex">
+      {{ 'OVERVIEW.OEE' | translate }}
+    </h5>
+  </nb-card-header>
+  <nb-card-body class="d-flex flex-column justify-content-between">
+        <ngx-oee-chart
+          [componentData]="oee"
+          [chartId] = "chartId"
+          [isOrder]="isOrder"
+          [isShift]="isShift"
+          [isLine]="isLine"
+          [processCellPath]="processCellPath"
+          [isLoading]="isLoading"
+          [noData]="noData"
+          [serverError]="serverError"
+          [machinePath]="machinePath"
+        ></ngx-oee-chart>
+  </nb-card-body>
+  <nb-card-footer>
+    <button (mousedown)=' goToDetails() ' [disabled]="!oee?.uoM || noData === true || isLoading === true || serverError" [hidden]="machinePath !== null" nbButton style="float: right;" class= "appearance-filled tertiary"  size="small">
+      {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>
+

@@ -1,0 +1,45 @@
+
+<div class="progress-bar-toaster" [@openClose]="isOpen ? 'open' : 'closed'" [hidden]=" !showProgress ">
+  <div class="toggle-button-container">
+    <button class="toggle-button" (click)=" toggle() " nbButton ghost >
+      <nb-icon class="icon-open-close" [hidden]="isOpen" icon="arrow-ios-back-outline"></nb-icon>
+      <nb-icon class="icon-open-close" [hidden]="!isOpen" icon="arrow-ios-forward-outline"></nb-icon>
+    </button>
+  </div>
+  <div style=" width: 100%; ">
+    <div style=" width: 100%; text-align: center;" [hidden]="!cancelButtonClicked">
+      <span>{{'REPORT.Canceling_download' | translate}}...</span>
+    </div>
+
+    <div class="progress-content" [hidden]="!isOpen || cancelButtonClicked">
+      <!-- [hidden]=" !showProgress "> -->
+      <div class="progress-bar-container">
+        <b class="title">Report Exporting</b>
+        <dx-progress-bar style="float:left"
+          #progressBar
+          id="progress-bar-status"
+          width="100%"
+          [class.complete]="+progressValue === 100"
+          [min]="0"
+          [max]="100"
+          [value]="+progressValue">
+        </dx-progress-bar>
+      </div>
+
+      <a (click)="cancelExportReport()" >
+        <nb-icon class="icon-close" slot="end" icon="close-circle-outline"></nb-icon>
+      </a>
+    </div>
+  </div>
+
+
+</div>
+<ngx-server-notifications
+                          *ngIf="exportReportId.path"
+                          [processCell]="exportReportId"
+                          [topic]="getComponentTopic()"
+                          [from]="'Export-Percentage'"
+                          [signalRSubscriptionType] = "getComponentSignalRSubscriptionType()"
+                          [signalRListenersNames]="getComponentSignalRListenersNames()"
+                          (message)="progressChanged()">
+</ngx-server-notifications>

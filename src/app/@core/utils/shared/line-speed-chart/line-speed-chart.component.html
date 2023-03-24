@@ -1,0 +1,2 @@
+<div *ngIf="showActualValue && (actualValue || actualValue == 0)"> {{'COMMON.Actual_value' | translate}}: <b>{{actualValue}}</b> ({{chartUoM}})</div>
+<div [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary" style="height: 550px; width: 100%;margin: 0 auto;" id= "{{chartId}}"> </div>

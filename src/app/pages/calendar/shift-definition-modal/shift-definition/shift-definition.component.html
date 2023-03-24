@@ -1,0 +1,54 @@
+<nb-card class="nb-card-team-definition"  [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'CALENDAR.Shift_definition' | translate }}
+  </nb-card-header>
+  <nb-card-body style="padding-top: 0;">
+    <!-- <ngx-spinner  [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading]="isLoading" *ngIf="isLoading" class="bg-spinner"></ngx-spinner> -->
+
+    <div class="sticky-div" style="padding-bottom: 20px; display: flex; justify-content: space-between;">
+      <div>
+        <button nbButton (click)='createNewShiftDefinition()' class="appearance-filled secondary" style="margin: 0 auto;">
+          {{ 'CALENDAR.Create_New' | translate }}
+        </button >
+
+          <!--  TASK 23670 https://dev.azure.com/KodisTreviso/d.operations/_workitems/edit/23670 -->
+          <!-- <button nbButton (click)=' openImportExportShiftDialog()' class="appearance-filled secondary" style="margin-left: 20px;">
+            {{ 'CALENDAR.Import_Export_shifts' | translate }}
+          </button> -->
+      </div>
+      <div class="hint-text" style="display: flex; align-items: flex-end;">{{ 'CALENDAR.Active_since' | translate }} {{shiftDefinitions?.referenceStartDate | DateFormatPipe: false :true}}</div>
+    </div>
+
+    <table class="table table-bordered table-sm row-border hover dataTable no-footer"  style="table-layout: fixed; "   >
+      <thead style="position: sticky;top: 70px;">
+        <tr>
+          <th style="width: 5%;" class="text-center">{{ 'COMMON.day' | translate }}</th>
+          <th style="width: 25%;" class="text-center">{{ 'CALENDAR.Shift_start_time' | translate }}</th>
+          <th style="width: 25%;" class="text-center">{{ 'CALENDAR.Shift_end_time' | translate }}</th>
+          <th style="width: 15%;" class="text-center">{{ 'CALENDAR.Team_name' | translate }}</th>
+          <th style="width: 5%;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let shift of shifts" [ngClass]="{'grey-row': (shift.day % 2) === 0}">
+          <td class="text-center"> {{shift.day}} </td>
+          <td class="text-center"> {{shift.startTime }} </td>
+          <td class="text-center"> {{shift.endTime }} </td>
+          <td class="text-center"> {{shift.teamName}} </td>
+          <td> <div *ngIf="shift.teamColor !== null && shift.teamColor !== undefined" class="color-div" [style.background]="shift.teamColor"></div>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </nb-card-body>
+  <nb-card-footer class="no-border">
+      <div class="flex">
+        <button nbButton
+                (click)='editShiftDefinitions()'
+                class="appearance-filled secondary" style="margin: 0 auto;">
+          {{ 'COMMON.Edit' | translate }}
+        </button >
+      </div>
+    </nb-card-footer>
+</nb-card>

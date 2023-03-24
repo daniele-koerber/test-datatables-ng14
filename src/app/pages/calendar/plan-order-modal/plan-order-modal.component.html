@@ -1,0 +1,164 @@
+<nb-card style="height: 560px;min-width: 600px;" [nbSpinner]="isSaving === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'CALENDAR.Plan_Order_Execution' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+        <ngx-buttons-toggle [hidden]="hideErpOrders" [optionsArray]="toggleArray" [defaultValue]=" toggleDefaultValue " (change)="toggleChange()"></ngx-buttons-toggle>
+        <div  class="space"> </div>
+
+        <!-- <div style="margin-top:30px;" class="space"> -->
+          <div class="flex small-space">
+            <!-- <div style=" display: flex; "> -->
+              <div class="first-div-align">{{ 'OVERVIEW.Production_Order' | translate }}: </div>
+              <div class="second-div-align">
+                <!-- <strong >{{productOrder}}</strong> -->
+
+                <mat-form-field [hidden]="!isFromERP" class="po-select">
+                  <mat-label>{{ 'SHARED.Select' | translate }}</mat-label>
+                  <mat-select (selectionChange)="productionOrderChange($event.value)">
+                    <mat-option *ngFor="let order of productionOrderList" [value]=" order ">{{ order.productionOrder }}</mat-option>
+                    <mat-option disabled *ngIf="productionOrderList?.length < 1">{{ 'SHARED.No_Data_Available' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <div [hidden]="isFromERP" >
+
+                  <mat-form-field class="input-align" >
+                    <mat-label>{{ 'OVERVIEW.Production_Order' | translate }}</mat-label>
+                    <input  [disabled]="isFromERP" matInput [(ngModel)]="scratchProductionOrder"  MatFormFieldControl="productOrder">
+                  </mat-form-field>
+
+                  <div class="center-button" style="width: max-content;">
+                    <button nbButton (click)='generateNewPO()' [disabled]="isGeneratingPO"
+                            class="center-button size-medium appearance-filled tertiary shape-round nb-transition">
+                      {{ 'SHARED.Generate' | translate }}
+                    </button >
+                    <div style="width: max-content;" class="spinner-container"><ngx-spinner [diameter]=" 20 " [strokeWidth]= " 2 " [isLoading]="isGeneratingPO"  *ngIf="isGeneratingPO" class="bg-spinner"></ngx-spinner></div>
+                  </div>
+
+                </div>
+
+              </div>
+            <!-- </div> -->
+          </div>
+
+          <div class="flex small-space">
+            <div class="first-div-align ">{{ 'OVERVIEW.Product_Code' | translate }}: </div>
+            <div class="second-div-align">
+              <!-- <strong [hidden]="!isBatchDetails">{{productCode}}</strong> -->
+
+              <mat-form-field [hidden]="!isFromERP" class="input-align" >
+                <mat-label>{{ 'OVERVIEW.Product_Code' | translate }}</mat-label>
+                <input (change)="calculateTime()" [disabled]="isFromERP" [value]="productCode" matInput MatFormFieldControl="productCodeFormControl">
+              </mat-form-field>
+
+              <mat-form-field [hidden]="isFromERP" class="po-select">
+                <mat-label>{{ 'SHARED.Select' | translate }}</mat-label>
+                <mat-select [(ngModel)]="scratchProductCode" (selectionChange)="productCodeChange($event.value)">
+                  <mat-option *ngFor="let product of productCodeList" [value]=" product ">
+                    <div>
+                      <div style="line-height: 1.1rem;position: relative;top: 4px;">
+                        <div>{{ product.productCode }}</div>
+                        <div style=" font-size: 12px; "> {{ product.productDescription }}</div>
+                      </div>
+                    </div>
+                  </mat-option>
+                  <mat-option disabled *ngIf="productCodeList?.length < 1">{{ 'SHARED.No_Data_Available' | translate }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+
+                </div>
+          </div>
+        <!-- </div> -->
+
+
+
+
+        <div  class="flex small-space">
+          <div class="first-div-align">{{ 'CALENDAR.Target_Quantity' | translate }}: </div>
+          <div class="second-div-align">
+            <mat-form-field class="input-align">
+              <mat-label>{{ 'CALENDAR.Target_Quantity' | translate }}</mat-label>
+              <input (change)="calculateTime()" [disabled]="isFromERP || !scratchProductionOrder || !scratchProductCode?.productCode" (input)="!isFromERP ? validateTimeSlotFromScratch(startDateTime, true) : ''" matInput type="number" min="0" [(ngModel)]="targetQuantity" >
+            </mat-form-field>
+            {{ uomPC }}
+          </div>
+        </div>
+
+        <!-- <div  class="space"> -->
+
+          <div style="margin-top:25px" class="flex small-space">
+            <div *ngFor="let batchParameter of batchParameters">
+              <div [ngSwitch]=" batchParameter.parameterType ">
+                <ngx-routing-master-optional (emitChange)="emitChangeF()" [batchParameter]="batchParameter" [processCell]="selectedProcessCell" *ngSwitchCase=" 'RoutingMasterOptional' "></ngx-routing-master-optional>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:25px" class="flex small-space">
+            <div class="first-div-align">
+              <nb-radio [checked]=" enableCalculationFromStart === true " id="" (click)=" enableCalculationFromStart = true " name="enableCalculationFromStart" value=""></nb-radio>
+              {{ 'SHARED.Scheduled_Start_Time' | translate }}:</div>
+            <div [ngClass]="(((isFromERP && !selectedProductionOrder ) || (!isFromERP && !(scratchProductionOrder !== '' && productCode !== '' && +targetQuantity > 0)))) ? 'disabled': ''"
+                class="second-div-align input-align">
+              <ngx-batch-dt-picker [readonly] = " enableCalculationFromStart === false "
+                (change)="isFromERP ?
+                          validateTimeSlotFromERP($event,true) :
+                          validateTimeSlotFromScratch($event,true)"
+                [dateInput]=" startDateTime | date:'yyyy/MM/dd HH:mm'"
+
+
+
+                >
+
+
+              </ngx-batch-dt-picker>
+                <div class="spinner-container"><ngx-spinner [diameter]=" 20 " [strokeWidth]= " 2 " [isLoading]="isLoading" [hidden]=" enableCalculationFromStart === false " *ngIf="isLoading" class="bg-spinner"></ngx-spinner></div>
+
+            </div>
+          </div>
+
+          <div class="flex small-space">
+            <div class="first-div-align">
+              <nb-radio [checked]=" enableCalculationFromStart === false " id="" (click)=" enableCalculationFromStart = false " name="enableCalculationFromStart" value=""></nb-radio>
+
+              {{ 'SHARED.Scheduled_End_Time' | translate }}:</div>
+            <div [ngClass]="(((isFromERP && !selectedProductionOrder ) || (!isFromERP && !(scratchProductionOrder !== '' && productCode !== '' && +targetQuantity > 0)))) ? 'disabled': ''"
+                class="second-div-align input-align">
+              <ngx-batch-dt-picker  [readonly] = " enableCalculationFromStart === true "
+                (change)="isFromERP ? validateTimeSlotFromERP($event,false) : validateTimeSlotFromScratch($event,false)"
+                class="input-align"
+                [dateInput]=" endDateTime | date:'yyyy/MM/dd HH:mm'"
+                ></ngx-batch-dt-picker>
+
+
+                <div class="spinner-container"><ngx-spinner [diameter]=" 20 " [strokeWidth]= " 2 " [isLoading]="isLoading" [hidden]=" enableCalculationFromStart === true " *ngIf="isLoading" class="bg-spinner"></ngx-spinner></div>
+
+            </div>
+          </div>
+        <!-- </div> -->
+
+
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer >
+    <div class="flex">
+      <button [disabled]= " isLoading || isSaving || !targetQuantity || !endDateTime || !startDateTime || (isFromERP ? !productionOrder : !scratchProductionOrder) || (isFromERP ? !productCode : !scratchProductCode.productCode)"
+              nbButton
+              (click)=' saveOrder() '
+              class="appearance-filled secondary" style="margin:0 auto">
+        {{ 'COMMON.Plan' | translate }}
+      </button >
+    </div>
+  </nb-card-footer>
+</nb-card>
+

@@ -1,0 +1,14 @@
+<div *ngIf=" optionsArray.length ">
+  <form [formGroup]="formGroup">
+    <ngx-material-multiple-select ngDefaultControl
+    [readonly]="readonly"
+    (selectChanged)="selectChanged($event)"
+    [formControlName]="parameterDefinitionName + '_' + path +'_formField'"
+    [selectedChoices]=" this.row?.value.SelectedDestinations "
+    [optionsArray]=" optionsArray"></ngx-material-multiple-select>
+
+    <mat-error *ngIf="formGroup.controls[parameterDefinitionName + '_' + path + '_formField']?.hasError('required')">
+      {{ 'COMMON.Field_is_required' | translate }}
+    </mat-error>
+  </form>
+</div>

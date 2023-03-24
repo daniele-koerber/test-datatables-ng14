@@ -1,0 +1,45 @@
+<!-- "max-width:1320px; height:900px" -->
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary"  style = "max-width: 95vw; max-height: 95vh; min-width: 30vw; min-height: 30vh;">
+  <nb-card-header>{{ 'REPORT.Quality_Summary' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body style="overflow: hidden; margin-bottom: 10px;">
+
+    <ngx-buttons-toggle [hidden]="serverError || isLoading"  [optionsArray]="toggleArray" [defaultValue]=" 0 " (change)="toggleChange($event)" ></ngx-buttons-toggle>
+
+
+    <div [hidden]="serverError || isLoading" class="row">
+      <div class="col-sm-12 div_maintb">
+
+        <table class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+
+          <tbody class="" >
+            <tr class="" *ngFor="let row of report[reportType]?.transposedChecks; let rowIndex = index">
+              <td [style]=" (rowIndex === 0 || rowIndex === 1 ? 'white-space: nowrap' : '') " *ngFor="let table of row; let columnIndex = index" [ngClass]="table.alert ? 'error': ''">
+                {{
+                  (rowIndex === 0 || rowIndex === 1) ? (columnIndex === 0 ? (table | translate) : table | DateFormatPipe ) :
+                  (columnIndex === 0 ? table.title : 
+                  (table.type == "radio-with-flag" || table.type == "select-with-flag") ? table.label : table.value)
+                }}
+              </td>
+            </tr>
+            <tr>
+              <td *ngFor="let row of report[reportType]?.checks; let columnIndex = index">
+                <span [hidden]="columnIndex !== 0">{{ 'REPORT.Corrective_Actions' | translate }}:</span>
+                <button style="display:block; margin:auto" [hidden]="columnIndex === 0" nbButton ghost class="button-arrow" (click)=openCorrectiveActions(row)><nb-icon class="icon-open" icon="book-open-outline"></nb-icon></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+      <p *ngIf="(serverError)">
+        {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+      </p>
+  </nb-card-body>
+</nb-card>

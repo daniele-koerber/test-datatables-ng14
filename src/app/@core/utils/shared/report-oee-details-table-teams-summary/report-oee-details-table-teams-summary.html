@@ -1,0 +1,94 @@
+<div [hidden]=" reportScatterTeamsArr.length === 0" style="overflow-x: auto">
+
+  <dx-data-grid
+  keyExpr="id"
+  [height]=" tableHeight "
+  [columnAutoWidth]="true"
+  [showRowLines]="true"
+  [showBorders]="false"
+  [showColumnLines]="false"
+  [hoverStateEnabled]="true"
+  [dataSource]="reportScatterTeamsArr">
+
+    <!-- Columns -->
+    <dxi-column
+    dataField="name"
+    width="200"
+    cellTemplate="cellNameTemplate"
+    [fixed]="true"
+    [caption]="'REPORT.Team' | translate">
+    </dxi-column>
+
+    <dxi-column
+    dataField="oee"
+    sortOrder="desc"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.OEE' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="availability"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.Availability' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="performance"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.Performance' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="quality"
+    alignment="center"
+    cellTemplate="cellPercentageTemplate"
+    [caption]="'OVERVIEW.Quality' | translate"></dxi-column>
+
+    <!-- task 22602 https://dev.azure.com/KodisTreviso/d.operations/_backlogs/backlog/Giga%20Doge%20Team/Stories/?workitem=22602 -->ù
+    <!-- <dxi-column
+    dataField="targetPieces"
+    alignment="left"
+    cellTemplate="cellPiecesTemplate"
+    [caption]="'COMMON.Target' | translate"></dxi-column> -->
+
+    <dxi-column
+    dataField="goodPieces"
+    alignment="left"
+    cellTemplate="cellPiecesTemplate"
+    [caption]="'COMMON.Good_Pieces' | translate"></dxi-column>
+
+    <dxi-column
+    dataField="defectivePieces"
+    alignment="left"
+    cellTemplate="cellPiecesTemplate"
+    [caption]="'COMMON.Defective' | translate"></dxi-column>
+
+    <!-- Options -->
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <!-- <dxo-paging [enabled]="true" [pageSize]="10"> </dxo-paging>
+    <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10, 100, 1000]"
+      [showInfo]="true">
+    </dxo-pager> -->
+
+    <!-- Templates -->
+    <ng-container *dxTemplate="let cell of 'cellNameTemplate'">
+      <div style="white-space:nowrap;">
+        <span> {{ cell.value }}</span>
+        <div [hidden]="cell.data.color === null" class="color-picker-read" [style.background-color]="cell.data.color"></div>
+      </div>
+    </ng-container>
+    <ng-container *dxTemplate="let cell of 'cellPercentageTemplate'">
+      <div style="white-space:nowrap;" class="formatNumber" [class]=" 'text-' + getValueColorClass(cell.value) ">
+        {{ cell.value | number : '1.2-2' }} %
+      </div>
+    </ng-container>
+    <ng-container *dxTemplate="let cell of 'cellPiecesTemplate'">
+      <div class="formatNumber">
+        {{ cell.value | number : '1.2-2' | removeComma }} {{ (cell.value !== null ? cell.data.uom : '') }}
+      </div>
+    </ng-container>
+  </dx-data-grid>
+
+</div>

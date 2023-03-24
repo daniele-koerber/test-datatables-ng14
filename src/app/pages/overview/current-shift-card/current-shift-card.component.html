@@ -1,0 +1,34 @@
+<nb-card [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>
+    <h5 class="card-title d-flex">
+      {{ 'OVERVIEW.Current_Shift' | translate }}
+      <ngx-oee-badge-status [status]="status" class="d-flex align-items-center" *ngIf="isLoading === false"></ngx-oee-badge-status>
+    </h5>
+  </nb-card-header>
+
+  <nb-card-body class="d-flex">
+    <div class="w-100" *ngIf="isLoading === false && !serverError">
+      <div class="flex-grow-1 h-100 d-flex flex-column justify-content-around">
+        <div class="shift-property">
+          <span class=" nb-font">{{ 'OVERVIEW.Team' | translate }}: </span><b>{{shift?.effectiveTeamName }}</b>
+          <div  *ngIf="shift?.effectiveTeamId" class="color-picker-read" [style.background-color]="shift?.isTeamOverriden === true ? shift?.overrideTeamColor : shift?.teamColor"></div>
+        </div>
+        <div class="shift-property">
+          <span class=" nb-font">{{ 'OVERVIEW.Start_Time' | translate }}: </span><b>{{ timeStart }}</b>
+        </div>
+        <div class="shift-property">
+          <span class=" nb-font">{{ 'OVERVIEW.End_Time' | translate }}:</span><b>{{ timeEnd }}</b>
+        </div>
+      </div>
+    </div>
+    <p *ngIf="(serverError)">
+      {{ 'SHARED.Server_Error_While_Data_Loading' | translate }}
+    </p>
+  </nb-card-body>
+
+  <nb-card-footer class="d-flex justify-content-end">
+    <button (mousedown)="goToShiftReport()" [disabled]="!shift?.effectiveTeamId || isLoading === true  || serverError === true || !hasReport" nbButton class= "tertiary" size="small">
+      {{ 'REPORT.Report' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>

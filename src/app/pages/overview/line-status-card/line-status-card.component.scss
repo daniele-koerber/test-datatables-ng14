@@ -1,0 +1,43 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  h5 { font-family: nb-theme(font-family-semibold); }
+
+}
+
+.details { 
+  font-size:14px; 
+  color:nb-theme(blue-color); 
+  justify-content: flex-end;
+  display: flex;
+  float: right;
+  padding-top: 10px;
+}
+
+.speed { 
+  font-size:16px; 
+
+  color: black; 
+  justify-content: flex-end;
+  display: flex;
+  float: left;
+  // border-bottom: 2px solid nb-theme(blue-color); padding-bottom:5px; 
+  border-bottom: 0px; 
+  padding-top: 4px;
+  .speedValue {
+    font-family: nb-theme(font-family-semibold);
+  }
+}
+
+.UoM {
+  font-size:12px; 
+  color: grey; 
+  padding-top: 2px;
+  padding-left: 3px;
+}
+
+.card-title{
+  font-family: nb-theme(font-family-semibold);
+  font-size: 18px;
+  margin: 0px;
+}

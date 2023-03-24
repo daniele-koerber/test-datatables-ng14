@@ -1,0 +1,49 @@
+<nb-card class="nb-card-team-definition" >
+  <!-- <nb-card-header>{{ 'CALENDAR.Export_shifts' | translate }}</nb-card-header> -->
+  <nb-card-body>
+    <div style ="padding-bottom: 16px;" class='title'>
+      <b >1 - {{ 'CALENDAR.Export_template_to_excel_file' | translate }}</b>
+    </div>
+    <div class="flex-spaced">
+      <div class="flex">
+          <div class="grey-text">{{ 'AUTH.from' | translate }}:</div>
+          <div class="input-align margin-hz">
+            <mat-form-field>
+              <input
+                class="date-mat"
+                matInput
+                nbInput
+                [nbDatepicker]="formcontrolFrom"
+                [formControl]="formControlFrom">
+              <nb-datepicker #formcontrolFrom [max]="formControlTo.value" (dateChange)="updateFrom($event)"></nb-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="grey-text">{{ 'AUTH.to' | translate }}:</div>
+          <div class="input-align margin-hz">
+            <mat-form-field>
+              <input
+                class="date-mat"
+                matInput
+                nbInput
+                [nbDatepicker]="formcontrolTo"
+                [formControl]="formControlTo">
+              <nb-datepicker #formcontrolTo [min]="formControlFrom.value" (dateChange)="updateTo($event)"></nb-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center;">
+      <button nbButton class= "appearance-filled secondary" (click)=" exportShifts()">
+          {{ 'CALENDAR.Export_shifts' | translate }}
+        </button >
+    </div>
+
+
+  </nb-card-body>
+  <!-- <nb-card-footer class="no-border">
+
+  </nb-card-footer> -->
+</nb-card>

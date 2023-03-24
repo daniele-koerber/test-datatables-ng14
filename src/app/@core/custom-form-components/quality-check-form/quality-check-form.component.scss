@@ -1,0 +1,23 @@
+// @import '../../../@theme/styles/themes';
+
+// @include nb-install-component() {
+
+// }
+
+::ng-deep{
+  nb-tab.content-active.ng-star-inserted {
+  height: 450px !important;
+}
+}
+
+textarea.form-control {
+  min-height: 90px !important;
+}
+
+:focus {
+  outline:none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+}
+

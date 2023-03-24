@@ -1,0 +1,11 @@
+<div *ngIf="!isDetails" [hidden]="isLoading === true" style="height: 320px; width: 100%;margin: 0 auto; " id= "{{chartId}}"> </div>
+
+<div *ngIf="isDetails" [hidden]="isLoading === true" style="height: 725px; width: 100%;margin: 0 auto; " id= "{{chartId}}"> </div>
+<!-- <div class="legend" style="margin-top: 16px; margin-left: 32px; margin-right: 32px;">
+    <ul>
+      <li *ngFor="let set of statusNames; let index = index">
+        <div class="dot" style="margin-top: 3px; margin-right: 8px;" [style.background-color]="getMachineStatusColor(set)"></div>
+        <p class="legend-description" > {{ set }}</p>
+      </li>
+    </ul>
+</div> -->

@@ -1,0 +1,59 @@
+<nb-card style="width: 1000px; height: 650px; ">
+  <nb-card-header>{{ 'CALENDAR.Parameter_Changes' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <ngx-spinner [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading]="isLoading" *ngIf="isLoading" class="bg-spinner"></ngx-spinner>
+    <div class="row">
+      <div class="col-sm-12">
+
+        <div class="div-container">
+          <div class="flex small-space">
+            <div class="first-div-align capitalize">{{ 'OVERVIEW.Production_Order' | translate }}: </div>
+            <div class="second-div-align"> <strong>{{order.productionOrder}}</strong> </div><br />
+          </div>
+
+          <div class="flex small-space">
+            <div class="first-div-align">{{ 'OVERVIEW.Product_Code' | translate }}: </div>
+            <div class="second-div-align"><strong>{{order.productCode}}</strong></div><br />
+          </div>
+
+          <div class="flex small-space">
+            <div class="first-div-align">{{ 'PRODUCT_DEFINITION.Version' | translate }}: </div>
+            <div class="second-div-align"><strong> {{order.version}}</strong></div><br />
+          </div>
+
+          <div class="flex small-space">
+            <div class="first-div-align">{{ 'CALENDAR.Parameter' | translate }}: </div>
+            <div class="second-div-align"><strong>{{parameter.parameterDescription}}</strong></div><br />
+          </div>
+        </div>
+
+        <table class="table table-bordered table-sm row-border hover" datatable="ng" [dtTrigger]="dtTrigger" [dtOptions]="dtOptions">
+          <thead>
+            <tr>
+              <th>{{ 'CALENDAR.Value' | translate }}</th>
+              <th>{{ 'CALENDAR.Modifier' | translate }}</th>
+              <th>{{ 'REPORT.Date_Time' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of data">
+              <!-- <td>{{ splitObj(row.value) }}</td> -->
+              <td>{{ row.value }}</td>
+              <td>{{ row.user ? row.user : 'initial value' }}</td>
+              <td><span class="hidden">{{ row.dateTime | date: "yyyy-MM-dd_h_mm" }}</span>  {{ row.dateTime | DateFormatPipe: true }}</td>
+            </tr>
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

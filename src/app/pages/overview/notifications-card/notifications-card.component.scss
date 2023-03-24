@@ -1,0 +1,6 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  h5 { font-family: nb-theme(font-family-semibold); }
+  :host { min-height:20rem; }
+}

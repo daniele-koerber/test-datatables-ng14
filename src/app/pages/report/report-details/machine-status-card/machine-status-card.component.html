@@ -1,0 +1,67 @@
+
+<nb-card *ngIf="!machinePath " [size]="'medium'" [nbSpinner]="isLoading === true || !drawChart" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>
+    <h5 class="card-title d-flex">
+      {{ 'SHARED.Status_Analysis' | translate }}
+    </h5>
+  </nb-card-header>
+  <nb-card-body style="overflow: hidden;">
+    <div class="row ">
+      <div class="col-sm-12">
+
+        <div *ngIf="!machinePath && drawChart && !isLoading">
+          <ngx-machine-status-report-chart
+            [chartId]= "'report-machine-status-chart-Id'"
+            [isDetails] = "isDetails"
+            [isLoading]="isLoading"
+            [noData]="noData"
+            [serverError]="serverError"
+            [machineStatus]="machinesStatus"
+            [showMachineInUse]="showMachineInUse"
+          ></ngx-machine-status-report-chart>
+        </div>
+
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button (mousedown)=' goToDetails() '  [disabled]="machinesStatus?.statusPerMinutes?.length === 0 || noData === true || serverError === true || !drawChart"  nbButton style="float: right;" class= "appearance-filled tertiary"  size="small">
+      {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>
+
+<nb-card *ngIf="machinePath  && drawChart" [size]="'medium'" >
+  <nb-card-header>
+    <h5 class="card-title d-flex">
+      {{ 'SHARED.Status_Analysis' | translate }}
+    </h5>
+  </nb-card-header>
+  <nb-card-body style="overflow: hidden; display: flex;">
+    <div class="row align-self-center" style = "width: -webkit-fill-available;">
+      <div class="col-sm-12">
+
+
+
+          <ngx-machine-status-analysis-chart
+            [chartId]="'machineStatusInMinReportchartId'"
+            [componentData]="machineStatus"
+            [processCellPath]="processCellPath"
+            [isLoading]="isLoading"
+            [noData]="noData"
+            [serverError]="serverError"
+            [machinePath]="machinePath"
+          ></ngx-machine-status-analysis-chart>
+
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <button (mousedown)=' goToDetailsMachine() '  [disabled]="noData === true || serverError === true"  nbButton style="float: right;" class= "appearance-filled tertiary"  size="small">
+      {{ 'COMMON.Show_details' | translate }} <nb-icon icon="chevron-right-outline"></nb-icon>
+    </button>
+  </nb-card-footer>
+</nb-card>
+
+
+

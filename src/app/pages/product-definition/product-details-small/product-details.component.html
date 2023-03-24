@@ -1,0 +1,28 @@
+<nb-card>
+  <nb-card-header>{{title}}
+    <button style="float: right;padding: 4px;" (click)=" cancel() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+
+    <div>
+      <ngx-product-details-card (setButtonState)=" setButtonState($event); " (emitChange)=' emitChange($event) ' [readonly]="readonly" [title]="title" [definition]="definition" [definitions]="definitions"></ngx-product-details-card>
+    </div>
+
+
+  </nb-card-body>
+
+  <nb-card-footer class="flex">
+    <button nbButton (click)=" onFormSubmit() "
+      class="appearance-filled secondary" style=" margin: 0 auto"
+      [disabled]="buttonDisabled ||
+      definition.productCode === '' || definition.productCode === null ||
+      definition.productDescription === '' || definition.productDescription === null">
+      {{ 'SHARED.Create' | translate }}
+    </button>
+  </nb-card-footer>
+</nb-card>

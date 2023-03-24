@@ -1,0 +1,65 @@
+<div class='chips-filter-container'>
+    <div id="filter">
+        <button id="filter" nbButton style="margin-left: 10px; margin-top: 10px;" class="appearance-filled secondary"  (click)="hidebutton = !hidebutton;">
+            {{ 'REPORT.Dates_range' | translate }}<nb-icon style="pointer-events: none;" icon="arrow-ios-downward-outline"></nb-icon>
+        </button>
+
+        <div id="filter" class="filters-popover-dates" [hidden]="hidebutton">
+            <div id="filter"class="filters-container">
+
+            <div id="filter" class="div-filter-container" (click)="selectRange('REPORT.Current_month', 0)">
+                <span id="filter" class="input-label">{{ 'REPORT.Current_month' | translate }}</span>
+            </div>
+
+            <div id="filter" class="div-filter-container" (click)="selectRange('REPORT.Previous_month', 0)">
+                <span id="filter" class="input-label">{{ 'REPORT.Previous_month' | translate }}</span>
+            </div>
+
+            <div id="filter" class="div-filter-container" (click)="selectRange('REPORT.Current_year' , 0)">
+                <span id="filter" class="input-label">{{ 'REPORT.Current_year' | translate }}</span>
+            </div>
+
+            <div id="filter" class="div-filter-container" (click)="selectRange('REPORT.Previous_year', 0)">
+                <span id="filter" class="input-label">{{ 'REPORT.Previous_year' | translate }}</span>
+            </div>
+
+            <div id="filter" class="div-filter-container" (click)="selectRange('REPORT.Last_7_days', -7)">
+                <span id="filter" class="input-label">{{ 'REPORT.Last_7_days' | translate }}</span>
+            </div>
+
+            <div id="filter" class="div-filter-container" (click)="selectRange('REPORT.Last_30_days', -30)">
+                <span id="filter" class="input-label">{{ 'REPORT.Last_30_days' | translate }}</span>
+            </div>
+
+            <div id="filter" class="div-filter-container" (click)="selectRange('REPORT.Last_60_days', -60)">
+                <span id="filter" class="input-label">{{ 'REPORT.Last_60_days' | translate }}</span>
+            </div>
+
+            <div id="filter" class="div-filter-container" (click)="selectRange('REPORT.Last_90_days', -90)">
+                <span id="filter" class="input-label">{{ 'REPORT.Last_90_days' | translate }}</span>
+            </div>
+
+            <div id="filter" class="div-filter-container">
+                <input readonly nbInput class="daterange-picker" (click)="movePicker()" [nbDatepicker]="customDateRangePicker">
+                <nb-rangepicker #customDateRangePicker (rangeChange)="customDateRange($event)"></nb-rangepicker>
+                <span id="filter" class="input-label">{{ 'REPORT.Customize' | translate }}</span>
+            </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="chip-container">
+        <mat-chip-list>
+          <mat-chip *ngIf="defaultStartTime == startTime && defaultEndTime == endTime" [removable]="false" >
+            {{dateTimePin}}
+          </mat-chip>
+          <mat-chip *ngIf="dateTimePin !== '' && !(defaultStartTime == startTime && defaultEndTime == endTime)" [removable]="true" (removed)="removeFilter()">
+            {{dateTimePin}}
+            <mat-icon matChipRemove >cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+
+
+  </div>

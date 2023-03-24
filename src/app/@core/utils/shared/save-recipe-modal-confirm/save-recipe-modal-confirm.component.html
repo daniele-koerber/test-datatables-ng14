@@ -1,0 +1,21 @@
+<nb-card>
+  <nb-card-header>{{ 'COMMON.Save_recipe' | translate }}</nb-card-header>
+  <nb-card-body>
+    {{ 'COMMON.When_you_save_all_planned_orders_parameter_will_be_updated' | translate }}
+    <br />
+
+  </nb-card-body>
+
+  <nb-card-footer>
+    <!-- <label>
+      <mat-checkbox
+      (change)=' updateOPB($event) '
+      [checked]="updatePlannedBatches" ></mat-checkbox>
+      {{ 'PRODUCT_DEFINITION.overwrite_planned_batches' | translate }}
+    </label>
+    <div  style="margin-top: 16px;" > </div> -->
+
+    <button nbButton  (click)=" cancel() " class="appearance-filled secondary">{{ 'COMMON.Cancel' | translate }}</button>
+    <button nbButton  (click)=" submit() "class="appearance-filled status-primary" style="float: right;">{{ 'COMMON.Save' | translate }}</button>
+  </nb-card-footer>
+</nb-card>

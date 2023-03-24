@@ -1,0 +1,45 @@
+<nb-card style="min-width: 400px; min-height: 200px;"  [nbSpinner]="isLoading === true" nbSpinnerSize="giant" nbSpinnerStatus="primary">
+  <nb-card-header>{{ 'COMMON.Add_New_quality_check' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <!-- <ngx-spinner [diameter]=" 50 " [strokeWidth]=" 5 " [isLoading]="isLoading" *ngIf="isLoading" class="bg-spinner"></ngx-spinner> -->
+
+
+
+    <form>
+      <!-- <p> {{ 'COMMON.Add_New_quality_check' | translate }}</p> -->
+
+      <!-- <div *ngFor="let qf of qualityForms"><label>
+        <input type="radio" (change)="handleChange($event)" name="qualityForm" #qualityForm [value]="qf.id">
+        {{qf.name}}
+      </label></div> -->
+
+
+      <p [hidden]=" qualityForms.length > 0 || isLoading" >
+        {{ 'COMMON.No_quality_check_Available' | translate }}
+      </p>
+
+      <mat-radio-group>
+        <mat-radio-button *ngFor="let qf of qualityForms" class="flex-radio-group" (change)="handleChange($event)" name="qualityForm" #qualityForm [value]="qf.id">
+        {{qf.name}}
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <div style="text-align: center;"><br />
+        <button style="margin:auto" nbButton shape="round" status="primary" [hidden]=" qualityForms.length == 0 || isLoading" [disabled]=" !qualityForm " (click)=" add() " type="button">
+          {{ 'COMMON.Add' | translate }}
+        </button>
+      </div>
+  </form>
+
+
+
+
+  </nb-card-body>
+</nb-card>

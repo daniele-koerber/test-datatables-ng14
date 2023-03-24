@@ -1,0 +1,21 @@
+<button
+        [matBadgeSize]="(notJustifiedDowntimesCount < badgeThreshold ? 'medium' : 'medium')" mat-stroked-button
+        [class]="(notJustifiedDowntimesCount < badgeThreshold ? 'primary' : 'primary') "
+        matBadgePosition="after"
+        matBadgeColor="warn"
+        [matBadgeHidden]="!(notJustifiedDowntimesCount>0)"
+        [matBadge]=" notJustifiedDowntimesCount "
+        (mousedown)=' openDowtimeAcknowledge() '>
+        <!-- [disabled]=" notJustifiedDowntimesCount === 0 "  -->
+        <div [innerHTML]="'COMMON.Downtimes' | translate "></div>
+</button>
+
+<ngx-server-notifications
+                          *ngIf="selectedProcessCell"
+                          from="dountimes-button"
+                          [processCell]="selectedProcessCell"
+                          [topic]="getComponentTopic()"
+                          [signalRSubscriptionType] = "getComponentSignalRSubscriptionType()"
+                          [signalRListenersNames]="getComponentSignalRListenersNames()"
+                          (message)="DowntimesCountChanged($event)">
+</ngx-server-notifications>

@@ -1,0 +1,47 @@
+<nb-card style="width: 670px; height: 900px;">
+  <nb-card-header>{{ 'REPORT.Corrective_Actions' | translate }}
+    <button style="float: right;padding: 4px;" (click)=" closeModal() " nbButton ghost >
+      <nb-icon class="icon-close" icon="close-outline"></nb-icon>
+    </button>
+    <button style="float: right;padding: 4px;" [disabled]=" (helpPageLinkDestination === '#') " (click)=" openHelp() " nbButton ghost >
+      <nb-icon class="icon-close"  icon="question-mark-circle-outline"></nb-icon>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div>
+      <!-- <div class="flex small-space">
+        <div class="first-div-align">{{ 'OVERVIEW.Production_Order' | translate }}: </div>
+        <div class="second-div-align"> <strong>{{batch !== undefined ? batch?.productionOrder : ''}}</strong> </div><br />
+      </div> -->
+
+      <div class="flex small-space">
+        <div class="first-div-align">{{ 'OVERVIEW.Acknowledge_date_time' | translate }}: </div>
+        <div class="second-div-align"><strong>{{acknowledgeDateTimeUtc | date :'yyyy/MM/dd HH:mm' }}</strong></div><br />
+      </div>
+
+      <div class="flex small-space">
+        <div class="first-div-align"> {{ 'OVERVIEW.Occurred_Date_Time' | translate }} : </div>
+        <div class="second-div-align"><strong> {{occurredDateTimeUtc | date :'yyyy/MM/dd HH:mm'}}</strong></div><br />
+      </div>
+      </div>
+      <hr/>
+    <div style="padding: 0.5rem 2rem;">
+      <div *ngFor="let checkbox of checkBoxes">
+        <label>
+          <mat-checkbox [disabled]="true" [name]="checkbox.key" [checked]="checkbox.value"> {{checkbox.title}}</mat-checkbox>
+
+        </label>
+      </div>
+      <div style="margin-bottom: 1rem;">
+        <div><label>{{ 'REPORT.Notes' | translate }}:</label></div>
+        <div><textarea class="form-control" [disabled]="true" cols="1" rows="10">{{notes[0].value}}</textarea></div>
+      </div>
+
+      <!-- <div>
+        <button nbButton outline shape="round" status="primary" type="button" (click)="close()" >&lt; {{ 'COMMON.Back' | translate }}</button>
+      </div> -->
+    </div>
+
+
+  </nb-card-body>
+</nb-card>
